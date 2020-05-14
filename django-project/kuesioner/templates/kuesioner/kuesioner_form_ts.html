@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Form Kuesioner Tracer Study
+{% endblock page_title %}
+
+
+{% block page_content %}
+    <div>
+        <form action="">
+            <div>
+                <h4>Menurut anda seberapa besar penekanan pada metode pembelajaran di bawah ini dilaksanakan di program studi anda? </h4>
+                <p>Perkuliahan</p>
+                <input type="radio" id="sangat-besar" name="sangat-besar" value="sangat besar">
+                <label for="sangat-besar">Sangat Besar</label><br>
+
+                <input type="radio" id="besar" name="besar" value="besar">
+                <label for="besar">Besar</label><br>
+
+                <input type="radio" id="cukup-besar" name="cukup-besar" value="cukup besar">
+                <label for="cukup-besar">Cukup Besar</label><br>
+
+                <input type="radio" id="kurang" name="kurang" value="kurang">
+                <label for="kurang">kurang</label><br>
+
+                <input type="radio" id="tidak-sama-sekali" name="tidak-sama-sekali" value="tidak sama sekali">
+                <label for="tidak-sama-sekali">Tidak Sama Sekali</label><br>
+            </div>
+
+            <table>
+                <tr>
+                  <th>Company</th>
+                  <th>Contact</th>
+                  <th>Country</th>
+                </tr>
+                <tr>
+                  <td>Alfreds Futterkiste</td>
+                  <td>Maria Anders</td>
+                  <td>Germany</td>
+                </tr>
+                <tr>
+                  <td>Centro comercial Moctezuma</td>
+                  <td>Francisco Chang</td>
+                  <td>Mexico</td>
+                </tr>
+                <tr>
+                  <td>Ernst Handel</td>
+                  <td>Roland Mendel</td>
+                  <td>Austria</td>
+                </tr>
+                <tr>
+                  <td>Island Trading</td>
+                  <td>Helen Bennett</td>
+                  <td>UK</td>
+                </tr>
+                <tr>
+                  <td>Laughing Bacchus Winecellars</td>
+                  <td>Yoshi Tannamuri</td>
+                  <td>Canada</td>
+                </tr>
+                <tr>
+                  <td>Magazzini Alimentari Riuniti</td>
+                  <td>Giovanni Rovelli</td>
+                  <td>Italy</td>
+                </tr>
+              </table>
+            <hr>
+        </form>
+    </div>
+{% endblock page_content %}
