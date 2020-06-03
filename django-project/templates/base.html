@@ -1,32 +1,82 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% block page_title %}
-        {% endblock page_title %}
-    </title>
-    <style>
-        table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 50%;
-        }
+    {% block title_outer %}
+        <title> 
+        {% block title %}
+          {{title}}
+        {% endblock %}
+        </title>
+    {% endblock  %}
 
-        td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-        }
-
-        tr:nth-child(even) {
-        background-color: #dddddd;
-        }
-    </style>
+    {% block meta %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock%}
+    
+    {% block stylesheets %}
+      {% include 'lib/_styles.html' %}
+    {% endblock  %}
+  
 </head>
-<body>
-    {% block page_content %}
-    {% endblock page_content %}
+<body class="hold-transition sidebar-mini layout-fixed">
+
+{% block body %}
+  <div class="wrapper">
+
+    {% block nav_header %}
+        {% include 'lib/_main_header.html' %}
+    {% endblock  %}
+
+    {% block nav_side %}
+      {% include 'lib/_main_side.html' %}
+    {% endblock  %}
+
+    {% block content_wrapper %}
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+
+        {% block content_header %}
+          {% include 'lib/_content_header.html' %}
+        {% endblock  %}
+
+        <!-- Main content -->
+        {% block content_outer %}
+        <section class="content">
+          <div class="container-fluid">
+
+            {% block content %}{% endblock  %}
+            
+          </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+        {% endblock  %}
+
+
+      </div>
+      <!-- /.content-wrapper -->
+      {% endblock  %}
+      
+      {% block nav_footer %}
+        {% include 'lib/_main_footer.html' %}
+      {% endblock  %}
+
+      {% block sidebar_control %}
+        {% include 'lib/_sidebar_control.html' %}
+      {% endblock  %}
+
+
+  </div>
+  <!-- ./wrapper -->
+{% endblock body %}
+
+
+{% block javascript %}
+  {% include 'lib/_scripts.html' %}
+{% endblock  %}
+
 </body>
 </html>

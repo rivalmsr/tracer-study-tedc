@@ -7,10 +7,13 @@ class MasterPoltekTedc(models.Model):
     status          = models.CharField(max_length=5, default='Aktif')
     email           = models.EmailField(blank=True)
     website         = models.CharField(max_length=100, blank=True)
+    kota            = models.CharField(max_length=100)
     alamat          = models.TextField()
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return "%s - %s" % (self.kode, self.nama)
 
 class MasterProdi(models.Model):
     kode            = models.SmallIntegerField()
@@ -27,9 +30,9 @@ class MasterProdi(models.Model):
     )
 
     LIST_DIPLOMA = (
-        ('D1', 'Diploma Satu'),
-        ('D3', 'Diploma Tiga'),
-        ('D4', 'Diploma Empat'),
+        ('D1', 'Diploma 1 (Satu)'),
+        ('D3', 'Diploma 3 (Tiga)'),
+        ('D4', 'Diploma 4 (Empat)'),
     )
 
     jejang          = models.CharField(
@@ -38,4 +41,10 @@ class MasterProdi(models.Model):
     )
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
+
+    class Meta :
+        ordering = ['nama']
+
+    def __str__(self):
+        return "%s - %s" % (self.kode, self.nama)
 

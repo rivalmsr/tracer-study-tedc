@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock  %}
+
+{% block content %}
+    <h3>Biodata Lulusan</h3>
+    <p> Nama : {{lulusan.nama}} NIM : {{lulusan.nomor_mahasiswa}}</p>
+    <a href="{% url 'lulusan:list' %}">Kembali</a>
+
+{% endblock  %}

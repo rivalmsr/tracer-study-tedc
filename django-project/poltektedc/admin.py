@@ -4,12 +4,13 @@ from .models import (
     MasterProdi
 )
 
-class AdminPoltek(admin.ModelAdmin):
-    readonly_fields = ['created', 'updated']
+class AdminPoltekTedc(admin.ModelAdmin):
+    readonly_fields = ['kode', 'status', 'created', 'updated']
+admin.site.register(MasterPoltekTedc, AdminPoltekTedc)
 
 List_Model = (
-    MasterPoltekTedc,
     MasterProdi,
 )
-
+class AdminPoltek(admin.ModelAdmin):
+    readonly_fields = ['created', 'updated']
 admin.site.register(List_Model, AdminPoltek)

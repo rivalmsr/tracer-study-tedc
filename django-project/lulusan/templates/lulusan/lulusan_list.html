@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    {{page_title}}
+{% endblock page_title %}
+
+{% block content %}
+    <h1>{{page_title}}</h1><br>
+    <ul>
+        <li>
+            <a href="{% url 'lulusan:create' %}">Input Data Mahasiswa</a>
+        </li>
+    </ul>
+    <table>
+        <tr>
+            <th>No</th>
+            <th>PK</th>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>Program Studi</th>
+            <th>Tahun Lulus</th>
+            <th>Nomor Telepon</th>
+            <th>Email</th>
+            <th>Opsi</th>
+        </tr>
+    {% for lulusan in list_of_lulusan %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{lulusan.pk}}</td>
+            <td>{{lulusan.nomor_mahasiswa}}</td>
+            <td>{{lulusan.nama}}</td>
+            <td>{{lulusan.kode_prodi}}</td>
+            <td>{{lulusan.tahun_lulus}}</td>
+            <td>{{lulusan.nomor_telepon}}</td>
+            <td>{{lulusan.alamat_email}}</td>
+            <td>
+                <a href="{% url 'lulusan:detail' lulusan.slug %}">Detail</a>
+                <a href="{% url 'lulusan:update' lulusan.pk %}">Edit</a>
+                <a href="{% url 'lulusan:delete' lulusan.pk %}">Hapus</a>
+            </td>
+        </tr>
+    {% endfor %}
+        
+        </table>
+
+{% endblock %}

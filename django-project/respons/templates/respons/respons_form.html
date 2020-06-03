@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock  %}
+
+{% block content %}
+    <form method='POST'>
+        <div>
+            <label for="">Nomor Mahasiswa :</label>
+            <input type="text">
+        </div><hr>
+        <div>
+            <h5>Menurut anda seberapa besar penekanan pada metode pembelajaran di bawah ini dilaksanakan di program studi anda? </h5>
+            <p>Perkuliahan</p>
+            <input type="radio" id="sangat-besar" name="perkulihan" value="Sangat Besar">
+            <label for="sangat-besar">Sangat Besar</label>
+            <input type="radio" id="besar" name="perkulihan" value="Besar">
+            <label for="besar">Besar</label>
+            <input type="radio" id="cukup-besar" name="perkulihan" value="Cukup Besar">
+            <label for="cukup-besar">Cukup Besar</label>
+            <input type="radio" id="kurang" name="perkulihan" value="Kurang">
+            <label for="kurang">Kurang</label>
+            <input type="radio" id="tidak-sama-sekali" name="perkulihan" value="Tidak Sama Sekali">
+            <label for="tidak-sama-sekali">Tidak Sama Sekali</label>
+            <br>
+            <p>Demostrasi</p>
+            <input type="radio" id="sangat-besar" name="demostrasi" value="Sangat Besar">
+            <label for="sangat-besar">Sangat Besar</label>
+            <input type="radio" id="besar" name="demostrasi" value="Besar">
+            <label for="besar">Besar</label>
+            <input type="radio" id="cukup-besar" name="demostrasi" value="Cukup Besar">
+            <label for="cukup-besar">Cukup Besar</label>
+            <input type="radio" id="kurang" name="demostrasi" value="Kurang">
+            <label for="kurang">Kurang</label>
+            <input type="radio" id="tidak-sama-sekali" name="demostrasi" value="Tidak Sama Sekali">
+            <label for="tidak-sama-sekali">Tidak Sama Sekali</label>
+            <br>
+            <p>Partisipasi dalam proyek riset</p>
+            <input type="radio" id="sangat-besar" name="riset" value="Sangat Besar">
+            <label for="sangat-besar">Sangat Besar</label>
+            <input type="radio" id="besar" name="riset" value="Besar">
+            <label for="besar">Besar</label>
+            <input type="radio" id="cukup-besar" name="riset" value="Cukup Besar">
+            <label for="cukup-besar">Cukup Besar</label>
+            <input type="radio" id="kurang" name="riset" value="Kurang">
+            <label for="kurang">Kurang</label>
+            <input type="radio" id="tidak-sama-sekali" name="riset" value="Tidak Sama Sekali">
+            <label for="tidak-sama-sekali">Tidak Sama Sekali</label>
+            <br>
+            <p>Magang</p>
+            <input type="radio" id="sangat-besar" name="magang" value="Sangat Besar">
+            <label for="sangat-besar">Sangat Besar</label>
+            <input type="radio" id="besar" name="magang" value="Besar">
+            <label for="besar">Besar</label>
+            <input type="radio" id="cukup-besar" name="magang" value="Cukup Besar">
+            <label for="cukup-besar">Cukup Besar</label>
+            <input type="radio" id="kurang" name="magang" value="Kurang">
+            <label for="kurang">Kurang</label>
+            <input type="radio" id="tidak-sama-sekali" name="magang" value="Tidak Sama Sekali">
+            <label for="tidak-sama-sekali">Tidak Sama Sekali</label>
+            <br>
+            <p>Praktikum</p>
+            <input type="radio" id="sangat-besar" name="praktikum" value="Sangat Besar">
+            <label for="sangat-besar">Sangat Besar</label>
+            <input type="radio" id="besar" name="praktikum" value="Besar">
+            <label for="besar">Besar</label>
+            <input type="radio" id="cukup-besar" name="praktikum" value="Cukup Besar">
+            <label for="cukup-besar">Cukup Besar</label>
+            <input type="radio" id="kurang" name="praktikum" value="Kurang">
+            <label for="kurang">Kurang</label>
+            <input type="radio" id="tidak-sama-sekali" name="praktikum" value="Tidak Sama Sekali">
+            <label for="tidak-sama-sekali">Tidak Sama Sekali</label>
+            <br>
+            <p>Kerja Lapangan</p>
+            <input type="radio" id="sangat-besar" name="kerja-lapangan" value="Sangat Besar">
+            <label for="sangat-besar">Sangat Besar</label>
+            <input type="radio" id="besar" name="kerja-lapangan" value="Besar">
+            <label for="besar">Besar</label>
+            <input type="radio" id="cukup-besar" name="kerja-lapangan" value="Cukup Besar">
+            <label for="cukup-besar">Cukup Besar</label>
+            <input type="radio" id="kurang" name="kerja-lapangan" value="Kurang">
+            <label for="kurang">Kurang</label>
+            <input type="radio" id="tidak-sama-sekali" name="kerja-lapangan" value="Tidak Sama Sekali">
+            <label for="tidak-sama-sekali">Tidak Sama Sekali</label>
+            <br>
+            <p>Diskusi</p>
+            <input type="radio" id="sangat-besar" name="diskusi" value="Sangat Besar">
+            <label for="sangat-besar">Sangat Besar</label>
+            <input type="radio" id="besar" name="diskusi" value="Besar">
+            <label for="besar">Besar</label>
+            <input type="radio" id="cukup-besar" name="diskusi" value="Cukup Besar">
+            <label for="cukup-besar">Cukup Besar</label>
+            <input type="radio" id="kurang" name="diskusi" value="Kurang">
+            <label for="kurang">Kurang</label>
+            <input type="radio" id="tidak-sama-sekali" name="diskusi" value="Tidak Sama Sekali">
+            <label for="tidak-sama-sekali">Tidak Sama Sekali</label>
+        </div><hr>
+        <div>
+            <h5>Kapan anda mulai mencari pekerjaan? Mohon pekerjaan sambilan tidak dimasukkan</h5>
+            <input type="radio" id="sebelum-lulus" name="mencari-kerja" value="Sebelum Lulus">
+            <label for="sebelum-lulus">Kira-kira <input type="number" name="mencari-kerja"> bulan sebelum lulus</label>
+            <br>
+            <input type="radio" id="sesudah-lulus" name="mencari-kerja" value="Sesudah Lulus">
+            <label for="sesudah-lulus">Kira-kira <input type="number" name="mencari-kerja"> bulan Sesudah lulus</label>
+        </div><hr>
+        <div>
+            <h5>Bagaimana anda mencari pekerjaan tersebut? Jawaban bisa lebih dari satu</h5>
+            <input type="checkbox" id="mencari-kerja1" name="mencari-kerja1" value="1">
+            <label for="mencari-kerja1"> Melalui iklan di koran/majalah, brosur</label><br>
+            <input type="checkbox" id="mencari-kerja2" name="mencari-kerja2" value="2">
+            <label for="mencari-kerja2"> Melamar ke perusahaan tanpa mengetahui lowongan yang ada</label><br>
+            <input type="checkbox" id="mencari-kerja3" name="mencari-kerja3" value="3">
+            <label for="mencari-kerja3"> Pergi ke bursa/pameran kerja</label><br>
+            <input type="checkbox" id="mencari-kerja4" name="mencari-kerja4" value="4">
+            <label for="mencari-kerja4"> Mencari lewat internet/iklan online/milis</label><br>
+            <input type="checkbox" id="mencari-kerja5" name="mencari-kerja5" value="5">
+            <label for="mencari-kerja5"> Dihubungi oleh perusahaan </label><br>
+            <input type="checkbox" id="mencari-kerja6" name="mencari-kerja6" value="6">
+            <label for="mencari-kerja6"> Menghubungi Kemenakertrans </label><br>
+            <input type="checkbox" id="mencari-kerja" name="mencari-kerja" value="">
+            <label for="mencari-kerja"> Memeroleh informasi dari pusat/kantor pengembangan karir fakultas/universitas </label><br>
+            <input type="checkbox" id="mencari-kerja" name="mencari-kerja" value="">
+            <label for="mencari-kerja"> Menghubungi kantor kemahasiswaan/hubungan alumni </label><br>
+            <input type="checkbox" id="mencari-kerja" name="mencari-kerja" value="">
+            <label for="mencari-kerja"> Membangun jejaring (network) sejak masih kuliah </label><br>
+            <input type="checkbox" id="mencari-kerja" name="mencari-kerja" value="">
+            <label for="mencari-kerja"> Melalui relasi (misalnya dosen, orang tua, saudara, teman, dll.) </label><br>
+            <input type="checkbox" id="mencari-kerja" name="mencari-kerja" value="">
+            <label for="mencari-kerja"> Membangun bisnis sendiri </label><br>
+            <input type="checkbox" id="mencari-kerja" name="mencari-kerja" value="">
+            <label for="mencari-kerja"> Melalui penempatan kerja atau magang </label><br>
+            <input type="checkbox" id="mencari-kerja" name="mencari-kerja" value="">
+            <label for="mencari-kerja"> Bekerja di tempat yang sama dengan tempat kerja semasa kuliah </label><br>
+            <input type="checkbox" id="mencari-kerja" name="mencari-kerja" value="">
+            <label for="mencari-kerja"> Lainnya: </label><br>
+        </div><hr>
+    </form>
+{% endblock  %}

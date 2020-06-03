@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    {{page_title}}
+{% endblock page_title %}
+
+{% block content %}
+    <h1>{{page_title}}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        
+        {{form.non_field_errors}}
+        <div>
+            {{form.nomor_mahasiswa.errors}}
+            <label for="{{form.nomor_mahasiswa.id_for_label}}"> NIM (Nomor Induk Mahasiswa): </label>
+            {{form.nomor_mahasiswa}}
+        </div>
+
+        <div>
+            <label for="{{form.tahun_lulus.id_for_label}}">Tahun Lulus: </label>
+            {{form.tahun_lulus}}
+        </div>
+
+        <div>
+            <label for="{{form.kode_prodi.id_for_label}}">Program Studi: </label>
+            {{form.kode_prodi}}
+        </div>
+
+        <div>
+            <label for="{{form.kode_prodi.id_for_label}}">Nama Lengkap: </label>
+            {{form.nama}}
+        </div>
+
+        <div>
+            <label for="{{form.nomor_telelpon.id_for_label}}">Nomor Telepon/HP: </label>
+            {{form.nomor_telepon}}
+        </div>
+
+        <div>
+            {{form.alamat_email.errors}}
+            <label for="{{form.alamat_email.id_for_label}}">Email: </label>
+            {{form.alamat_email}}
+        </div>
+
+        <a href="{% url 'lulusan:list' %}">Kembali</a>
+        <button type="submit">Simpan</button>
+    </form>
+{% endblock %} 

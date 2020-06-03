@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock  %}
+
+{% block content %}
+    <form method="POST">
+    {% csrf_token %}
+        <h4>Anda yakin akan menghapus data lulusan</h4>
+        <p>Nama : {{object.nama}}</p>
+        <p>Nomor Induk Mahasiswa (NIM): {{object.nomor_mahasiswa}}</p>
+        <a href="{% url 'lulusan:list' %}">Batal</a>
+        <button type="submit" value="Confirm">Ya</button>
+    </form>
+{% endblock  %}

@@ -2,11 +2,11 @@ from django.contrib import admin
 from .models import (
     MasterKuesioner, 
     MasterFSatu,
-    MasterFDua
+    MasterSubKuesioner
     )
 
 class AdminMasterFSatu(admin.ModelAdmin):
-    readonly_fields = ['kode_pt', 'created', 'updated']
+    readonly_fields = ['kode_pt', 'slug', 'created', 'updated']
 
 admin.site.register(MasterFSatu, AdminMasterFSatu)
 
@@ -15,6 +15,6 @@ class AdminKuesioner(admin.ModelAdmin):
     
 list_model = (
     MasterKuesioner, 
-    MasterFDua
+    MasterSubKuesioner
 )
 admin.site.register(list_model, AdminKuesioner)
