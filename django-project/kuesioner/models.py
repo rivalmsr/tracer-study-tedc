@@ -24,12 +24,13 @@ class MasterKuesioner(models.Model):
 
 
 class MasterSubKuesioner(models.Model):
-    master_kuesioner_id     = models.ForeignKey(
+    master_kuesioner_id = models.ForeignKey(
                                 MasterKuesioner,
                                 models.SET_NULL,
                                 blank=True,
                                 null=True
     )
+    kode                = models.CharField(max_length=7)
     sub_pertanyaan      = models.CharField(max_length=35)
     created             = models.DateTimeField(auto_now_add=True)
     updated             = models.DateTimeField(auto_now=True)
@@ -38,7 +39,26 @@ class MasterSubKuesioner(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return "%s - %s" % (self.id, self.sub_pertanyaan)
+        return "%s - %s" % (self.kode, self.sub_pertanyaan)
+
+
+class MasterOpsiRespons(models.Model):
+    master_kuesioner_id = models.ForeignKey(
+                                MasterKuesioner,
+                                models.SET_NULL,
+                                blank=True,
+                                null=True,
+    )
+    kode                = models.CharField(max_length=7)
+    opsi_respons        = models.TextField()
+    created             = models.DateTimeField(auto_now_add=True)
+    updated             = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['id']
+
+    def __str__(self):
+        return "%s - %s" %(self.kode, self.opsi_respons)
 
 
 class MasterFSatu(models.Model):

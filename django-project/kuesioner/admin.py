@@ -1,8 +1,9 @@
 from django.contrib import admin
 from .models import (
     MasterKuesioner, 
+    MasterSubKuesioner,
+    MasterOpsiRespons,
     MasterFSatu,
-    MasterSubKuesioner
     )
 
 class AdminMasterFSatu(admin.ModelAdmin):
@@ -15,6 +16,7 @@ class AdminKuesioner(admin.ModelAdmin):
     
 list_model = (
     MasterKuesioner, 
-    MasterSubKuesioner
+    MasterSubKuesioner,
+    MasterOpsiRespons
 )
 admin.site.register(list_model, AdminKuesioner)

@@ -7,38 +7,93 @@
     <form action="" method="POST">
         <div>
             <h5>{{list_kuesioner.F1}}</h5>
-            <label for="">Nomor Mahasiswa/ NIM :</label>
-            <input type="text">
+            <label for="nomor_mahasiswa">Nomor Mahasiswa/ NIM :</label>
+            <input type="text" name="F1" id="nomor_mahasiswa">
         </div><hr>
         <div>
             <h5>{{list_kuesioner.F2}}</h5>
-            <input type="radio">
-            <label for="">Nomor Mahasiswa/ NIM :</label>
-            <input type="text">
             {% for subkuesioner in subkuesioner_fdua %}
                 <h6>{{subkuesioner.sub_pertanyaan}}</h6>
                 {% for key_option, value_option in response_options_fdua %}
-                <input type="radio" id="{{key_option}}" name="{{subkuesioner.sub_pertanyaan}}" value="{{value_option}}">
-                <label for="{{key_option}}">{{value_option}}</label>
+                <input type="radio" id="{{subkuesioner.kode}}-{{key_option}}" name="F2-{{subkuesioner.kode}}" value="{{value_option}}">
+                <label for="{{subkuesioner.kode}}-{{key_option}}">{{value_option}}</label>
                 {% endfor %}
                 <br>
             {% endfor %}
+            
         </div><hr>
         
         <div>
             <h5>{{list_kuesioner.F3}}</h5>
-            <label for="">Nomor Mahasiswa/ NIM :</label>
-            <input type="text">
-        </div><hr>
-        <p>
-            {% for subkuesioner in list_master_subkuesioner %}
-                <ul>
-                    <li>
-                    {{subkuesioner.master_kuesioner_id.kode}} : {{subkuesioner.sub_pertanyaan}}
-                    </li>
-                </ul>
+            <p>
+                {{subkuesioner_ftiga}}
+            </p>
+            {% for subkuesioner in subkuesioner_ftiga %}
+                {% if subkuesioner.kode != 'F304' %}
+                <input type="radio" id="F3-{{subkuesioner.kode}}" name="F3">
+                <label for="F3-{{subkuesioner.kode}}">
+                    Kira-kira <input type="number" name="F3-F301"> Bulan {{subkuesioner.sub_pertanyaan}}
+                </label><br>
+                {% else %}
+                    <input type="radio" id="F3-{{subkuesioner.kode}}" name="F3">
+                    <label for="F3-{{subkuesioner.kode}}">{{subkuesioner.sub_pertanyaan}}</label><br>
+                {% endif %}
             {% endfor %}
-        </p>
+        </div><hr>
+
+        <div>
+            <h5>{{list_kuesioner.F4}}</h5>
+            {% for respons in opsi_respons_fempat %}
+                {% if subkuesioner.kode != 'F304' %}
+                <input type="checkbox" id="{{respons.kode}}" name="{{respons.kode}}" value="{{respons.opsi_respons}}">
+                <label for="{{respons.kode}}">{{respons.opsi_respons}}</label><br>
+                {% endif %}
+            {% endfor %}
+        </div><hr>
+        <div>
+            <h5>{{list_kuesioner.F5}}</h5>
+            {% for subkuesioner in subkuesioner_flima %}
+                {% if subkuesioner.kode != 'F304' %}
+                <input type="radio" id="F5-{{subkuesioner.kode}}" name="F5">
+                <label for="F5-{{subkuesioner.kode}}">
+                    Kira-kira <input type="number" name="F3-F301"> Bulan {{subkuesioner.sub_pertanyaan}}
+                </label><br>
+                {% endif %}
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            <h5>{{list_kuesioner.F6}}</h5>
+            {% for subkuesioner in subkuesioner_fenam %}
+                <input type="number" name="F6" id="F6-{{subkuesioner.kode}}">
+                <label for="F6-{{subkuesioner.kode}}">{{subkuesioner.sub_pertanyaan}}</label>
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            <h5>{{list_kuesioner.F7}}</h5>
+            {% for subkuesioner in subkuesioner_ftujuh %}
+                <input type="number" name="F7" id="F7-{{subkuesioner.kode}}">
+                <label for="F7-{{subkuesioner.kode}}">{{subkuesioner.sub_pertanyaan}}</label>
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            <h5>{{list_kuesioner.F7A}}</h5>
+            {% for subkuesioner in subkuesioner_ftujuh %}
+                <input type="number" name="F7A" id="F7A-{{subkuesioner.kode}}">
+                <label for="F7A-{{subkuesioner.kode}}">{{subkuesioner.sub_pertanyaan}}</label>
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            <h5>{{list_kuesioner.F8}}</h5>
+            {% for respons in opsi_respons_fdelapan %}
+                <input type="radio" name="F8" id="F8-{{respons.kode}}">
+                <label for="F8-{{respons.kode}}">{{respons.opsi_respons}}</label><br>
+            {% endfor %}
+        </div><hr>
+
         <button type="submit">Kirim</button>
     </form>
 {% endblock  %}
