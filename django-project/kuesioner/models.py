@@ -1,8 +1,8 @@
 from django.db import models
-from django.utils.text import slugify
 from django.urls import reverse
 from datetime import datetime
 from poltektedc.models import MasterProdi
+from django.utils.text import slugify
 from .validators import (
     validate_nomor_mahasiswa,
     validate_alamat_email,
@@ -24,11 +24,9 @@ class MasterKuesioner(models.Model):
 
 
 class MasterSubKuesioner(models.Model):
-    master_kuesioner_id = models.ForeignKey(
+    master_kuesioner_id = models.ManyToManyField(
                                 MasterKuesioner,
-                                models.SET_NULL,
                                 blank=True,
-                                null=True
     )
     kode                = models.CharField(max_length=7)
     sub_pertanyaan      = models.CharField(max_length=35)

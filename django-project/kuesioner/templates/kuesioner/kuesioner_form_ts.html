@@ -5,7 +5,7 @@
 
 {% block content %}
     <form action="" method="POST">
-        <div>
+        {% comment %} <div>
             <h5>{{list_kuesioner.F1}}</h5>
             <label for="nomor_mahasiswa">Nomor Mahasiswa/ NIM :</label>
             <input type="text" name="F1" id="nomor_mahasiswa">
@@ -21,9 +21,9 @@
                 <br>
             {% endfor %}
             
-        </div><hr>
+        </div><hr> {% endcomment %}
         
-        <div>
+        {% comment %} <div>
             <h5>{{list_kuesioner.F3}}</h5>
             <p>
                 {{subkuesioner_ftiga}}
@@ -92,7 +92,7 @@
                 <input type="radio" name="F8" id="F8-{{respons.kode}}">
                 <label for="F8-{{respons.kode}}">{{respons.opsi_respons}}</label><br>
             {% endfor %}
-        </div><hr>
+        </div><hr> {% endcomment %}
 
         <button type="submit">Kirim</button>
     </form>

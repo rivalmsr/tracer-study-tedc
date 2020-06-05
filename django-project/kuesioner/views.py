@@ -8,7 +8,6 @@ from .models import (
 
 
 class KuesionerView(View):
-    pass
     template_name = 'kuesioner/kuesioner_form_ts.html'
     master_subkuesioner = MasterSubKuesioner.objects.all()
     list_kuesioner = {}
@@ -50,21 +49,42 @@ class KuesionerView(View):
     context['opsi_respons_fdelapan'] = opsi_respons_fdelapan
     context['opsi_respons_fsembilan'] = opsi_respons_fsembilan
 
-    def get_opsi_respons(self):
-        pass
+    # Get kuesioner
+    key_context_kuesioner = 'kuesioner_'
+    list_kode_kuesioner = MasterKuesioner.objects.values_list('kode', flat=True)
+    for kode in list_kode_kuesioner:
+        context[key_context_kuesioner+kode] = MasterKuesioner.objects.filter(kode=kode)
 
+   
+    def get_subkuesioner(self):
+        list_subkuesioner = ('F2','F3','F5','F6',)
+        key_context = 'subkuesioner_'
+        for kode in list_subkuesioner:
+            self.context[key_context+kode] = MasterSubKuesioner.objects.filter(master_kuesioner_id__kode=kode)
+        # 
+        self.context['subkuesioner_F5'] = MasterSubKuesioner.objects.filter(master_kuesioner_id__kode='F2')
+        self.context['subkuesioner_F7'] = MasterSubKuesioner.objects.filter(master_kuesioner_id__kode='F6')
+        return self.context
 
     def get_kuesioner(self):
         master_kuesioner = MasterKuesioner.objects.all()
-        # self.list_kuesioner = MasterKuesioner.objects.values_list('kode', 'pertanyaan')
         for kuesioner in master_kuesioner:
                 self.list_kuesioner[kuesioner.kode] = kuesioner.pertanyaan
-        print(self.list_kuesioner)
         return self.list_kuesioner
+
+    def get_opsi_respons(self):
+        list_kuesioner_respons = ('F4', 'F8', 'F9', 'F10',)
+        key_context = 'opsi_respons_'
+        for kode in list_kuesioner_respons:
+            self.context[key_context+kode] = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode=kode)
+        return self.context
         
     def get(self, request):
         self.context['title'] = 'Kuesioner Belmawa'
         self.context['list_kuesioner'] = self.get_kuesioner()
-        print(self.get_kuesioner())
+        self.get_subkuesioner()
+        self.get_opsi_respons()
+        print(self.context['subkuesioner_F5'])
+        # print(self.context['opsi_respons_F4'])
         return render(request, self.template_name, self.context)
         
