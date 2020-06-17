@@ -1,7 +1,15 @@
 from django.urls import path
 from django.views.generic import TemplateView
+from .views import (
+    index,
+    create,
+)
+
+
 app_name = 'respons'
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='respons/respons_form.html'), name='create')
+    # path('create/', ResponsCreate.as_view(), name='create'),
+    path('create/', create, name='create'),
+    path('', index, name='index'),
 ]

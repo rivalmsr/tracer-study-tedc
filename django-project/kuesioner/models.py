@@ -11,7 +11,7 @@ from .validators import (
 
 class MasterKuesioner(models.Model):
     kode                = models.CharField(max_length=5)
-    pertanyaan          = models.CharField(max_length=130)
+    pertanyaan          = models.CharField(max_length=150)
     keterangan          = models.TextField(blank=True)
     created             = models.DateTimeField(auto_now_add=True)
     updated             = models.DateTimeField(auto_now=True)
@@ -29,7 +29,7 @@ class MasterSubKuesioner(models.Model):
                                 blank=True,
     )
     kode                = models.CharField(max_length=7)
-    sub_pertanyaan      = models.CharField(max_length=35)
+    sub_pertanyaan      = models.CharField(max_length=150)
     created             = models.DateTimeField(auto_now_add=True)
     updated             = models.DateTimeField(auto_now=True)
 
@@ -41,14 +41,12 @@ class MasterSubKuesioner(models.Model):
 
 
 class MasterOpsiRespons(models.Model):
-    master_kuesioner_id = models.ForeignKey(
+    master_kuesioner_id = models.ManyToManyField(
                                 MasterKuesioner,
-                                models.SET_NULL,
                                 blank=True,
-                                null=True,
     )
     kode                = models.CharField(max_length=7)
-    opsi_respons        = models.TextField()
+    opsi_respons        = models.CharField(max_length=150)
     created             = models.DateTimeField(auto_now_add=True)
     updated             = models.DateTimeField(auto_now=True)
 

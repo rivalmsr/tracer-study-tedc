@@ -17,9 +17,9 @@ class ResponsHeader(models.Model):
     updated                 = models.DateTimeField(auto_now=True)
     slug                    = models.SlugField(blank=True, editable=False)
 
-    def save(self):
+    def save(self, **kwargs):
         self.slug = slugify(self.master_fsatu_id)
-        super().save()
+        super(ResponsHeader, self).save(**kwargs)
 
     def __str__(self):
         return "%s - %s" % (self.id, self.master_fsatu_id)
@@ -38,9 +38,18 @@ class ResponsFDuaDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
+    respons_header_id       = models.ForeignKey(
+                                ResponsHeader,
+                                on_delete=models.CASCADE,
+                                blank=True,
+                                null=True,
+    )
     respons                 = models.CharField(
                                 max_length=25,
     )
+
+    def save(self, **kwargs):
+        super(ResponsFDuaDetail, self).save(**kwargs)
 
     def __str__(self):
         return "%s - %s" % (self.master_subkuesioner_id, self.respons)
@@ -53,15 +62,20 @@ class ResponsFTigaDetail(models.Model):
                                 blank=True,
                                 null=True
     )
-    master_subkuesioner_id  = models.ForeignKey(
-                                MasterSubKuesioner,
-                                models.SET_NULL,
+    respons_header_id       = models.ForeignKey(
+                                ResponsHeader,
+                                on_delete=models.CASCADE,
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.SmallIntegerField()
+    respons                 = models.SmallIntegerField(blank=True)
+    keterangan              = models.CharField(max_length=30)
+
+    def save(self, **kwargs):
+        super(ResponsFTigaDetail, self).save(**kwargs)
+
     def __str__(self):
-        return "%s - %s" % (self.master_subkuesioner_id, self.respons)
+        return "%s - %s %s" % (self.master_kuesioner_id, self.respons, "Bulan" )
 
 
 
@@ -78,7 +92,17 @@ class ResponsFEmpatDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
+    respons_header_id       = models.ForeignKey(
+                                ResponsHeader,
+                                on_delete=models.CASCADE,
+                                blank=True,
+                                null=True,
+    )
     respons                 = models.TextField()
+
+    def save(self, **kwargs):
+        super(ResponsFEmpatDetail, self).save(**kwargs)
+
     def __str__(self):
         return "%s - %s" % (self.master_subkuesioner_id, self.respons)
 
@@ -90,15 +114,20 @@ class ResponsFLimaDetail(models.Model):
                                 blank=True,
                                 null=True
     )
-    master_subkuesioner_id  = models.ForeignKey(
-                                MasterSubKuesioner,
-                                models.SET_NULL,
+    respons_header_id       = models.ForeignKey(
+                                ResponsHeader,
+                                on_delete=models.CASCADE,
                                 blank=True,
                                 null=True,
     )
     respons                 = models.SmallIntegerField()
+    keterangan              = models.CharField(max_length=30)
+
+    def save(self, **kwargs):
+        super(ResponsFLimaDetail, self).save(**kwargs)
+
     def __str__(self):
-        return "%s - %s" % (self.master_subkuesioner_id, self.respons)
+        return "%s - %s" % (self.master_kuesioner_id, self.respons)
 
 
 class ResponsFEnamDetail(models.Model):
@@ -112,9 +141,19 @@ class ResponsFEnamDetail(models.Model):
                                 MasterSubKuesioner,
                                 models.SET_NULL,
                                 blank=True,
+                                null=True
+    )
+    respons_header_id       = models.ForeignKey(
+                                ResponsHeader,
+                                on_delete=models.CASCADE,
+                                blank=True,
                                 null=True,
     )
     respons                 = models.SmallIntegerField()
+
+    def save(self, **kwargs):
+        super(ResponsFEnamDetail, self).save(**kwargs)
+
     def __str__(self):
         return "%s - %s" % (self.master_subkuesioner_id, self.respons)
 

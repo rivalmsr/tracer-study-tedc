@@ -1,7 +1,12 @@
 from django.urls import path
-from .views import KuesionerView
+from .views import (
+    KuesionerIndex,
+    KuesionerForm,
+    KuesionerView,
+)
 
 app_name = 'kuesioner'
 urlpatterns = [
-    path('', KuesionerView.as_view(), name='form'),
+    path('form/', KuesionerForm.as_view(), name='form'),
+    path('', KuesionerIndex.as_view(), name='index'),
 ]

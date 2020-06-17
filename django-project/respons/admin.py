@@ -38,6 +38,5 @@ List_Respons_Model = (
 class AdminRespons(admin.ModelAdmin):
     readonly_fields = ['slug', 'created', 'updated']
 
-
 admin.site.register(ResponsHeader, AdminRespons)
 admin.site.register(List_Respons_Model)
