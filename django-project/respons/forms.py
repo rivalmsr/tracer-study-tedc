@@ -86,8 +86,26 @@ class ResponsFLimaForm(forms.Form):
     respons_f51 = forms.IntegerField()
 
     # Get Choices Respons
-    CHOICES_F52 = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F3').values_list('opsi_respons', 'opsi_respons')
+    CHOICES_F52 = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F5').values_list('opsi_respons', 'opsi_respons')
     respons_f52 = forms.ChoiceField(
         widget  = forms.RadioSelect,
         choices = CHOICES_F52,   
+    )
+
+class ResponsFEnamForm(forms.Form):
+    LABEL_F6    = MasterSubKuesioner.objects.filter(master_kuesioner_id__kode='F6').values_list('sub_pertanyaan', flat=True)
+    respons_f6  = forms.IntegerField(
+                    label=LABEL_F6[0],
+    )
+
+class ResponsFTujuhForm(forms.Form):
+    LABEL_F7    = MasterSubKuesioner.objects.filter(master_kuesioner_id__kode='F7').values_list('sub_pertanyaan', flat=True)
+    respons_f7  = forms.IntegerField(
+                    label=LABEL_F7[0],
+    )
+
+class ResponsFTujuhAForm(forms.Form):
+    LABEL_F7A    = MasterSubKuesioner.objects.filter(master_kuesioner_id__kode='F7A').values_list('sub_pertanyaan', flat=True)
+    respons_f7A  = forms.IntegerField(
+                    label=LABEL_F7A[0],
     )

@@ -10,6 +10,9 @@ from .models import (
     ResponsFTigaDetail,
     ResponsFEmpatDetail,
     ResponsFLimaDetail,
+    ResponsFEnamDetail,
+    ResponsFTujuhDetail,
+    ResponsFTujuhADetail,
 )
 
 from .forms import (
@@ -18,6 +21,9 @@ from .forms import (
     ResponsFTigaForm,
     ResponsFEmpatForm,
     ResponsFLimaForm,
+    ResponsFEnamForm,
+    ResponsFTujuhForm,
+    ResponsFTujuhAForm,
 )
 
 from kuesioner.views import KuesionerForm
@@ -56,28 +62,26 @@ def create(request):
     ftiga_form      = ResponsFTigaForm(request.POST or None)
     fempat_form     = ResponsFEmpatForm(request.POST or None)
     flima_form      = ResponsFLimaForm(request.POST or None)
+    fenam_form      = ResponsFEnamForm(request.POST or None)
+    ftujuh_form     = ResponsFTujuhForm(request.POST or None)
+    ftujuh_a_form   = ResponsFTujuhAForm(request.POST or None)
 
+    # List key context and forms
     list_form = [
         ('header_form', header_form),
         ('fdua_form', fdua_form),
         ('ftiga_form', ftiga_form),
         ('fempat_form', fempat_form),
-        ('flima_form', flima_form),        
+        ('flima_form', flima_form),
+        ('fenam_form', fenam_form),        
+        ('ftujuh_form', ftujuh_form),
+        ('ftujuh_a_form', ftujuh_a_form),
     ]
+    # Return forms to context
     for key, value in list_form:
         context[key] = value
     
-    # Returns to template
-    template_name = 'respons/respons_form.html'
-    context['title']        = 'Create Respons'
-    # context['header_form']  = header_form
-    # context['fdua_form']    = fdua_form
-    # context['ftiga_form']   = ftiga_form
-    # context['fempat_form']  = fempat_form
-    # context['flima_form']   = flima_form
-    # ftiga = ResponsFTigaDetail.objects.get('respons')
-    # print(ftiga)
-
+    # Reqeust Method Check
     if request.method == 'POST':
         if header_form.is_valid:
             fsatu = ResponsHeader.objects.create( 
@@ -141,5 +145,37 @@ def create(request):
                         keterangan              = request.POST.get('respons_f52')
                     )
                     flima.save()
+
+                # Respons F6
+                # if fenam_form.is_valid:
+                #     fenam = ResponsFEnamDetail.objects.create(
+                #         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f6')),
+                #         respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                #         respons                 = request.POST.get('respons_f6'),
+                #     )
+                #     fenam.save()
+
+                # # Respons F7
+                # if ftujuh_form.is_valid:
+                #     ftujuh = ResponsFTujuhDetail.objects.create(
+                #         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7')),
+                #         respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                #         respons                 = request.POST.get('respons_f7'),
+                #     )
+                #     ftujuh.save()
+
+                # # Respons F7A
+                # if ftujuh_a_form.is_valid:
+                #     ftujuh_a = ResponsFTujuhDetail.objects.create(
+                #         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7A')),
+                #         respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                #         respons                 = request.POST.get('respons_f7A'),
+                #     )
+                #     ftujuh_a.save()
+
+    # Returns to template
+    template_name = 'respons/respons_form.html'
+    context['title']        = 'Create Respons'    
+
     return render(request, template_name, context)
 

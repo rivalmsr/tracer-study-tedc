@@ -172,7 +172,45 @@ class ResponsFTujuhDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
+    respons_header_id       = models.ForeignKey(
+                                ResponsHeader,
+                                on_delete=models.CASCADE,
+                                blank=True,
+                                null=True,
+    )
     respons                 = models.SmallIntegerField()
+
+    def save(self, **kwargs):
+        super(ResponsFTujuhDetail, self).save(**kwargs)
+
+    def __str__(self):
+        return "%s - %s" % (self.master_subkuesioner_id, self.respons)
+
+
+class ResponsFTujuhADetail(models.Model):
+    master_kuesioner_id     = models.ForeignKey(
+                                MasterKuesioner,
+                                models.SET_NULL,
+                                blank=True,
+                                null=True
+    )
+    master_subkuesioner_id  = models.ForeignKey(
+                                MasterSubKuesioner,
+                                models.SET_NULL,
+                                blank=True,
+                                null=True,
+    )
+    respons_header_id       = models.ForeignKey(
+                                ResponsHeader,
+                                on_delete=models.CASCADE,
+                                blank=True,
+                                null=True,
+    )
+    respons                 = models.SmallIntegerField()
+
+    def save(self, **kwargs):
+        super(ResponsFTujuhADetail, self).save(**kwargs)
+
     def __str__(self):
         return "%s - %s" % (self.master_subkuesioner_id, self.respons)
 
