@@ -109,3 +109,26 @@ class ResponsFTujuhAForm(forms.Form):
     respons_f7A  = forms.IntegerField(
                     label=LABEL_F7A[0],
     )
+
+class ResponsFDelapanForm(forms.Form):
+    # Get Choices Respons
+    CHOICES_F8 = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F8').values_list('opsi_respons', 'opsi_respons')
+    respons_f8 = forms.ChoiceField(
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F8,   
+    )
+
+class ResponsFSembilanForm(forms.Form):
+    CHOICES_F9  = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F9').values_list('opsi_respons', 'opsi_respons')
+    respons_f9  = forms.MultipleChoiceField(
+        widget  = forms.CheckboxSelectMultiple,
+        choices = CHOICES_F9,
+    )
+
+class ResponsFSepuluhForm(forms.Form):
+    # Get Choices Respons
+    CHOICES_F10 = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F10').values_list('opsi_respons', 'opsi_respons')
+    respons_f10 = forms.ChoiceField(
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F10,   
+    )

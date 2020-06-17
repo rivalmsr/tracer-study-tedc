@@ -100,6 +100,44 @@
             {% endfor %}
         </div><hr>
 
+        <div>
+            {% for kuesioner in kuesioner_F8 %}
+                <input type="hidden" name="kuesioner_f8" value="{{kuesioner.pk}}">
+                <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
+                <h6><b>{{kuesioner.keterangan}}</b></h6>
+                {% for field in fdelapan_form%}
+                    {{field.label_tag}}
+                    {{field}}<br>
+                {% endfor %}
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            {% for kuesioner in kuesioner_F9 %}
+                <input type="hidden" name="kuesioner_f9" value="{{kuesioner.pk}}">
+                <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
+                <h6><b>{{kuesioner.keterangan}}</b></h6>
+                {% for field in fsembilan_form%}
+                    {{field.label_tag}}
+                    {{field}}<br>
+                {% endfor %}
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            {% for kuesioner in kuesioner_F10 %}
+                <input type="hidden" name="kuesioner_f10" value="{{kuesioner.pk}}">
+                <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
+                <h6><b>{{kuesioner.keterangan}}</b></h6>
+                {% for field in fsepuluh_form%}
+                    {{field.label_tag}}
+                    {{field}}<br>
+                {% endfor %}
+            {% endfor %}
+        </div><hr>
+
+
+
         <button type="submit" value="simpan">Simpan</button>
     </form>
 {% endblock content %}

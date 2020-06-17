@@ -222,13 +222,17 @@ class ResponsFDelapanDetail(models.Model):
                                 blank=True,
                                 null=True
     )
-    master_subkuesioner_id  = models.ForeignKey(
-                                MasterSubKuesioner,
-                                models.SET_NULL,
+    respons_header_id       = models.ForeignKey(
+                                ResponsHeader,
+                                on_delete=models.CASCADE,
                                 blank=True,
                                 null=True,
     )
     respons                 = models.CharField(max_length=6)
+    
+    def save(self, **kwargs):
+        super(ResponsFDelapanDetail, self).save(**kwargs)
+
     def __str__(self):
         return "%s - %s" % (self.master_subkuesioner_id, self.respons)
 
@@ -240,13 +244,17 @@ class ResponsFSembilanDetail(models.Model):
                                 blank=True,
                                 null=True
     )
-    master_subkuesioner_id  = models.ForeignKey(
-                                MasterSubKuesioner,
-                                models.SET_NULL,
+    respons_header_id       = models.ForeignKey(
+                                ResponsHeader,
+                                on_delete=models.CASCADE,
                                 blank=True,
                                 null=True,
     )
     respons                 = models.TextField()
+
+    def save(self, **kwargs):
+        super(ResponsFSembilanDetail, self).save(**kwargs)
+
     def __str__(self):
         return "%s - %s" % (self.master_subkuesioner_id, self.respons)
 
@@ -258,13 +266,17 @@ class ResponsFSepuluhDetail(models.Model):
                                 blank=True,
                                 null=True
     )
-    master_subkuesioner_id  = models.ForeignKey(
-                                MasterSubKuesioner,
-                                models.SET_NULL,
+    respons_header_id       = models.ForeignKey(
+                                ResponsHeader,
+                                on_delete=models.CASCADE,
                                 blank=True,
                                 null=True,
     )
     respons                 = models.CharField(max_length=100)
+
+    def save(self, **kwargs):
+        super(ResponsFSepuluhDetail, self).save(**kwargs)
+
     def __str__(self):
         return "%s - %s" % (self.master_subkuesioner_id, self.respons)
 

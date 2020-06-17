@@ -13,6 +13,9 @@ from .models import (
     ResponsFEnamDetail,
     ResponsFTujuhDetail,
     ResponsFTujuhADetail,
+    ResponsFDelapanDetail,
+    ResponsFSembilanDetail,
+    ResponsFSepuluhDetail,
 )
 
 from .forms import (
@@ -24,6 +27,9 @@ from .forms import (
     ResponsFEnamForm,
     ResponsFTujuhForm,
     ResponsFTujuhAForm,
+    ResponsFDelapanForm,
+    ResponsFSembilanForm,
+    ResponsFSepuluhForm,
 )
 
 from kuesioner.views import KuesionerForm
@@ -49,6 +55,10 @@ def create(request):
     # Initialisasi Dictionary
     context = {}
     data = {}
+    
+    # Returns to template
+    template_name       = 'respons/respons_form.html'
+    context['title']    = 'Create Respons'    
 
     # Get Kuesioner 
     key_context_kuesioner = 'kuesioner_'
@@ -65,6 +75,9 @@ def create(request):
     fenam_form      = ResponsFEnamForm(request.POST or None)
     ftujuh_form     = ResponsFTujuhForm(request.POST or None)
     ftujuh_a_form   = ResponsFTujuhAForm(request.POST or None)
+    fdelapan_form   = ResponsFDelapanForm(request.POST or None)
+    fsembilan_form  = ResponsFSembilanForm(request.POST or None)
+    fsepuluh_form   = ResponsFSepuluhForm(request.POST or None)
 
     # List key context and forms
     list_form = [
@@ -76,6 +89,9 @@ def create(request):
         ('fenam_form', fenam_form),        
         ('ftujuh_form', ftujuh_form),
         ('ftujuh_a_form', ftujuh_a_form),
+        ('fdelapan_form', fdelapan_form),
+        ('fsembilan_form', fsembilan_form),
+        ('fsepuluh_form', fsepuluh_form),
     ]
     # Return forms to context
     for key, value in list_form:
@@ -126,8 +142,6 @@ def create(request):
                     ftiga.save()
 
                 # Respons F4
-                print(request.POST.getlist('respons_f4'))
-
                 if fempat_form.is_valid:
                     fempat = ResponsFEmpatDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f4')),
@@ -147,35 +161,61 @@ def create(request):
                     flima.save()
 
                 # Respons F6
-                # if fenam_form.is_valid:
-                #     fenam = ResponsFEnamDetail.objects.create(
-                #         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f6')),
-                #         respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                #         respons                 = request.POST.get('respons_f6'),
-                #     )
-                #     fenam.save()
+                if fenam_form.is_valid:
+                    fenam = ResponsFEnamDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f6')),
+                        master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f6')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = request.POST.get('respons_f6'),
+                    )
+                    fenam.save()
 
-                # # Respons F7
-                # if ftujuh_form.is_valid:
-                #     ftujuh = ResponsFTujuhDetail.objects.create(
-                #         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7')),
-                #         respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                #         respons                 = request.POST.get('respons_f7'),
-                #     )
-                #     ftujuh.save()
+                # Respons F7
+                if ftujuh_form.is_valid:
+                    ftujuh = ResponsFTujuhDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7')),
+                        master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f7')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = request.POST.get('respons_f7'),
+                    )
+                    ftujuh.save()
 
-                # # Respons F7A
-                # if ftujuh_a_form.is_valid:
-                #     ftujuh_a = ResponsFTujuhDetail.objects.create(
-                #         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7A')),
-                #         respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                #         respons                 = request.POST.get('respons_f7A'),
-                #     )
-                #     ftujuh_a.save()
+                # Respons F7A
+                if ftujuh_a_form.is_valid:
+                    ftujuh_a = ResponsFTujuhADetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7A')),
+                        master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_   f7A')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = request.POST.get('respons_f7A'),
+                    )
+                    ftujuh_a.save()
+                
+                # Respons F8
+                if fdelapan_form.is_valid:
+                    fdelapan = ResponsFDelapanDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f8')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = request.POST.get('respons_f8'),
+                    )
+                    fdelapan.save()
+                
+                # Respons F9
+                if fsembilan_form.is_valid:
+                    fsembilan = ResponsFSembilanDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f9')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = request.POST.getlist('respons_f9'),
+                    )
+                    fsembilan.save()
 
-    # Returns to template
-    template_name = 'respons/respons_form.html'
-    context['title']        = 'Create Respons'    
+                # Respons F10
+                if fsepuluh_form.is_valid:
+                    fsepuluh = ResponsFSepuluhDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f10')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = request.POST.get('respons_f10'),
+                    )
+                    fsepuluh.save()
 
     return render(request, template_name, context)
 
