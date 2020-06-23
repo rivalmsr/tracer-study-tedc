@@ -21,10 +21,62 @@
                 <input type="hidden" name="kuesioner_f2" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                 <h6><b>{{kuesioner.keterangan}}</b></h6>
-                {% for field in fdua_form%}
-                    {{field.label_tag}}
-                    {{field}}
-                {% endfor %}
+                    {{fdua_form.respons_f21.label}}<br>
+                    {% for radio in fdua_form.respons_f21%}
+                        <label for="{{radio.id_for_label}}">
+                            <span class="radio">{{radio.tag}}</span>
+                            {{radio.choice_label}}
+                        </label>
+                    {% endfor %}
+                    <br>
+                    {{fdua_form.respons_f22.label}}<br>
+                    {% for radio in fdua_form.respons_f22%}
+                        <label for="{{radio.id_for_label}}">
+                            <span class="radio">{{radio.tag}}</span>
+                            {{radio.choice_label}}
+                        </label>
+                    {% endfor %}
+                    <br>
+                    {{fdua_form.respons_f23.label}}<br>
+                    {% for radio in fdua_form.respons_f23%}
+                        <label for="{{radio.id_for_label}}">
+                            <span class="radio">{{radio.tag}}</span>
+                            {{radio.choice_label}}
+                        </label>
+                    {% endfor %}
+                    <br>
+                    {{fdua_form.respons_f24.label}}<br>
+                    {% for radio in fdua_form.respons_f24%}
+                        <label for="{{radio.id_for_label}}">
+                            <span class="radio">{{radio.tag}}</span>
+                            {{radio.choice_label}}
+                        </label>
+                    {% endfor %}
+                    <br>
+                    {{fdua_form.respons_f25.label}}<br>
+                    {% for radio in fdua_form.respons_f25%}
+                        <label for="{{radio.id_for_label}}">
+                            <span class="radio">{{radio.tag}}</span>
+                            {{radio.choice_label}}
+                        </label>
+                    {% endfor %}
+                    <br>
+                    {{fdua_form.respons_f26.label}}<br>
+                    {% for radio in fdua_form.respons_f26%}
+                        <label for="{{radio.id_for_label}}">
+                            <span class="radio">{{radio.tag}}</span>
+                            {{radio.choice_label}}
+                        </label>
+                    {% endfor %}
+                    <br>
+                    {{fdua_form.respons_f27.label}}<br>
+                    {% for radio in fdua_form.respons_f27%}
+                        <label for="{{radio.id_for_label}}">
+                            <span class="radio">{{radio.tag}}</span>
+                            {{radio.choice_label}}
+                        </label>
+                    {% endfor %}
+                    <br>
             {% endfor %}
         </div><hr>
 
@@ -33,9 +85,24 @@
                 <input type="hidden" name="kuesioner_f3" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                 <h6><b>{{kuesioner.keterangan}}</b></h6>
-                {% for field in ftiga_form%}
-                    {{field.label_tag}}
-                    {{field}}<br>
+                <input type="number" name="{{ftiga_form.respons_f31.html_name}}"><br>
+                {% for radio in ftiga_form.respons_f32%}
+                    {% if radio.id_for_label != "id_respons_f32_2" %}
+
+                        <label for="{{radio.id_for_label}}">
+                            <span class="radio">{{radio.tag}}</span>
+                            Kira-kira
+                            
+                            Bulan {{radio.choice_label}}
+                        </label>
+                        <br>
+                        {% else %}
+                        <label for="{{radio.id_for_label}}">
+                            <span class="radio">{{radio.tag}}</span>
+                            {{radio.choice_label}}
+                        </label>
+                        <br>
+                    {% endif %}
                 {% endfor %}
             {% endfor %}
         </div><hr>
@@ -57,9 +124,14 @@
                 <input type="hidden" name="kuesioner_f5" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                 <h6><b>{{kuesioner.keterangan}}</b></h6>
-                {% for field in flima_form%}
-                    {{field.label_tag}}
-                    {{field}}<br>
+                <input type="number" name="{{flima_form.respons_f51.html_name}}"><br>
+                {% for radio in flima_form.respons_f52%}
+                    <label for="{{radio.id_for_label}}">
+                        <span class="radio">{{radio.tag}}</span>
+                        Kira-kira
+                        Bulan {{radio.choice_label}}
+                    </label>
+                    <br>
                 {% endfor %}
             {% endfor %}
         </div><hr>
@@ -136,6 +208,145 @@
             {% endfor %}
         </div><hr>
 
+        <div>
+            {% for kuesioner in kuesioner_F11 %}
+                <input type="hidden" name="kuesioner_f11" value="{{kuesioner.pk}}">
+                <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
+                <h6><b>{{kuesioner.keterangan}}</b></h6>
+                {% for field in fsebelas_form%}
+                    {{field.label_tag}}
+                    {{field}}<br>
+                {% endfor %}
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            {% for kuesioner in kuesioner_F13 %}
+                <input type="hidden" name="kuesioner_f13" value="{{kuesioner.pk}}">
+                <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
+                <h6><b>{{kuesioner.keterangan}}</b></h6>
+                {% for field in ftigabelas_form%}
+                    {{field.label_tag}}
+                    <span>Rp. {{field}} (Isilah dengan ANGKA saja, tanpa tanda Titik atau Koma)</span><br>
+                {% endfor %}
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            {% for kuesioner in kuesioner_F14 %}
+                <input type="hidden" name="kuesioner_f14" value="{{kuesioner.pk}}">
+                <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
+                <h6><b>{{kuesioner.keterangan}}</b></h6>
+                {% for field in fempatbelas_form%}
+                    {{field.label_tag}}
+                    {{field}}<br>
+                {% endfor %}
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            {% for kuesioner in kuesioner_F15 %}
+                <input type="hidden" name="kuesioner_f15" value="{{kuesioner.pk}}">
+                <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
+                <h6><b>{{kuesioner.keterangan}}</b></h6>
+                {% for field in flimabelas_form%}
+                    {{field.label_tag}}
+                    {{field}}<br>
+                {% endfor %}
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            {% for kuesioner in kuesioner_F16 %}
+                <input type="hidden" name="kuesioner_f16" value="{{kuesioner.pk}}">
+                <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
+                <h6><b>{{kuesioner.keterangan}}</b></h6>
+                {% for field in fenambelas_form%}
+                    {{field.label_tag}}
+                    {{field}}<br>
+                {% endfor %}
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            {% for kuesioner in kuesioner_F17A %}
+                <input type="hidden" name="kuesioner_f17A" value="{{kuesioner.pk}}">
+                <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
+                <h6><b>{{kuesioner.keterangan}}</b></h6>
+                <table>
+                    <tr>
+                        <th>Sub Pertanyaan</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                    </tr>
+                    {% for field in ftujuhbelas_a_form %}
+                    <tr>
+                        <td>{{field.label}}</td>
+                        <td>
+                            <input type="radio" value="1" name="respons_f17_{{forloop.counter}}_a">
+                        </td>
+                        <td>
+                            <input type="radio" value="2" name="respons_f17_{{forloop.counter}}_a">
+                        </td>
+                        <td>
+                            <input type="radio" value="3" name="respons_f17_{{forloop.counter}}_a">
+                        </td>
+                        <td>
+                            <input type="radio" value="4" name="respons_f17_{{forloop.counter}}_a">
+                        </td>
+                        <td>
+                            <input type="radio" value="5" name="respons_f17_{{forloop.counter}}_a">
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </table>
+        
+            {% endfor %}
+        </div><hr>
+
+        <div>
+            {% for kuesioner in kuesioner_F17B %}
+                <input type="hidden" name="kuesioner_f17B" value="{{kuesioner.pk}}">
+                <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
+                <h6><b>{{kuesioner.keterangan}}</b></h6>
+                <table>
+                    <tr>
+                        <th>Sub Pertanyaan</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                    </tr>
+                    {% for field in ftujuhbelas_a_form %}
+                    <tr>
+                        <td>{{field.label}}</td>
+                        <td>
+                            <input type="radio" value="1" name="respons_f17_{{forloop.counter}}_b">
+                        </td>
+                        <td>
+                            <input type="radio" value="2" name="respons_f17_{{forloop.counter}}_b">
+                        </td>
+                        <td>
+                            <input type="radio" value="3" name="respons_f17_{{forloop.counter}}_b">
+                        </td>
+                        <td>
+                            <input type="radio" value="4" name="respons_f17_{{forloop.counter}}_b">
+                        </td>
+                        <td>
+                            <input type="radio" value="5" name="respons_f17_{{forloop.counter}}_b">
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </table>
+        
+            {% endfor %}
+        </div><hr>
 
 
         <button type="submit" value="simpan">Simpan</button>

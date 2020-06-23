@@ -16,7 +16,8 @@ from .models import (
     ResponsFEmpatbelasDetail,
     ResponsFLimabelasDetail,
     ResponsFEnambelasDetail,
-    ResponsFTujuhbelasDetail,
+    ResponsFTujuhbelasADetail,
+    ResponsFTujuhbelasBDetail,
 )
 
 List_Respons_Model = (
@@ -35,7 +36,8 @@ List_Respons_Model = (
     ResponsFEmpatbelasDetail,
     ResponsFLimabelasDetail,
     ResponsFEnambelasDetail,
-    ResponsFTujuhbelasDetail,
+    ResponsFTujuhbelasADetail,
+    ResponsFTujuhbelasBDetail,
 )
 class AdminRespons(admin.ModelAdmin):
     readonly_fields = ['slug', 'created', 'updated']

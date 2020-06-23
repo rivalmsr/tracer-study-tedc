@@ -132,3 +132,239 @@ class ResponsFSepuluhForm(forms.Form):
         widget  = forms.RadioSelect,
         choices = CHOICES_F10,   
     )
+
+class ResponsFSebelasForm(forms.Form):
+    # Get Choices Respons
+    CHOICES_F11 = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F11').values_list('opsi_respons', 'opsi_respons')
+    respons_f11 = forms.ChoiceField(
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F11,   
+    )
+
+class ResponsFTigabelasForm(forms.Form):
+    LIST_SUBKUESIONER = {}
+    data_subkuesioner = MasterSubKuesioner.objects.values_list('kode', 'sub_pertanyaan')
+    for key, value in data_subkuesioner:
+        LIST_SUBKUESIONER[key] = value
+
+    respons_f131  = forms.IntegerField(
+                    label=LIST_SUBKUESIONER['F13-1'],
+    )
+    respons_f132  = forms.IntegerField(
+                    label=LIST_SUBKUESIONER['F13-2'],
+    )
+    respons_f133  = forms.IntegerField(
+                    label=LIST_SUBKUESIONER['F13-3'],
+    )
+
+class ResponsFEmpatbelasForm(forms.Form):
+    # Get Choices Respons
+    CHOICES_F14 = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F14').values_list('opsi_respons', 'opsi_respons')
+    respons_f14 = forms.ChoiceField(
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F14,   
+    )
+
+class ResponsFLimabelasForm(forms.Form):
+    # Get Choices Respons
+    CHOICES_F15 = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F15').values_list('opsi_respons', 'opsi_respons')
+    respons_f15 = forms.ChoiceField(
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F15,   
+    )
+
+
+class ResponsFEnambelasForm(forms.Form):
+    CHOICES_F16 = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F16').values_list('opsi_respons', 'opsi_respons')
+    respons_f16 = forms.MultipleChoiceField(
+        widget  = forms.CheckboxSelectMultiple,
+        choices = CHOICES_F16,
+    )
+
+class ResponsFTujuhbelasAForm(forms.Form):
+    #Get Subkuesioner
+    LIST_SUBKUESIONER = {}
+    data_subkuesioner = MasterSubKuesioner.objects.values_list('kode', 'sub_pertanyaan')
+    for key, value in data_subkuesioner:
+        LIST_SUBKUESIONER[key] = value
+    # Get Opsi Respons
+    CHOICES_F17 = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F17A').values_list('opsi_respons', 'opsi_respons')
+    
+    # Get respons forms
+    list_form = [
+        (1, 'F17-1'),
+        (2, 'F17-2'),
+    ]
+    respons_f17_1 = forms.ChoiceField(
+            label   = LIST_SUBKUESIONER['F17-1'],
+            widget  = forms.RadioSelect,
+            choices = CHOICES_F17,
+        )
+
+    respons_f17_2 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-2'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_3 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-3'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_4 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-4'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_5 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-5'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_6 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-6'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_7 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-7'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_8 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-8'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_9 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-9'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_10 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-10'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_11 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-11'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_12 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-12'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_13 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-13'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_14 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-14'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_15 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-15'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_16 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-16'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_17 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-17'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_18 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-18'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_19 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-19'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_20 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-20'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_21 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-21'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_22 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-22'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_23 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-23'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_24 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-24'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_25 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-25'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_26 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-26'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_27 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-27'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_28 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-28'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
+
+    respons_f17_29 = forms.ChoiceField(
+        label   = LIST_SUBKUESIONER ['F17-29'],
+        widget  = forms.RadioSelect,
+        choices = CHOICES_F17 
+    )
