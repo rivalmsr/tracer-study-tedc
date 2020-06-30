@@ -21,56 +21,56 @@
                 <input type="hidden" name="kuesioner_f2" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                 <h6><b>{{kuesioner.keterangan}}</b></h6>
-                    {{fdua_form.respons_f21.label}}<br>
-                    {% for radio in fdua_form.respons_f21%}
+                    {{fdua_form.respons_f2_1.label}}<br>
+                    {% for radio in fdua_form.respons_f2_1%}
                         <label for="{{radio.id_for_label}}">
                             <span class="radio">{{radio.tag}}</span>
                             {{radio.choice_label}}
                         </label>
                     {% endfor %}
                     <br>
-                    {{fdua_form.respons_f22.label}}<br>
-                    {% for radio in fdua_form.respons_f22%}
+                    {{fdua_form.respons_f2_2.label}}<br>
+                    {% for radio in fdua_form.respons_f2_2%}
                         <label for="{{radio.id_for_label}}">
                             <span class="radio">{{radio.tag}}</span>
                             {{radio.choice_label}}
                         </label>
                     {% endfor %}
                     <br>
-                    {{fdua_form.respons_f23.label}}<br>
-                    {% for radio in fdua_form.respons_f23%}
+                    {{fdua_form.respons_f2_3.label}}<br>
+                    {% for radio in fdua_form.respons_f2_3%}
                         <label for="{{radio.id_for_label}}">
                             <span class="radio">{{radio.tag}}</span>
                             {{radio.choice_label}}
                         </label>
                     {% endfor %}
                     <br>
-                    {{fdua_form.respons_f24.label}}<br>
-                    {% for radio in fdua_form.respons_f24%}
+                    {{fdua_form.respons_f2_4.label}}<br>
+                    {% for radio in fdua_form.respons_f2_4%}
                         <label for="{{radio.id_for_label}}">
                             <span class="radio">{{radio.tag}}</span>
                             {{radio.choice_label}}
                         </label>
                     {% endfor %}
                     <br>
-                    {{fdua_form.respons_f25.label}}<br>
-                    {% for radio in fdua_form.respons_f25%}
+                    {{fdua_form.respons_f2_5.label}}<br>
+                    {% for radio in fdua_form.respons_f2_5%}
                         <label for="{{radio.id_for_label}}">
                             <span class="radio">{{radio.tag}}</span>
                             {{radio.choice_label}}
                         </label>
                     {% endfor %}
                     <br>
-                    {{fdua_form.respons_f26.label}}<br>
-                    {% for radio in fdua_form.respons_f26%}
+                    {{fdua_form.respons_f2_6.label}}<br>
+                    {% for radio in fdua_form.respons_f2_6%}
                         <label for="{{radio.id_for_label}}">
                             <span class="radio">{{radio.tag}}</span>
                             {{radio.choice_label}}
                         </label>
                     {% endfor %}
                     <br>
-                    {{fdua_form.respons_f27.label}}<br>
-                    {% for radio in fdua_form.respons_f27%}
+                    {{fdua_form.respons_f2_7.label}}<br>
+                    {% for radio in fdua_form.respons_f2_7%}
                         <label for="{{radio.id_for_label}}">
                             <span class="radio">{{radio.tag}}</span>
                             {{radio.choice_label}}
@@ -85,9 +85,9 @@
                 <input type="hidden" name="kuesioner_f3" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                 <h6><b>{{kuesioner.keterangan}}</b></h6>
-                <input type="number" name="{{ftiga_form.respons_f31.html_name}}"><br>
-                {% for radio in ftiga_form.respons_f32%}
-                    {% if radio.id_for_label != "id_respons_f32_2" %}
+               {{ftiga_form.respons_f3_1}}<br>
+                {% for radio in ftiga_form.respons_f3_2%}
+                    {% if radio.id_for_label != "id_respons_f3_2_2" %}
 
                         <label for="{{radio.id_for_label}}">
                             <span class="radio">{{radio.tag}}</span>
@@ -112,9 +112,16 @@
                 <input type="hidden" name="kuesioner_f4" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                 <h6><b>{{kuesioner.keterangan}}</b></h6>
-                {% for field in fempat_form%}
-                    {{field.label_tag}}
-                    {{field}}<br>
+                {% for field in fempat_form.respons_f4%}
+                    <label id="{{field.id_for_label}}">
+                        <input type="checkbox" name="{{fempat_form.respons_f4.html_name}}" value="{{field.choice_label}}" id="{{field.id_for_label}}"
+                            {% if field.choice_label in fempat_form.respons_f4.value %}
+                                checked="checked"
+                            {% endif %}
+                        >
+                        {{field.choice_label}}
+                    </label><br>
+                    
                 {% endfor %}
             {% endfor %}
         </div><hr>
@@ -124,8 +131,8 @@
                 <input type="hidden" name="kuesioner_f5" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                 <h6><b>{{kuesioner.keterangan}}</b></h6>
-                <input type="number" name="{{flima_form.respons_f51.html_name}}"><br>
-                {% for radio in flima_form.respons_f52%}
+                {{flima_form.respons_f5_1}}<br>
+                {% for radio in flima_form.respons_f5_2%}
                     <label for="{{radio.id_for_label}}">
                         <span class="radio">{{radio.tag}}</span>
                         Kira-kira
@@ -189,14 +196,21 @@
                 <input type="hidden" name="kuesioner_f9" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                 <h6><b>{{kuesioner.keterangan}}</b></h6>
-                {% for field in fsembilan_form%}
-                    {{field.label_tag}}
-                    {{field}}<br>
+                {% for field in fsembilan_form.respons_f9%}
+                    <label id="{{field.id_for_label}}">
+                        <input type="checkbox" name="{{fsembilan_form.respons_f9.html_name}}" value="{{field.choice_label}}" id="{{field.id_for_label}}"
+                            {% if field.choice_label in fsembilan_form.respons_f9.value %}
+                                checked="checked"
+                            {% endif %}
+                        >
+                        {{field.choice_label}}
+                    </label><br>
                 {% endfor %}
             {% endfor %}
         </div><hr>
 
         <div>
+            {{fsepuluh_form.respons_f10.value}}
             {% for kuesioner in kuesioner_F10 %}
                 <input type="hidden" name="kuesioner_f10" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
@@ -261,14 +275,21 @@
                 <input type="hidden" name="kuesioner_f16" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                 <h6><b>{{kuesioner.keterangan}}</b></h6>
-                {% for field in fenambelas_form%}
-                    {{field.label_tag}}
-                    {{field}}<br>
+                {% for field in fenambelas_form.respons_f16%}
+                    <label id="{{field.id_for_label}}">
+                        <input type="checkbox" name="{{fenambelas_form.respons_f16.html_name}}" value="{{field.choice_label}}" id="{{field.id_for_label}}"
+                            {% if field.choice_label in fenambelas_form.respons_f16.value %}
+                                checked="checked"
+                            {% endif %}
+                        >
+                        {{field.choice_label}}
+                    </label><br>
                 {% endfor %}
             {% endfor %}
         </div><hr>
-
+        
         <div>
+            {{ftujuhbelas_a_form.respons_f17_1.value}}
             {% for kuesioner in kuesioner_F17A %}
                 <input type="hidden" name="kuesioner_f17A" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
@@ -276,35 +297,386 @@
                 <table>
                     <tr>
                         <th>Sub Pertanyaan</th>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
+                        <th colspan="5">Sangat Rendah - Sangat Tinggi</th>
                     </tr>
-                    {% for field in ftujuhbelas_a_form %}
                     <tr>
-                        <td>{{field.label}}</td>
                         <td>
-                            <input type="radio" value="1" name="respons_f17_{{forloop.counter}}_a">
-                        </td>
+                            {{ftujuhbelas_a_form.respons_f17_1_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_1_a%}
                         <td>
-                            <input type="radio" value="2" name="respons_f17_{{forloop.counter}}_a">
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
                         </td>
-                        <td>
-                            <input type="radio" value="3" name="respons_f17_{{forloop.counter}}_a">
-                        </td>
-                        <td>
-                            <input type="radio" value="4" name="respons_f17_{{forloop.counter}}_a">
-                        </td>
-                        <td>
-                            <input type="radio" value="5" name="respons_f17_{{forloop.counter}}_a">
-                        </td>
-                        
+                        {% endfor %}
                     </tr>
-                    {% endfor %}
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_2_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_2_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_3_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_3_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_4_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_4_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_5_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_5_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_6_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_6_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_7_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_7_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_8_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_8_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_9_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_9_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_10_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_10_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_11_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_11_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_12_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_12_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_13_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_13_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_14_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_14_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_15_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_15_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_16_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_16_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_17_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_17_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_18_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_18_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_19_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_19_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_20_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_20_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_21_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_21_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_22_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_22_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_23_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_23_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_24_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_24_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_25_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_25_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_26_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_26_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_27_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_27_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_28_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_28_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_a_form.respons_f17_29_a.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_a_form.respons_f17_29_a%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
                 </table>
-        
             {% endfor %}
         </div><hr>
 
@@ -316,38 +688,389 @@
                 <table>
                     <tr>
                         <th>Sub Pertanyaan</th>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
+                        <th colspan="5">Sangat Rendah - Sangat Tinggi</th>
                     </tr>
-                    {% for field in ftujuhbelas_a_form %}
                     <tr>
-                        <td>{{field.label}}</td>
                         <td>
-                            <input type="radio" value="1" name="respons_f17_{{forloop.counter}}_b">
-                        </td>
+                            {{ftujuhbelas_b_form.respons_f17_1_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_1_b%}
                         <td>
-                            <input type="radio" value="2" name="respons_f17_{{forloop.counter}}_b">
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
                         </td>
-                        <td>
-                            <input type="radio" value="3" name="respons_f17_{{forloop.counter}}_b">
-                        </td>
-                        <td>
-                            <input type="radio" value="4" name="respons_f17_{{forloop.counter}}_b">
-                        </td>
-                        <td>
-                            <input type="radio" value="5" name="respons_f17_{{forloop.counter}}_b">
-                        </td>
-                        
+                        {% endfor %}
                     </tr>
-                    {% endfor %}
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_2_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_2_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_3_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_3_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_4_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_4_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_5_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_5_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_6_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_6_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_7_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_7_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_8_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_8_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_9_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_9_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_10_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_10_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_11_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_11_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_12_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_12_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_13_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_13_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_14_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_14_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_15_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_15_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_16_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_16_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_17_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_17_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_18_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_18_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_19_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_19_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_20_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_20_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_21_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_21_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_22_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_22_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_23_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_23_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_24_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_24_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_25_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_25_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_26_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_26_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_27_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_27_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_28_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_28_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ftujuhbelas_b_form.respons_f17_29_b.label}}
+                        </td>    
+                        {% for radio in ftujuhbelas_b_form.respons_f17_29_b%}
+                        <td>
+                            <label for="{{radio.id_for_label}}">
+                                <span class="radio">{{radio.tag}}</span>
+                                {{radio.choice_label}}
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
                 </table>
         
             {% endfor %}
         </div><hr>
-
 
         <button type="submit" value="simpan">Simpan</button>
     </form>
