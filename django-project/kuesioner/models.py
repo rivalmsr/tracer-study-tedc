@@ -1,7 +1,10 @@
 from django.db import models
 from django.urls import reverse
 from datetime import datetime
-from poltektedc.models import MasterProdi
+from poltektedc.models import ( 
+    MasterPoltekTedc,
+    MasterProdi,
+)
 from django.utils.text import slugify
 from .validators import (
     validate_nomor_mahasiswa,
@@ -61,22 +64,24 @@ class MasterFSatu(models.Model):
     nomor_mahasiswa     = models.CharField(
                             max_length=12,
                             unique=True)
-    kode_pt             = models.PositiveIntegerField(default='045016', editable=False)
-    
+    master_poltek_id    = models.ForeignKey(
+                        MasterPoltekTedc,
+                        models.SET_NULL,
+                        blank=True,
+                        null=True,
+    )
+    master_prodi_id     = models.ForeignKey(
+                        MasterProdi,
+                        models.SET_NULL,
+                        blank=True,
+                        null=True,
+    )
     LIST_OF_YEAR = []
     for y in range(2004, (datetime.now().year+1)):
         LIST_OF_YEAR.append((y, y))
 
     tahun_lulus         = models.PositiveSmallIntegerField(
                             choices=LIST_OF_YEAR,
-    )
-    
-    LIST_OF_KODE_PRODI = []
-    list_prodi = MasterProdi.objects.values_list('kode', 'nama')
-    for i in list_prodi:
-        LIST_OF_KODE_PRODI.append(i)
-    kode_prodi          = models.PositiveSmallIntegerField(
-                            choices=LIST_OF_KODE_PRODI,
     )
     nama                = models.CharField(max_length=100)
     nomor_telepon       = models.CharField(max_length=13)

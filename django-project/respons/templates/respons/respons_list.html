@@ -21,19 +21,17 @@
             <th>Publish</th>
             <th>Opsi</th>
         </tr>
-    {{list_of_responden}}
     {% for responden in list_of_responden %}
-    {{responden.master_fsatu_id.nama}}
         <tr>
             <td>{{forloop.counter}}</td>
             <td>{{responden.master_fsatu_id.nama}}</td>
             <td>{{responden.master_fsatu_id.nomor_mahasiswa}}</td>
-            <td>{{responden.master_fsatu_id.kode_prodi}}</td>
+            <td>{{responden.master_fsatu_id.master_prodi_id.nama}}</td>
             <td>{{responden.master_fsatu_id.tahun_lulus}}</td>
             <td>{{responden.created|date}}</td>
             
             <td>
-                <a href="">Detail</a>
+                <a href="{% url 'respons:detail' responden.pk %}">Detail</a>
                 <a href="{% url 'respons:update' responden.pk %}">Edit</a>
                 <a href="">Hapus</a>
             </td>

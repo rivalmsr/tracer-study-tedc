@@ -7,7 +7,7 @@ from .models import (
     )
 
 class AdminMasterFSatu(admin.ModelAdmin):
-    readonly_fields = ['kode_pt', 'slug', 'created', 'updated']
+    readonly_fields = ['master_poltek_id', 'slug', 'created', 'updated']
 
 admin.site.register(MasterFSatu, AdminMasterFSatu)
 

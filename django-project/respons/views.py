@@ -80,6 +80,48 @@ class ResponsListView(ListView):
         kwargs = self.kwargs
         return super().get_context_data(*args, **kwargs)
 
+def detail(request, detail_id):
+    context = {}
+    template_name = 'respons/respons_detail.html'
+
+    # Get data form database
+    data_respons_header = ResponsHeader.objects.get(pk=detail_id)
+    data_fdua = ResponsFDuaDetail.objects.filter(respons_header_id=data_respons_header.pk)
+    data_ftiga = ResponsFTigaDetail.objects.get(respons_header_id=data_respons_header.pk)
+    data_fempat = ResponsFEmpatDetail.objects.filter(respons_header_id=data_respons_header.pk).values_list('respons', flat=True)
+    data_flima = ResponsFLimaDetail.objects.get(respons_header_id=data_respons_header.pk)
+    data_fenam = ResponsFEnamDetail.objects.get(respons_header_id=data_respons_header.pk)
+    data_ftujuh = ResponsFTujuhDetail.objects.get(respons_header_id=data_respons_header.pk)
+    data_ftujuh_a = ResponsFTujuhADetail.objects.get(respons_header_id=data_respons_header.pk)
+    data_fdelapan = ResponsFDelapanDetail.objects.get(respons_header_id=data_respons_header.pk)
+
+    get_F8 = MasterOpsiRespons.objects.get(kode='F8-02')
+    if data_fdelapan.respons == get_F8.opsi_respons:
+        data_fsembilan = ResponsFSembilanDetail.objects.filter(respons_header_id=data_respons_header.pk).values_list('respons', flat=True)
+        data_fsepuluh = ResponsFSepuluhDetail.objects.get(respons_header_id=data_respons_header.pk)
+    
+    context = {
+        'title': 'Detail Respons',
+        'data_respons_header': data_respons_header,
+        'data_fdua': data_fdua,
+        'data_ftiga': data_ftiga,
+        'data_fempat': data_fempat,
+        'data_flima': data_flima,
+        'data_fenam': data_fenam,
+        'data_ftujuh': data_ftujuh,
+        'data_ftujuh_a': data_ftujuh_a,
+        'data_fdelapan': data_fdelapan,
+    }
+    
+    # Get kuesioner form database and into context
+    key_context_kuesioner = 'kuesioner_'
+    list_kode_kuesioner = MasterKuesioner.objects.values_list('kode', flat=True)
+    for kode in list_kode_kuesioner:
+        context[key_context_kuesioner+kode] = MasterKuesioner.objects.filter(kode=kode)
+
+    return render(request, template_name, context)
+
+
 def create(request):  
     # Initialisasi Dictionary 
     context = {}
