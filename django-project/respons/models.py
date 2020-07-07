@@ -4,6 +4,7 @@ from kuesioner.models import (
     MasterKuesioner,
     MasterSubKuesioner,
     MasterFSatu,
+    MasterOpsiRespons,
 )
 
 class ResponsHeader(models.Model):

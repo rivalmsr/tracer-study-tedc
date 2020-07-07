@@ -5,13 +5,15 @@ from .views import (
     LulusanDetailView,
     LulusanUpdateView,
     LulusanDeleteView,
+    create,
+    delete,
 )
 
 app_name = 'lulusan'
 urlpatterns = [
-    path('delete/<int:pk>/', LulusanDeleteView.as_view(), name='delete'),
+    path('delete/<int:delete_id>/', delete, name='delete'),
     path('update/<int:pk>/', LulusanUpdateView.as_view(), name='update'),
-    path('create/', LulusanCreateView.as_view(), name='create'),
+    path('create/', create, name='create'),
     path('detail/<slug:slug>/', LulusanDetailView.as_view(), name='detail'),
     path('list/', LulusanListView.as_view(), name='list'),
 ]

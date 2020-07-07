@@ -7,8 +7,8 @@
     <form method="POST">
     {% csrf_token %}
         <h4>Anda yakin akan menghapus data lulusan</h4>
-        <p>Nama : {{object.nama}}</p>
-        <p>Nomor Induk Mahasiswa (NIM): {{object.nomor_mahasiswa}}</p>
+        <p>Nama : {{lulusan.nama}}</p>
+        <p>Nomor Induk Mahasiswa (NIM): {{lulusan.nomor_mahasiswa}}</p>
         <a href="{% url 'lulusan:list' %}">Batal</a>
         <button type="submit" value="Confirm">Ya</button>
     </form>

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block title %}
     {{title}}
@@ -10,12 +11,12 @@
     <h5>Nama : </h5>
     <h4>{{data_respons_header.master_fsatu_id.nama}}</h4>
     <h5>Nim : </h5>
-    <h4>{{data_respons_header.master_fsatu_id.nomor_mahasiswa}}</h4>
     <h5>Jurusan : </h5>
     <h4>{{data_respons_header.master_fsatu_id.kode_prodi}}</h4>
     <h5>Lulusan : </h5>
     <h4>{{data_respons_header.master_fsatu_id.tahun_lulus}}</h4>
     <hr>
+    <h4>{{data_respons_header.master_fsatu_id.nomor_mahasiswa}}</h4>
 
     <h4>Tanggapan Responden</h4>
     {% for kuesioner in kuesioner_F2 %}
@@ -41,7 +42,11 @@
 
     {% for kuesioner in kuesioner_F4 %}
     <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    {{data_fempat}}
+    <ul>
+        {% for respons in data_fempat %}
+            <li>{{respons}}</li>
+        {% endfor %}
+    </ul>
     {% endfor %}
     <hr>
 
@@ -84,5 +89,187 @@
     </h5>
     {% endfor %}
     <hr>
+
+    {% if data_fdelapan.respons == get_F8_value.opsi_respons %}
+
+        {% for kuesioner in kuesioner_F9 %}
+        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+        <ul>
+            {% for respons in data_fsembilan %}
+                <li>{{respons}}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+        <hr>
+
+        {% for kuesioner in kuesioner_F10 %}
+        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+        <h5>
+            {{data_fsepuluh.respons}}
+        </h5>
+        {% endfor %}
+        <hr>
+    {% else %}
+
+        {% for kuesioner in kuesioner_F11 %}
+        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+        <h5>
+            {{data_fsebelas.respons}}
+        </h5>
+        {% endfor %}
+        <hr>
+
+        {% for kuesioner in kuesioner_F13 %}
+        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+        <table>
+            {% for ftigabelas in data_ftigabelas %}
+            <tr>
+                <td>{{ftigabelas.master_subkuesioner_id.sub_pertanyaan}}</td>
+                <td>Rp. {{ftigabelas.respons|intcomma}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endfor %}
+        <hr>
+
+        {% for kuesioner in kuesioner_F14 %}
+        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+        <h5>
+            {{data_fempatbelas.respons}}
+        </h5>
+        {% endfor %}
+        <hr>
+
+        {% for kuesioner in kuesioner_F15 %}
+        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+        <h5>
+            {{data_flimabelas.respons}}
+        </h5>
+        {% endfor %}
+        <hr>
+
+        {% for kuesioner in kuesioner_F16 %}
+        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+        <ul>
+            {% for respons in data_fenambelas %}
+                <li>{{respons}}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+        <hr>
+        
+    {% endif %}
     
+    {% for kuesioner in kuesioner_F17A %}
+    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+    <table>
+        <tr>
+            <th>Sub Pertanyaan</th>
+            <th colspan="5">Sangat Rendah - Sangat Tinggi</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+        </tr>
+        {% for ftujuhbelas in data_ftujuhbelas_a %}
+        <tr>
+            <td>{{ftujuhbelas.master_subkuesioner_id.sub_pertanyaan}}</td>
+            {% if ftujuhbelas.respons == 1%}
+                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            {% elif ftujuhbelas.respons == 2%}
+                <td></td>
+                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            {% elif ftujuhbelas.respons == 3%}
+                <td></td>
+                <td></td>
+                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
+                <td></td>
+                <td></td>    
+            {% elif ftujuhbelas.respons == 4%}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
+                <td></td>
+            {% elif ftujuhbelas.respons == 5%}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
+            {% endif %}
+            
+        </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+    <hr>
+
+    {% for kuesioner in kuesioner_F17B %}
+    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+    <table>
+        <tr>
+            <th>Sub Pertanyaan</th>
+            <th colspan="5">Sangat Rendah - Sangat Tinggi</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+        </tr>
+        {% for ftujuhbelas in data_ftujuhbelas_b %}
+        <tr>
+            <td>{{ftujuhbelas.master_subkuesioner_id.sub_pertanyaan}}</td>
+            {% if ftujuhbelas.respons == 1%}
+                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            {% elif ftujuhbelas.respons == 2%}
+                <td></td>
+                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            {% elif ftujuhbelas.respons == 3%}
+                <td></td>
+                <td></td>
+                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
+                <td></td>
+                <td></td>    
+            {% elif ftujuhbelas.respons == 4%}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
+                <td></td>
+            {% elif ftujuhbelas.respons == 5%}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
+            {% endif %}
+            
+        </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+    <hr>
+
 {% endblock  %}

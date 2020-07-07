@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 
 from django.views.generic import (
     CreateView,
@@ -84,7 +85,7 @@ def detail(request, detail_id):
     context = {}
     template_name = 'respons/respons_detail.html'
 
-    # Get data form database
+    # get data F2-F8 from database
     data_respons_header = ResponsHeader.objects.get(pk=detail_id)
     data_fdua = ResponsFDuaDetail.objects.filter(respons_header_id=data_respons_header.pk)
     data_ftiga = ResponsFTigaDetail.objects.get(respons_header_id=data_respons_header.pk)
@@ -94,12 +95,10 @@ def detail(request, detail_id):
     data_ftujuh = ResponsFTujuhDetail.objects.get(respons_header_id=data_respons_header.pk)
     data_ftujuh_a = ResponsFTujuhADetail.objects.get(respons_header_id=data_respons_header.pk)
     data_fdelapan = ResponsFDelapanDetail.objects.get(respons_header_id=data_respons_header.pk)
-
-    get_F8 = MasterOpsiRespons.objects.get(kode='F8-02')
-    if data_fdelapan.respons == get_F8.opsi_respons:
-        data_fsembilan = ResponsFSembilanDetail.objects.filter(respons_header_id=data_respons_header.pk).values_list('respons', flat=True)
-        data_fsepuluh = ResponsFSepuluhDetail.objects.get(respons_header_id=data_respons_header.pk)
-    
+    # get data F17 from database
+    data_ftujuhbelas_a = ResponsFTujuhbelasADetail.objects.filter(respons_header_id=data_respons_header.pk)
+    data_ftujuhbelas_b = ResponsFTujuhbelasBDetail.objects.filter(respons_header_id=data_respons_header.pk)
+    # return data F2-F8 and F17 into context
     context = {
         'title': 'Detail Respons',
         'data_respons_header': data_respons_header,
@@ -111,14 +110,40 @@ def detail(request, detail_id):
         'data_ftujuh': data_ftujuh,
         'data_ftujuh_a': data_ftujuh_a,
         'data_fdelapan': data_fdelapan,
+        'data_ftujuhbelas_a': data_ftujuhbelas_a,
+        'data_ftujuhbelas_b': data_ftujuhbelas_b,
     }
+    # check condition if value is F8-02
+    get_F8_value = MasterOpsiRespons.objects.get(kode='F8-02')
+    context['get_F8_value'] = get_F8_value
+    if data_fdelapan.respons == get_F8_value.opsi_respons:
+        # get data F9 and F10 from database
+        data_fsembilan = ResponsFSembilanDetail.objects.filter(respons_header_id=data_respons_header.pk).values_list('respons', flat=True)
+        data_fsepuluh = ResponsFSepuluhDetail.objects.get(respons_header_id=data_respons_header.pk)
+        # return data F9 and F10 into context
+        context['data_fsembilan'] = data_fsembilan
+        context['data_fsepuluh'] = data_fsepuluh
+    else :
+        # get data F11-F16 from database
+        data_fsebelas = ResponsFSebelasDetail.objects.get(respons_header_id=data_respons_header.pk)
+        data_ftigabelas = ResponsFTigabelasDetail.objects.filter(respons_header_id=data_respons_header.pk)
+        data_fempatbelas = ResponsFEmpatbelasDetail.objects.get(respons_header_id=data_respons_header.pk)
+        data_flimabelas = ResponsFLimabelasDetail.objects.get(respons_header_id=data_respons_header.pk)
+        data_fenambelas = ResponsFEnambelasDetail.objects.filter(respons_header_id=data_respons_header.pk).values_list('respons', flat=True)
+        # return data F11-F16 into context
+        context['data_fsebelas'] = data_fsebelas
+        context['data_ftigabelas'] = data_ftigabelas
+        context['data_fempatbelas'] = data_fempatbelas
+        context['data_flimabelas'] = data_flimabelas
+        context['data_fenambelas'] = data_fenambelas
     
-    # Get kuesioner form database and into context
+    # get data kuesioner form database
     key_context_kuesioner = 'kuesioner_'
     list_kode_kuesioner = MasterKuesioner.objects.values_list('kode', flat=True)
+    # return data kuesioner into context
     for kode in list_kode_kuesioner:
         context[key_context_kuesioner+kode] = MasterKuesioner.objects.filter(kode=kode)
-
+    
     return render(request, template_name, context)
 
 
@@ -192,6 +217,8 @@ def create(request):
             fsatu.save()
             
             if  ResponsHeader.objects.filter(master_fsatu_id__pk=request.POST.get('respons_f1')).exists():
+                get_respons_header = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1'))
+                print("ini id :", get_respons_header.pk)
                 # Respons F2
                 if fdua_form.is_valid():
                     data_fdua = {}
@@ -222,12 +249,18 @@ def create(request):
 
                 # Respons F4
                 if fempat_form.is_valid():
+                    data_fempat = ""
+                    getlist_fempat = request.POST.getlist('respons_f4')
+                     
+                    for value in getlist_fempat:
+                        data_fempat += value + "|" 
+
                     fempat = ResponsFEmpatDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f4')),
                         respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                        respons                 = request.POST.getlist('respons_f4')
+                        respons                 = data_fempat
                     )
-                    ftiga.save()
+                    fempat.save()
                     
                 # Respons F5
                 if flima_form.is_valid():
@@ -283,10 +316,16 @@ def create(request):
 
                     # Respons F9
                     if fsembilan_form.is_valid():
+                        data_fsembilan = ""
+                        getlist_respons_f9 = request.POST.getlist('respons_f9')
+                         
+                        for value in getlist_respons_f9:
+                            data_fsembilan += value + "|"
+
                         fsembilan = ResponsFSembilanDetail.objects.create(
                             master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f9')),
                             respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                            respons                 = request.POST.getlist('respons_f9'),
+                            respons                 = data_fsembilan
                         )
                         fsembilan.save()
 
@@ -346,10 +385,16 @@ def create(request):
 
                     # Respons F16
                     if fenambelas_form.is_valid():
+                        data_fenambelas = ""
+                        getlist_respons_fenambelas = request.POST.getlist('respons_f16')
+
+                        for value in getlist_respons_fenambelas:
+                            data_fenambelas += value + "|"
+
                         fenambelas = ResponsFEnambelasDetail.objects.create(
                             master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f16')),
                             respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                            respons                 = request.POST.getlist('respons_f16'),
+                            respons                 = data_fenambelas
                         )
                         fenambelas.save()
 
@@ -384,6 +429,8 @@ def create(request):
                             respons                 = value
                         )
                         ftujuhbelas_b.save()
+
+                return redirect('respons:detail', get_respons_header.pk)
 
     return render(request, template_name, context)
 
@@ -423,8 +470,9 @@ def update(request, update_id):
 
     # F4
     get_value_fempat = ResponsFEmpatDetail.objects.get(respons_header_id__pk=update_id)
+    data_update_fempat = get_value_fempat.respons.split("|")
     data_form_fempat = {
-        'respons_f4': get_value_fempat.respons
+        'respons_f4': data_update_fempat
     }
     fempat_form     = ResponsFEmpatForm(request.POST or None, initial=data_form_fempat)
 
@@ -469,8 +517,9 @@ def update(request, update_id):
     # F9
     if ResponsFSembilanDetail.objects.filter(respons_header_id__pk=update_id).exists():
         get_value_fsembilan = ResponsFSembilanDetail.objects.get(respons_header_id__pk=update_id)
+        data_update_fsembilan = get_value_fsembilan.respons.split("|")
         data_form_fsembilan = {
-            'respons_f9': get_value_fsembilan.respons
+            'respons_f9': data_update_fsembilan
         }
         fsembilan_form     = ResponsFSembilanForm(request.POST or None, initial=data_form_fsembilan)
     else:
@@ -529,8 +578,11 @@ def update(request, update_id):
     # F16
     if ResponsFEnambelasDetail.objects.filter(respons_header_id__pk=update_id).exists():
         get_value_fenambelas = ResponsFEnambelasDetail.objects.get(respons_header_id__pk=update_id)
+        print(get_value_fenambelas)
+        data_update_fenambelas = get_value_fenambelas.respons.split("|")
+        print(data_update_fenambelas)
         data_form_fenambelas = {
-            'respons_f16': get_value_fenambelas.respons,   
+            'respons_f16': data_update_fenambelas
         }
         fenambelas_form      = ResponsFEnambelasForm(request.POST or None, initial=data_form_fenambelas)
     else:
@@ -601,10 +653,19 @@ def update(request, update_id):
                 )
             # Respons F4
             if fempat_form.is_valid():
+                data_fempat = ""
+                getlist_respons_f4 = request.POST.getlist('respons_f4')
+
+                # return value into variable
+                for value in getlist_respons_f4:
+                     data_fempat += value + "|"   
+
+                # return value getlist into database
                 get_fempat = ResponsFEmpatDetail.objects.get(respons_header_id__pk=respons_header.pk)
                 fempat = ResponsFEmpatDetail.objects.filter(pk=get_fempat.pk).update(
-                    respons = request.POST.getlist('respons_f4')
+                    respons = data_fempat
                 )
+
             # Respons F5
             if flima_form.is_valid():
                 get_flima = ResponsFLimaDetail.objects.get(respons_header_id__pk=respons_header.pk)
@@ -640,9 +701,17 @@ def update(request, update_id):
             if  request.POST.get('respons_f8') == MasterOpsiRespons.objects.values_list('opsi_respons', flat=True).get(kode='F8-02'):
                 # Respons F9
                 if fsembilan_form.is_valid():
+                    data_fsembilan = ""
+                    getlist_respons_f9 = request.POST.getlist('respons_f9')
+
+                    # return value into variable
+                    for value in getlist_respons_f9:
+                        data_fsembilan += value + "|"
+
+                    # return data into database 
                     get_fsembilan = ResponsFSembilanDetail.objects.get(respons_header_id__pk=respons_header.pk)
                     fsembilan = ResponsFSembilanDetail.objects.filter(pk=get_fsembilan.pk).update(
-                        respons = request.POST.getlist('respons_f9')
+                        respons = data_fsembilan
                     )
                 # Respons F10
                 if fsepuluh_form.is_valid():
@@ -683,10 +752,16 @@ def update(request, update_id):
                     )
                 # Respons F16
                 if fenambelas_form.is_valid():
+                    data_fenambelas = ""
+                    getlist_respons_f16 = request.POST.getlist('respons_f16')
+                    # return value into variable
+                    for value in getlist_respons_f16:
+                        data_fenambelas += value + "|"
                     get_fenambelas = ResponsFEnambelasDetail.objects.get(respons_header_id__pk=respons_header.pk)
                     fenambelas = ResponsFEnambelasDetail.objects.filter(pk=get_fenambelas.pk).update(
-                        respons = request.POST.getlist('respons_f16')
+                        respons = data_fenambelas
                     )
+
             # Respons F17A
             if ftujuhbelas_a_form.is_valid():
                 get_ftujuhbelas_a_id = ResponsFTujuhbelasADetail.objects.filter(respons_header_id__pk=respons_header.pk).values_list('pk', flat=True)
@@ -708,6 +783,7 @@ def update(request, update_id):
                 for key, value in data_ftujuhbelas_b.items():
                     fdua = ResponsFTujuhbelasBDetail.objects.filter(pk=key).update(
                         respons = value
-                    )            
+                    )
+            return redirect('respons:detail', update_id)
                 
     return render(request, template_name, context)

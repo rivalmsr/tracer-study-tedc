@@ -93,6 +93,7 @@ class MasterFSatu(models.Model):
     def save(self):
         text_slug = self.nomor_mahasiswa +' '+self.nama
         self.slug = slugify(text_slug)
+        
         return super().save()
 
     def get_absolute_url(self):
