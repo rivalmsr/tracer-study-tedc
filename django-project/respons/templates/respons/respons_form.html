@@ -191,6 +191,8 @@
             {% endfor %}
         </div><hr>
 
+        {% comment %} jQuery on click F9 to F10 {% endcomment %}
+    <div id="form-fsembilan-and-fsepuluh">
         <div>
             {% for kuesioner in kuesioner_F9 %}
                 <input type="hidden" name="kuesioner_f9" value="{{kuesioner.pk}}">
@@ -210,7 +212,6 @@
         </div><hr>
 
         <div>
-            {{fsepuluh_form.respons_f10.value}}
             {% for kuesioner in kuesioner_F10 %}
                 <input type="hidden" name="kuesioner_f10" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
@@ -222,6 +223,10 @@
             {% endfor %}
         </div><hr>
 
+    </div>
+
+    {% comment %} jQuery on click F11 to F16 {% endcomment %}
+    <div id="form-fsebelas-to-fenambelas">
         <div>
             {% for kuesioner in kuesioner_F11 %}
                 <input type="hidden" name="kuesioner_f11" value="{{kuesioner.pk}}">
@@ -287,6 +292,7 @@
                 {% endfor %}
             {% endfor %}
         </div><hr>
+    </div>
         
         <div>
             {{ftujuhbelas_a_form.respons_f17_1.value}}
@@ -1075,3 +1081,20 @@
         <button type="submit" value="simpan">Simpan</button>
     </form>
 {% endblock content %}
+
+{% block javascript %}
+  {% include 'lib/_scripts.html' %}
+  <script>
+    $(document).ready(function(){
+        $('#id_respons_f8_0').on('click', ()=>{
+            $('#form-fsembilan-and-fsepuluh').hide();
+            $('#form-fsebelas-to-fenambelas').show();
+        });
+
+        $('#id_respons_f8_1').on('click', ()=>{
+            $('#form-fsembilan-and-fsepuluh').show();
+            $('#form-fsebelas-to-fenambelas').hide();
+        });
+    });
+  </script>
+{% endblock  %}

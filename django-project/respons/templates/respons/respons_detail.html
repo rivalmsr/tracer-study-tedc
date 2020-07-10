@@ -5,18 +5,17 @@
     {{title}}
 {% endblock  %}
 
-
 {% block content %}
     <h1>{{title}}</h1>
     <h5>Nama : </h5>
     <h4>{{data_respons_header.master_fsatu_id.nama}}</h4>
     <h5>Nim : </h5>
+    <h4>{{data_respons_header.master_fsatu_id.nomor_mahasiswa}}</h4>
     <h5>Jurusan : </h5>
-    <h4>{{data_respons_header.master_fsatu_id.kode_prodi}}</h4>
+    <h4>{{data_respons_header.master_fsatu_id.master_prodi_id.nama}}</h4>
     <h5>Lulusan : </h5>
     <h4>{{data_respons_header.master_fsatu_id.tahun_lulus}}</h4>
     <hr>
-    <h4>{{data_respons_header.master_fsatu_id.nomor_mahasiswa}}</h4>
 
     <h4>Tanggapan Responden</h4>
     {% for kuesioner in kuesioner_F2 %}
@@ -44,7 +43,10 @@
     <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
     <ul>
         {% for respons in data_fempat %}
-            <li>{{respons}}</li>
+            {% if respons == '' %}
+            {% else %}
+                <li>{{respons}}</li>
+            {% endif %}
         {% endfor %}
     </ul>
     {% endfor %}
@@ -96,7 +98,10 @@
         <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
         <ul>
             {% for respons in data_fsembilan %}
+                {% if respons == '' %}
+                {% else %}
                 <li>{{respons}}</li>
+                {% endif %}
             {% endfor %}
         </ul>
         {% endfor %}
@@ -152,7 +157,10 @@
         <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
         <ul>
             {% for respons in data_fenambelas %}
+                {% if respons == '' %}
+                {% else %}
                 <li>{{respons}}</li>
+                {% endif %}
             {% endfor %}
         </ul>
         {% endfor %}

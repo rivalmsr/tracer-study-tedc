@@ -38,23 +38,26 @@ def create(request):
 
     context = {
         'title': 'Tambah Data Lulusan',
+        'nav_item_lulusan': 'menu-open',
+        'nav_status_lulusan': 'active',
+        'nav_status_tambah_lulusan': 'active',
         'form': form,
     }
 
     return render(request, template_name, context)
 
 
-class LulusanCreateView(CreateView):
-    form_class  = MasterFSatuForm
-    template_name = 'lulusan/lulusan_form.html'
-    extra_context = {
+# class LulusanCreateView(CreateView):
+#     form_class  = MasterFSatuForm
+#     template_name = 'lulusan/lulusan_form.html'
+#     extra_context = {
 
-        'title':'Tambah Data Mahasiswa'
-    }
+#         'title':'Tambah Data Mahasiswa'
+#     }
 
-    def get_context_data(self, *args, **kwargs):
-        kwargs.update(self.extra_context)
-        return super().get_context_data(*args, **kwargs)
+#     def get_context_data(self, *args, **kwargs):
+#         kwargs.update(self.extra_context)
+#         return super().get_context_data(*args, **kwargs)
 
 
 class LulusanListView(ListView):
@@ -62,7 +65,10 @@ class LulusanListView(ListView):
     context_object_name = 'list_of_lulusan'
     template_name       = 'lulusan/lulusan_list.html'
     extra_context       = {
-        'page_title': 'List Lulusan'
+        'title': 'List Lulusan',
+        'nav_item_lulusan': 'menu-open',
+        'nav_status_lulusan': 'active',
+        'nav_status_daftar_lulusan': 'active',
     }
 
     def get_context_data(self, *args, **kwargs):
@@ -75,6 +81,12 @@ class LulusanDetailView(DetailView):
     model               = MasterFSatu
     context_object_name = 'lulusan'
     template_name       = 'lulusan/lulusan_detail.html'
+    extra_context       = {
+        'title': 'Detail Lulusan',
+        'nav_item_lulusan': 'menu-open',
+        'nav_status_lulusan': 'active',
+        'nav_status_daftar_lulusan': 'active',
+    }
 
 
 class LulusanUpdateView(UpdateView):
@@ -83,7 +95,10 @@ class LulusanUpdateView(UpdateView):
     template_name       = 'lulusan/lulusan_form.html'
     success_url         = reverse_lazy('lulusan:list')
     extra_context       = {
-        'title': 'Edit Data Mahasiswa'
+        'title': 'Edit Data Mahasiswa',
+        'nav_item_lulusan': 'menu-open',
+        'nav_status_lulusan': 'active',
+        'nav_status_daftar_lulusan': 'active',
     }
 
 def delete(request, delete_id):
@@ -108,9 +123,9 @@ def delete(request, delete_id):
 
     return render(request, template_name, context)
 
-class LulusanDeleteView(DeleteView):
-    model               = MasterFSatu
-    content_object_name = 'lulusan'
-    template_name       = 'lulusan/lulusan_confirm_delete.html'
-    success_url         = reverse_lazy('lulusan:list')
+# class LulusanDeleteView(DeleteView):
+#     model               = MasterFSatu
+#     content_object_name = 'lulusan'
+#     template_name       = 'lulusan/lulusan_confirm_delete.html'
+#     success_url         = reverse_lazy('lulusan:list')
 

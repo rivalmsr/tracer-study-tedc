@@ -1,0 +1,150 @@
+{% load static %}
+<!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-teal elevation-2">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link navbar-teal text-sm elevation-1">
+      <img src=" {% static 'admin-lte/dist/img/AdminLTELogo.png' %} " alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light"><b>Tracer Study</b> TEDC</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar sidebar-wrapper">
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-child-indent nav-compact" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item has-treeview">
+            <a href="{% url 'beranda' %}" class="nav-link {{nav_status_beranda}}">
+              <i class="nav-icon fas fa-home"></i>
+              <p>
+                BERANDA
+              </p>
+            </a>
+          </li>
+
+          {% comment %} Side Lulusan {% endcomment %}
+          <li class="nav-item has-treeview {{nav_item_lulusan}}">
+            <a href="#" class="nav-link {{nav_status_lulusan}}">
+              <i class="nav-icon fas fa-user-graduate"></i>
+              <p>
+                LULUSAN
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'lulusan:list' %}" class="nav-link {{nav_status_daftar_lulusan}}">
+                  <i class="fas fa-list-alt nav-icon"></i>
+                  <p>DAFTAR LULUSAN</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'lulusan:create' %}" class="nav-link {{nav_status_tambah_lulusan}}">
+                  <i class="fas fa-user-edit nav-icon"></i>
+                  <p>INPUT DATA LULUSAN</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-treeview {{nav_item_kuesioner}}">
+            <a href="#" class="nav-link {{nav_status_kuesioner}}">
+              <i class="nav-icon fas fa-paper-plane"></i>
+              <p>
+                KUESIONER
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'kuesioner:list' %}" class="nav-link {{nav_status_daftar_kuesioner}}">
+                  <i class="fas fa-list-alt nav-icon"></i>
+                  <p>DAFTAR KUESIONER</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'respons:create' %}" class="nav-link {{nav_status_pengisian_kuesioner}}">
+                  <i class="fas fas fa-pen-alt nav-icon"></i>
+                  <p>FORM KUESIONER</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview {{nav_item_responden}}">
+            <a href="#" class="nav-link {{nav_status_responden}}">
+              <i class="nav-icon  fas fa-database"></i>
+              <p>
+                DATA
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'respons:list' %}" class="nav-link {{nav_status_daftar_responden}}">
+                  <i class="fas fa-list-alt nav-icon"></i>
+                  <p>DATA TRACER</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{nav_status}}">
+                  <i class="fas fa-address-card nav-icon"></i>
+                  <p>PUSAT KARIR</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{nav_status}}">
+                  <i class="fas fa-download nav-icon"></i>
+                  <p>UNDUH DATA TRACER</p>
+                </a>
+              </li>    
+            </ul>
+          </li>
+          <li class="nav-item has-treeview {{nav_item_report}}">
+            <a href="#" class="nav-link {{nav_status_report}}">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                REPORT
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="" class="nav-link {{nav_status_report}}">
+                  <i class="fas fa-poll-h nav-icon"></i>
+                  <p>REPORT KESELARASAN HORISONTAL</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{nav_status_report}}">
+                  <i class="fas fa-poll nav-icon"></i>
+                  <p>REPORT KESELARASAN VERTIKAL</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{nav_status_report}}">
+                  <i class="fas fa-list-alt nav-icon"></i>
+                  <p>DAFTAR LAMA TUNGGU</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{nav_status_report}}">
+                  <i class="fas fa-chart-line nav-icon"></i>
+                  <p>STATISTIK PER PRODI</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{nav_status_report}}">
+                  <i class="fas fa-chart-line nav-icon"></i>
+                  <p>STATISTIK TRACER STUDY</p>
+                </a>
+              </li>    
+            </ul>
+          </li>
+        </ul>
+      </nav><br><br><br>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

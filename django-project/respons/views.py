@@ -51,8 +51,6 @@ from .forms import (
     ResponsFTujuhbelasBForm,
 )
 
-from kuesioner.views import KuesionerForm
-
 from kuesioner.models import (
     MasterKuesioner,
     MasterSubKuesioner,
@@ -73,7 +71,10 @@ class ResponsListView(ListView):
     template_name   = 'respons/respons_list.html'
     context_object_name = 'list_of_responden'
     extra_context= {
-        'title': 'List Responden'
+        'title': 'List Responden',
+        'nav_item_responden': 'menu-open',
+        'nav_status_responden': 'active',
+        'nav_status_daftar_responden': 'active',
     }
 
     def get_context_data(self, *args, **kwargs):
@@ -89,7 +90,8 @@ def detail(request, detail_id):
     data_respons_header = ResponsHeader.objects.get(pk=detail_id)
     data_fdua = ResponsFDuaDetail.objects.filter(respons_header_id=data_respons_header.pk)
     data_ftiga = ResponsFTigaDetail.objects.get(respons_header_id=data_respons_header.pk)
-    data_fempat = ResponsFEmpatDetail.objects.filter(respons_header_id=data_respons_header.pk).values_list('respons', flat=True)
+    get_data_fempat = ResponsFEmpatDetail.objects.values_list('respons', flat=True).get(respons_header_id=data_respons_header.pk)
+    data_fempat = get_data_fempat.split(";")
     data_flima = ResponsFLimaDetail.objects.get(respons_header_id=data_respons_header.pk)
     data_fenam = ResponsFEnamDetail.objects.get(respons_header_id=data_respons_header.pk)
     data_ftujuh = ResponsFTujuhDetail.objects.get(respons_header_id=data_respons_header.pk)
@@ -101,6 +103,9 @@ def detail(request, detail_id):
     # return data F2-F8 and F17 into context
     context = {
         'title': 'Detail Respons',
+        'nav_item_responden': 'menu-open',
+        'nav_status_responden': 'active',
+        'nav_status_daftar_responden': 'active',
         'data_respons_header': data_respons_header,
         'data_fdua': data_fdua,
         'data_ftiga': data_ftiga,
@@ -118,7 +123,8 @@ def detail(request, detail_id):
     context['get_F8_value'] = get_F8_value
     if data_fdelapan.respons == get_F8_value.opsi_respons:
         # get data F9 and F10 from database
-        data_fsembilan = ResponsFSembilanDetail.objects.filter(respons_header_id=data_respons_header.pk).values_list('respons', flat=True)
+        get_data_fsembilan = ResponsFSembilanDetail.objects.values_list('respons', flat=True).get(respons_header_id=data_respons_header.pk)
+        data_fsembilan = get_data_fsembilan.split(";")
         data_fsepuluh = ResponsFSepuluhDetail.objects.get(respons_header_id=data_respons_header.pk)
         # return data F9 and F10 into context
         context['data_fsembilan'] = data_fsembilan
@@ -129,7 +135,8 @@ def detail(request, detail_id):
         data_ftigabelas = ResponsFTigabelasDetail.objects.filter(respons_header_id=data_respons_header.pk)
         data_fempatbelas = ResponsFEmpatbelasDetail.objects.get(respons_header_id=data_respons_header.pk)
         data_flimabelas = ResponsFLimabelasDetail.objects.get(respons_header_id=data_respons_header.pk)
-        data_fenambelas = ResponsFEnambelasDetail.objects.filter(respons_header_id=data_respons_header.pk).values_list('respons', flat=True)
+        get_data_fenambelas = ResponsFEnambelasDetail.objects.values_list('respons', flat=True).get(respons_header_id=data_respons_header.pk)
+        data_fenambelas = get_data_fenambelas.split(";")
         # return data F11-F16 into context
         context['data_fsebelas'] = data_fsebelas
         context['data_ftigabelas'] = data_ftigabelas
@@ -153,7 +160,12 @@ def create(request):
     
     # Returns to template
     template_name       = 'respons/respons_form.html'
-    context['title']    = 'Create Respons'    
+    context = {
+        'title': 'Create Respons',
+        'nav_item_kuesioner': 'menu-open',
+        'nav_status_kuesioner': 'active',
+        'nav_status_pengisian_kuesioner': 'active',
+    }
 
     # Get Kuesioner 
     key_context_kuesioner = 'kuesioner_'
@@ -253,7 +265,7 @@ def create(request):
                     getlist_fempat = request.POST.getlist('respons_f4')
                      
                     for value in getlist_fempat:
-                        data_fempat += value + "|" 
+                        data_fempat += value + ";" 
 
                     fempat = ResponsFEmpatDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f4')),
@@ -320,7 +332,7 @@ def create(request):
                         getlist_respons_f9 = request.POST.getlist('respons_f9')
                          
                         for value in getlist_respons_f9:
-                            data_fsembilan += value + "|"
+                            data_fsembilan += value + ";"
 
                         fsembilan = ResponsFSembilanDetail.objects.create(
                             master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f9')),
@@ -389,7 +401,7 @@ def create(request):
                         getlist_respons_fenambelas = request.POST.getlist('respons_f16')
 
                         for value in getlist_respons_fenambelas:
-                            data_fenambelas += value + "|"
+                            data_fenambelas += value + ";"
 
                         fenambelas = ResponsFEnambelasDetail.objects.create(
                             master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f16')),
@@ -437,7 +449,10 @@ def create(request):
 def update(request, update_id):
     template_name       = 'respons/respons_form.html'
     context             = {
-        'title': 'Create Respons'
+        'title': 'Create Respons',
+        'nav_item_responden': 'menu-open',
+        'nav_status_responden': 'active',
+        'nav_status_daftar_responden': 'active',
         }
     # Get Kuesioner 
     key_context_kuesioner = 'kuesioner_'
@@ -470,7 +485,7 @@ def update(request, update_id):
 
     # F4
     get_value_fempat = ResponsFEmpatDetail.objects.get(respons_header_id__pk=update_id)
-    data_update_fempat = get_value_fempat.respons.split("|")
+    data_update_fempat = get_value_fempat.respons.split(";")
     data_form_fempat = {
         'respons_f4': data_update_fempat
     }
@@ -517,7 +532,7 @@ def update(request, update_id):
     # F9
     if ResponsFSembilanDetail.objects.filter(respons_header_id__pk=update_id).exists():
         get_value_fsembilan = ResponsFSembilanDetail.objects.get(respons_header_id__pk=update_id)
-        data_update_fsembilan = get_value_fsembilan.respons.split("|")
+        data_update_fsembilan = get_value_fsembilan.respons.split(";")
         data_form_fsembilan = {
             'respons_f9': data_update_fsembilan
         }
@@ -578,9 +593,7 @@ def update(request, update_id):
     # F16
     if ResponsFEnambelasDetail.objects.filter(respons_header_id__pk=update_id).exists():
         get_value_fenambelas = ResponsFEnambelasDetail.objects.get(respons_header_id__pk=update_id)
-        print(get_value_fenambelas)
-        data_update_fenambelas = get_value_fenambelas.respons.split("|")
-        print(data_update_fenambelas)
+        data_update_fenambelas = get_value_fenambelas.respons.split(";")
         data_form_fenambelas = {
             'respons_f16': data_update_fenambelas
         }
@@ -658,7 +671,7 @@ def update(request, update_id):
 
                 # return value into variable
                 for value in getlist_respons_f4:
-                     data_fempat += value + "|"   
+                     data_fempat += value + ";"   
 
                 # return value getlist into database
                 get_fempat = ResponsFEmpatDetail.objects.get(respons_header_id__pk=respons_header.pk)
@@ -706,7 +719,7 @@ def update(request, update_id):
 
                     # return value into variable
                     for value in getlist_respons_f9:
-                        data_fsembilan += value + "|"
+                        data_fsembilan += value + ";"
 
                     # return data into database 
                     get_fsembilan = ResponsFSembilanDetail.objects.get(respons_header_id__pk=respons_header.pk)
@@ -756,7 +769,7 @@ def update(request, update_id):
                     getlist_respons_f16 = request.POST.getlist('respons_f16')
                     # return value into variable
                     for value in getlist_respons_f16:
-                        data_fenambelas += value + "|"
+                        data_fenambelas += value + ";"
                     get_fenambelas = ResponsFEnambelasDetail.objects.get(respons_header_id__pk=respons_header.pk)
                     fenambelas = ResponsFEnambelasDetail.objects.filter(pk=get_fenambelas.pk).update(
                         respons = data_fenambelas
