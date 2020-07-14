@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'lulusan',
     'poltektedc',
     'respons',
+    'report',
 ]
 
 MIDDLEWARE = [

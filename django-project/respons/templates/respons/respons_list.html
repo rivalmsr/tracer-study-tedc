@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {{title}}
@@ -8,10 +9,22 @@
     <h1>{{title}}</h1><br>
     <ul>
         <li>
-            <a href="">Input Data Mahasiswa</a>
+            <a href="{% url 'lulusan:create' %}">Input Data Mahasiswa</a>
         </li>
     </ul>
+
+    <input id="myInput" type="text" placeholder="Search...">
+    <select id="myOpsi">
+        <option>Pilihan Prodi</option>
+        {% for prodi in list_of_responden %}
+            <option value="{{prodi.master_fsatu_id.master_prodi_id.nama}}">{{prodi.master_fsatu_id.master_prodi_id.nama}}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" id="myFilter">Filter</button>
+    <br><br>
+
     <table>
+    <thead>
         <tr>
             <th>No</th>
             <th>Nama</th>
@@ -21,6 +34,8 @@
             <th>Publish</th>
             <th>Opsi</th>
         </tr>
+    </thead>
+    <tbody id="myTable">
     {% for responden in list_of_responden %}
         <tr>
             <td>{{forloop.counter}}</td>
@@ -37,7 +52,34 @@
             </td>
         </tr>
     {% endfor %}
-        
-        </table>
+    <tbody>
+    </table>
 
 {% endblock %}
+
+{% block javascript %}
+    {% include 'lib/_scripts.html' %}
+    <!-- jsGrid -->
+    <script src=" {% static 'admin-lte/plugins/jsgrid/demos/db.js' %}"></script>
+    <script src=" {% static 'admin-lte/plugins/jsgrid/jsgrid.min.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myInput').on('keyup', function() {
+                var value = $(this).val().toLowerCase();
+                console.log(value);
+                $('#myTable tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > - 1)
+                });
+            });
+
+            $('#myFilter').on('click', function() {
+                var value = $('#myOpsi').val().toLowerCase();
+                console.log(value);
+                $('#myTable tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > - 1)
+                });
+            });
+        });
+    </script>
+
+{% endblock  %}

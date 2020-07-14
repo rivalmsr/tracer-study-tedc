@@ -10,6 +10,7 @@ from .views import (
 urlpatterns = [
     path('accounts/logout/', logout_view, name='logout'),
     path('accounts/login/', login_view, name='login' ),
+    path('report/', include('report.urls', namespace='report')),
     path('respons/', include('respons.urls', namespace='respons')),
     path('lulusan/', include('lulusan.urls', namespace='lulusan')),
     path('kuesioner/', include('kuesioner.urls', namespace='kuesioner')),

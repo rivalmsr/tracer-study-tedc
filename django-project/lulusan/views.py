@@ -129,3 +129,10 @@ def delete(request, delete_id):
 #     template_name       = 'lulusan/lulusan_confirm_delete.html'
 #     success_url         = reverse_lazy('lulusan:list')
 
+def lulusan_profile(request):
+    template_name = 'lulusan/lulusan_profile.html'
+    context = {
+        'title': 'Profil Lulusan'
+    }
+
+    return render(request, template_name, context)
