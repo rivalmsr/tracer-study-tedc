@@ -15,7 +15,7 @@
 
     <input id="myInput" type="text" placeholder="Search...">
     <select id="myOpsi">
-        <option>Pilihan Prodi</option>
+        <option value=""> Semua Prodi</option>
         {% for prodi in list_of_responden %}
             <option value="{{prodi.master_fsatu_id.master_prodi_id.nama}}">{{prodi.master_fsatu_id.master_prodi_id.nama}}</option>
         {% endfor %}
@@ -64,9 +64,10 @@
     <script src=" {% static 'admin-lte/plugins/jsgrid/jsgrid.min.js' %}"></script>
     <script>
         $(document).ready(function() {
+            $(':reset');
+
             $('#myInput').on('keyup', function() {
                 var value = $(this).val().toLowerCase();
-                console.log(value);
                 $('#myTable tr').filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > - 1)
                 });
@@ -74,11 +75,12 @@
 
             $('#myFilter').on('click', function() {
                 var value = $('#myOpsi').val().toLowerCase();
-                console.log(value);
                 $('#myTable tr').filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > - 1)
                 });
             });
+
+
         });
     </script>
 

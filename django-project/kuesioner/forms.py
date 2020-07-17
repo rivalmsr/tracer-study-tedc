@@ -13,4 +13,37 @@ class MasterFSatuForm(forms.ModelForm):
             'nomor_telepon',
             'alamat_email',
             ]
-        
+        widgets = {
+
+            'nomor_mahasiswa': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'tahun_lulus': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'master_prodi_id': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'nama': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'nomor_telepon': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'alamat_email': forms.EmailInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+
+        }

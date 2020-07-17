@@ -64,11 +64,13 @@ class MasterFSatu(models.Model):
     nomor_mahasiswa     = models.CharField(
                             max_length=12,
                             unique=True)
+    DEFAULT_POLTEK = 1
     master_poltek_id    = models.ForeignKey(
                         MasterPoltekTedc,
                         models.SET_NULL,
                         blank=True,
                         null=True,
+                        default=DEFAULT_POLTEK,
     )
     master_prodi_id     = models.ForeignKey(
                         MasterProdi,

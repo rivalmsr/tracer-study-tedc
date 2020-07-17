@@ -65,7 +65,7 @@ class LulusanListView(ListView):
     context_object_name = 'list_of_lulusan'
     template_name       = 'lulusan/lulusan_list.html'
     extra_context       = {
-        'title': 'List Lulusan',
+        'title': 'Daftar Lulusan',
         'nav_item_lulusan': 'menu-open',
         'nav_status_lulusan': 'active',
         'nav_status_daftar_lulusan': 'active',

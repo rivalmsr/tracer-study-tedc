@@ -1,4 +1,6 @@
+import xlwt
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 
 from django.views.generic import (
@@ -230,7 +232,6 @@ def create(request):
             
             if  ResponsHeader.objects.filter(master_fsatu_id__pk=request.POST.get('respons_f1')).exists():
                 get_respons_header = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1'))
-                print("ini id :", get_respons_header.pk)
                 # Respons F2
                 if fdua_form.is_valid():
                     data_fdua = {}
@@ -800,3 +801,98 @@ def update(request, update_id):
             return redirect('respons:detail', update_id)
                 
     return render(request, template_name, context)
+
+def export_xls(request):
+    response = HttpResponse(content_type="")
+    response['Content-Disposition'] = 'attachment; filename="Master-Kuesioner.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Kuesioner')
+
+    # sheet header, first row
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = [
+        'kdptimsmh', 'kdpstmsmh', 'nimhsmsmh', 'nmmhsmsmh', 'telpomsmh', 'emailmsmh', 'tahun_lulus', #fsatu
+        'f21', 'f22', 'f23', 'f24', 'f25', 'f26', 'f27', #fdua
+        'f301', 'f302', 'f303', #ftiga
+        'f401', 'f402', 'f403', 'f404', 'f405', 'f406', 'f407', 'f408', 'f409', 'f410', 'f411', 'f412', 'f413', 'f414', 'f415', 'f416', #fempat
+
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    # empty list master_rows
+    master_rows = []
+    # sheet body, remaining rows
+    print("start test")
+    list_header_respons_id = ResponsHeader.objects.all().values_list('master_fsatu_id__pk', flat=True).order_by('pk')
+    for master_fsatu_id in list_header_respons_id:
+        # empty list temp_rows
+        temp_rows = []
+        # get respons_header form database
+        get_respons_header = ResponsHeader.objects.get(master_fsatu_id__pk=master_fsatu_id)
+
+        # insert values fsatu into rows 
+        fsatu_rows = MasterFSatu.objects.values_list('master_poltek_id__kode', 'master_prodi_id__kode', 'nomor_mahasiswa', 'nama', 'nomor_telepon', 'alamat_email', 'tahun_lulus').get(pk=master_fsatu_id)
+        for row in fsatu_rows:
+            temp_rows.append(row)
+
+        # insert values fdua into rows 
+        fdua_rows = ResponsFDuaDetail.objects.filter(respons_header_id__pk=get_respons_header.id).values_list('respons', flat=True).order_by('id')
+        temp_rows.extend(fdua_rows)
+
+        # insert values ftiga into rows 
+        ftiga_rows = ResponsFTigaDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+        list_ftiga = []
+        if ftiga_rows.keterangan == 'Saya tidak mencari kerja':
+            list_ftiga = [ftiga_rows.keterangan, '', '']
+        elif ftiga_rows.keterangan == 'Sebelum Lulus':
+            list_ftiga = [ftiga_rows.respons, ftiga_rows.keterangan, '']
+        elif ftiga_rows.keterangan == 'Sesudah Lulus':
+            list_ftiga = [ftiga_rows.respons, '', ftiga_rows.keterangan]
+        temp_rows.extend(list_ftiga)
+
+        # insert values fempat into rows 
+        # initialization
+        list_kode_and_respons = {}
+        list_kode = []
+        list_fempat = []
+        # get values fempat and insert to list
+        get_fempat = ResponsFEmpatDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+        list_respons_fempat = get_fempat.respons.split(';')
+        for respons in list_respons_fempat:
+            if respons != '':
+                get_opsi_respons = MasterOpsiRespons.objects.get(opsi_respons=respons)
+            list_kode_and_respons[get_opsi_respons.kode] = get_opsi_respons.opsi_respons
+            list_kode.append(get_opsi_respons.kode)
+        # list from kode fempat
+        list_queueing_fempat = [
+            'F4-01', 'F4-02', 'F4-03', 'F4-04', 'F4-05', 'F4-06', 
+            'F4-07', 'F4-08', 'F4-09',  'F4-10', 'F4-11', 'F4-12',
+             'F4-13', 'F4-14', 'F4-15', 'F4-16',  
+        ]
+        # make list fempat such as queuing
+        for value in list_queueing_fempat:
+            if value in list_kode:
+                get_value = list_kode_and_respons.get(value)
+                list_fempat.append(get_value)
+            else:
+                list_fempat.append('')
+        temp_rows.extend(list_fempat)
+
+        # result all values to master rows
+        master_rows.append(temp_rows)
+        
+    print(master_rows)
+    print("end test")
+    
+    for row in master_rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+
+    wb.save(response)
+    return response

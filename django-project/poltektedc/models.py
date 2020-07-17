@@ -2,7 +2,10 @@ from django.db import models
 
 
 class MasterPoltekTedc(models.Model):
-    kode            = models.SmallIntegerField(default='045016')
+    kode            = models.CharField(
+                        max_length=6,
+                        default='045016',
+    )
     nama            = models.CharField(max_length=100)
     status          = models.CharField(max_length=5, default='Aktif')
     email           = models.EmailField(blank=True)
@@ -16,7 +19,7 @@ class MasterPoltekTedc(models.Model):
         return "%s - %s" % (self.kode, self.nama)
 
 class MasterProdi(models.Model):
-    kode            = models.SmallIntegerField()
+    kode            = models.PositiveIntegerField()
     nama            = models.CharField(max_length=100)
 
     STATUS_PRODI = (

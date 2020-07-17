@@ -65,7 +65,7 @@ class ResponsFDuaForm(forms.Form):
 
 
 class ResponsFTigaForm(forms.Form):
-    respons_f3_1 = forms.IntegerField()
+    respons_f3_1 = forms.IntegerField(required=False)
 
     # Get Choices Respons
     CHOICES_F3_2 = MasterOpsiRespons.objects.filter(master_kuesioner_id__kode='F3').values_list('opsi_respons', 'opsi_respons')

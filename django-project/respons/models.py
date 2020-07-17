@@ -69,14 +69,18 @@ class ResponsFTigaDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.SmallIntegerField(blank=True)
+    respons                 = models.CharField(
+                                max_length=5,
+                                blank=True,
+                                null=True,
+    )
     keterangan              = models.CharField(max_length=30)
 
     def save(self, **kwargs):
         super(ResponsFTigaDetail, self).save(**kwargs)
 
     def __str__(self):
-        return "%s - %s %s" % (self.master_kuesioner_id, self.respons, "Bulan" )
+        return "%s - %s %s" % (self.master_kuesioner_id, self.respons, self.keterangan)
 
 
 

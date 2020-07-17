@@ -34,7 +34,11 @@
     {% for kuesioner in kuesioner_F3 %}
     <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
     <h5>
-        Kira-kira Bulan {{data_ftiga.respons}} {{data_ftiga.keterangan}} 
+        {% if data_ftiga.respons %}
+            Kira-kira Bulan {{data_ftiga.respons}} {{data_ftiga.keterangan}} 
+        {% else %}
+            {{data_ftiga.keterangan}} 
+        {% endif %}
     </h5>
     {% endfor %}
     <hr>

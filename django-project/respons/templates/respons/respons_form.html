@@ -85,7 +85,8 @@
                 <input type="hidden" name="kuesioner_f3" value="{{kuesioner.pk}}">
                 <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                 <h6><b>{{kuesioner.keterangan}}</b></h6>
-               {{ftiga_form.respons_f3_1}}<br>
+                {{ftiga_form.respons_f3_1}}
+               <br>
                 {% for radio in ftiga_form.respons_f3_2%}
                     {% if radio.id_for_label != "id_respons_f3_2_2" %}
 

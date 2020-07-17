@@ -6,11 +6,13 @@ from .views import (
     create,
     update,
     ResponsListView,
+    export_xls,
 )
 
 
 app_name = 'respons'
 urlpatterns = [
+    path('export_xls/', login_required(export_xls), name='export-xls' ),
     path('list/', login_required(ResponsListView.as_view()), name='list'),
     path('detail/<int:detail_id>/', login_required(detail), name='detail'),
     path('update/<int:update_id>/', login_required(update), name='update'),
