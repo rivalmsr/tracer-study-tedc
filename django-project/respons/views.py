@@ -819,7 +819,16 @@ def export_xls(request):
         'f21', 'f22', 'f23', 'f24', 'f25', 'f26', 'f27', #fdua
         'f301', 'f302', 'f303', #ftiga
         'f401', 'f402', 'f403', 'f404', 'f405', 'f406', 'f407', 'f408', 'f409', 'f410', 'f411', 'f412', 'f413', 'f414', 'f415', 'f416', #fempat
-
+        'f6', #fenam
+        'f501', 'f502', 'f503', #flima
+        'f7', #ftujuh
+        'f7a', #ftuju_a
+        'f8', #fdelapan
+        'f901', 'f902', 'f903', 'f904', 'f905', 'f906', #fsembilan
+        'f101', 'f102', #fsepuluh
+        'f1101', 'f1102', #fsebelas
+        'f1201', 'f1202', #fduabelas
+        'f1301', 'f1302', 'f1303' #ftigabelas
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
@@ -835,16 +844,16 @@ def export_xls(request):
         # get respons_header form database
         get_respons_header = ResponsHeader.objects.get(master_fsatu_id__pk=master_fsatu_id)
 
-        # insert values fsatu into rows 
+        # insert values fsatu into temp_rows
         fsatu_rows = MasterFSatu.objects.values_list('master_poltek_id__kode', 'master_prodi_id__kode', 'nomor_mahasiswa', 'nama', 'nomor_telepon', 'alamat_email', 'tahun_lulus').get(pk=master_fsatu_id)
         for row in fsatu_rows:
             temp_rows.append(row)
 
-        # insert values fdua into rows 
+        # insert values fdua into temp_rows
         fdua_rows = ResponsFDuaDetail.objects.filter(respons_header_id__pk=get_respons_header.id).values_list('respons', flat=True).order_by('id')
         temp_rows.extend(fdua_rows)
 
-        # insert values ftiga into rows 
+        # insert values ftiga into temp_rows 
         ftiga_rows = ResponsFTigaDetail.objects.get(respons_header_id__pk=get_respons_header.id)
         list_ftiga = []
         if ftiga_rows.keterangan == 'Saya tidak mencari kerja':
@@ -855,33 +864,134 @@ def export_xls(request):
             list_ftiga = [ftiga_rows.respons, '', ftiga_rows.keterangan]
         temp_rows.extend(list_ftiga)
 
-        # insert values fempat into rows 
+        # insert values fempat into temp_rows 
         # initialization
         list_kode_and_respons = {}
         list_kode = []
         list_fempat = []
         # get values fempat and insert to list
-        get_fempat = ResponsFEmpatDetail.objects.get(respons_header_id__pk=get_respons_header.id)
-        list_respons_fempat = get_fempat.respons.split(';')
+        get_value_fempat = ResponsFEmpatDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+        list_respons_fempat = get_value_fempat.respons.split(';')
         for respons in list_respons_fempat:
             if respons != '':
-                get_opsi_respons = MasterOpsiRespons.objects.get(opsi_respons=respons)
+                if respons == 'Lainnya':
+                    get_opsi_respons = MasterOpsiRespons.objects.get(kode='F4-15')
+                else:
+                    get_opsi_respons = MasterOpsiRespons.objects.get(opsi_respons=respons)
             list_kode_and_respons[get_opsi_respons.kode] = get_opsi_respons.opsi_respons
             list_kode.append(get_opsi_respons.kode)
-        # list from kode fempat
+        # list kode fempat
         list_queueing_fempat = [
             'F4-01', 'F4-02', 'F4-03', 'F4-04', 'F4-05', 'F4-06', 
             'F4-07', 'F4-08', 'F4-09',  'F4-10', 'F4-11', 'F4-12',
              'F4-13', 'F4-14', 'F4-15', 'F4-16',  
         ]
         # make list fempat such as queuing
-        for value in list_queueing_fempat:
-            if value in list_kode:
-                get_value = list_kode_and_respons.get(value)
+        for queue in list_queueing_fempat:
+            if queue in list_kode:
+                get_value = list_kode_and_respons.get(queue)
                 list_fempat.append(get_value)
             else:
                 list_fempat.append('')
         temp_rows.extend(list_fempat)
+
+        # insert values fenam into temp_rows 
+        get_value_fenam = ResponsFEnamDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+        temp_rows.extend(str(get_value_fenam.respons))
+
+        # insert values flima into temp_rows
+        get_value_flima = ResponsFLimaDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+        checking_value = [get_value_flima.respons, get_value_flima.keterangan]
+        temp_flima = []
+        if get_value_flima.keterangan == 'Sebelum Lulus':
+            temp_flima = [get_value_flima.respons, get_value_flima.keterangan, '']
+        else:
+            temp_flima = [get_value_flima.respons, '', get_value_flima.keterangan]
+        temp_rows.extend(temp_flima)
+
+        # insert values ftujuh into temp_rows
+        get_value_ftujuh = ResponsFTujuhDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+        temp_ftujuh = get_value_ftujuh.respons
+        temp_rows.append(str(temp_ftujuh))
+
+        # insert values ftujuh_a into temp_rows
+        get_value_ftujuh_a = ResponsFTujuhADetail.objects.get(respons_header_id__pk=get_respons_header.id)
+        temp_ftujuh_a = get_value_ftujuh_a.respons
+        temp_rows.append(str(temp_ftujuh_a))
+
+        # insert values fdelapan into temp_rows
+        get_value_fdelapan = ResponsFDelapanDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+        temp_fdelapan = get_value_fdelapan.respons
+        temp_rows.append(temp_fdelapan)
+
+        # Optional Conditions F9 - F10
+        if ResponsFSembilanDetail.objects.filter(respons_header_id__pk=get_respons_header.id):
+
+            # insert values fsembilan into temp_rows
+            # initialization list
+            list_kode_and_respons = {}
+            list_kode = []
+            list_fsembilan = []
+            get_value_fsembilan = ResponsFSembilanDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+            list_respons_fsembilan = get_value_fsembilan.respons.split(';')
+            for respons in list_respons_fsembilan:
+                if respons != '':
+                    if respons == 'Lainnya':
+                        get_opsi_respons = MasterOpsiRespons.objects.get(kode='F9-05')
+                    else:
+                        get_opsi_respons = MasterOpsiRespons.objects.get(opsi_respons=respons)
+                list_kode_and_respons[get_opsi_respons.kode] = get_opsi_respons.opsi_respons
+                list_kode.append(get_opsi_respons.kode)
+
+            list_queuing_fsembilan = [
+                'F9-01', 'F9-02', 'F9-03', 'F9-04', 'F9-05', 'F9-06' 
+            ]
+            # make list fempat such as queuing
+            for queue in list_queuing_fsembilan:
+                if queue in list_kode:
+                    get_value = list_kode_and_respons.get(queue)
+                    list_fsembilan.append(get_value)
+                else:
+                    list_fsembilan.append('')
+            temp_rows.extend(list_fsembilan)
+
+            # insert values fsepuluh into temp_rows
+            get_value_fsepuluh = ResponsFSepuluhDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+            temp_fsepuluh = [get_value_fsepuluh.respons, '']
+            temp_rows.extend(temp_fsepuluh)
+
+            # IF NOT VALUES IN RESPONS F11 - F16 TO INSERT ROWS
+            list_fsepuluh = ['', '']
+            list_fsebelas = ['', '']
+            list_fduabelas = ['', '']
+            list_ftigabelas = ['', '', '']
+            temp_rows.extend(list_fsepuluh)
+            temp_rows.extend(list_fsebelas)
+            temp_rows.extend(list_fduabelas)
+            temp_rows.extend(list_ftigabelas)
+        else:
+            # IF NOT VALUES IN RESPONS F9 - F10 TO INSERT ROWS
+            list_fsembilan = ['', '', '', '', '', '' ]
+            list_fsepuluh = ['', '']
+            temp_rows.extend(list_fsembilan)
+            temp_rows.extend(list_fsepuluh)
+
+            # insert values fsebelas into temp_rows
+            get_value_fsebelas = ResponsFSebelasDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+            temp_fsebelas = [get_value_fsebelas.respons, '']
+            temp_rows.extend(temp_fsebelas)
+
+            # IF NOT VALUES IN RESPONS F12 TO INSERT ROWS
+            list_fduabelas = ['', '']
+            temp_rows.extend(list_fduabelas)
+
+            # insert values ftigabelas into temp_rows
+            # initialization list
+            temp_ftigabelas = []
+            get_values_ftigabelas = ResponsFTigabelasDetail.objects.filter(respons_header_id__pk=get_respons_header.id).values_list('respons', flat=True).order_by('pk')
+            for value in get_values_ftigabelas:
+                temp_ftigabelas.append(value)
+            temp_rows.extend(temp_ftigabelas)
 
         # result all values to master rows
         master_rows.append(temp_rows)
