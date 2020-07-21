@@ -813,6 +813,7 @@ def export_xls(request):
     row_num = 0
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
+    
 
     columns = [
         'kdptimsmh', 'kdpstmsmh', 'nimhsmsmh', 'nmmhsmsmh', 'telpomsmh', 'emailmsmh', 'tahun_lulus', #fsatu
@@ -970,14 +971,12 @@ def export_xls(request):
             temp_rows.extend(temp_fsepuluh)
 
             # IF NOT VALUES IN RESPONS F11 - F16 TO INSERT ROWS
-            list_fsepuluh = ['', '']
             list_fsebelas = ['', '']
             list_fduabelas = ['', '']
             list_ftigabelas = ['', '', '']
             list_fempatbelas = ['']
             list_flimabelas = ['']
             list_fenambelas = ['', '', '', '', '', '', '','', '', '', '', '', '', '', ]
-            temp_rows.extend(list_fsepuluh)
             temp_rows.extend(list_fsebelas)
             temp_rows.extend(list_fduabelas)
             temp_rows.extend(list_ftigabelas)
@@ -1049,17 +1048,22 @@ def export_xls(request):
 
             print('list_fenambelas', list_fenambelas)
             temp_rows.extend(list_fenambelas)
-
+        # insert values ftujuhbelas into temp_rows
+        # initializition
+        list_ftujuhbelas = []
+        get_values_ftujuhbelas_a = ResponsFTujuhbelasADetail.objects.filter(respons_header_id__pk=get_respons_header.id).values_list('respons', flat=True).order_by('pk')
+        get_values_ftujuhbelas_b = ResponsFTujuhbelasBDetail.objects.filter(respons_header_id__pk=get_respons_header.id).values_list('respons', flat=True).order_by('pk')
+        for value_a, value_b in zip(get_values_ftujuhbelas_a, get_values_ftujuhbelas_b):
+            list_ftujuhbelas.append(value_a)
+            list_ftujuhbelas.append(value_b)
+        temp_rows.extend(list_ftujuhbelas)
         # result all values to master rows
         master_rows.append(temp_rows)
-        
-    print(master_rows)
-    print("end test")
-    
+
     for row in master_rows:
         row_num += 1
         for col_num in range(len(row)):
             ws.write(row_num, col_num, row[col_num], font_style)
-
+            
     wb.save(response)
     return response

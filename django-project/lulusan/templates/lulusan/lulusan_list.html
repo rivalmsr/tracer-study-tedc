@@ -47,9 +47,9 @@
                                 <td>{{lulusan.nomor_telepon}}</td>
                                 <td>{{lulusan.alamat_email}}</td>
                                 <td>
-                                    <a href="{% url 'lulusan:detail' lulusan.slug %}">Detail</a>
-                                    <a href="{% url 'lulusan:update' lulusan.pk %}">Edit</a>
-                                    <a href="{% url 'lulusan:delete' lulusan.pk %}">Hapus</a>
+                                    <a class="btn btn-info btn-sm" href="{% url 'lulusan:detail' lulusan.slug %}">Detail</a>
+                                    <a class="btn btn-warning btn-sm" href="{% url 'lulusan:update' lulusan.pk %}">Edit</a>
+                                    <a class="btn btn-danger btn-sm" href="{% url 'lulusan:delete' lulusan.pk %}">Hapus</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -85,10 +85,6 @@
     <!-- page script -->
     <script>
     $(function () {
-        $("#example1").DataTable({
-        "responsive": true,
-        "autoWidth": false,
-        });
         $('#example2').DataTable({
         "paging": true,
         "lengthChange": false,

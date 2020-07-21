@@ -5,63 +5,124 @@
     {{title}}
 {% endblock title %}
 
+{% block stylesheets %}
+    {% include 'lib/_styles.html' %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin-lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock  %}
+
 {% block content %}
     <h1>{{title}}</h1><br>
-    <ul>
-        <li>
-            <a href="{% url 'lulusan:create' %}">Input Data Mahasiswa</a>
-        </li>
-    </ul>
 
-    <input id="myInput" type="text" placeholder="Search...">
-    <select id="myOpsi">
-        <option value=""> Semua Prodi</option>
-        {% for prodi in list_of_responden %}
-            <option value="{{prodi.master_fsatu_id.master_prodi_id.nama}}">{{prodi.master_fsatu_id.master_prodi_id.nama}}</option>
-        {% endfor %}
-    </select>
-    <button type="submit" id="myFilter">Filter</button>
-    <br><br>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-olive text-sm">
+                <div class="card-header">
+                    <h3 class="card-title">{{title}}</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="input-group input-group-sm">
+                                <a class="btn btn-outline-primary btn-sm" href="{% url 'lulusan:create' %}">Input Data Mahasiswa</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control"  id="myInput" type="text" placeholder="Search...">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group input-group-sm">
+                                <select class="form-control" id="myOpsi">
+                                    <option value=""> Semua Prodi</option>
+                                    {% for prodi in list_of_responden %}
+                                        <option value="{{prodi.master_fsatu_id.master_prodi_id.nama}}">{{prodi.master_fsatu_id.master_prodi_id.nama}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="input-group-append">
+                                    <button class="btn btn-outline-primary btn-sm" type="submit" id="myFilter">Filter</button>
+                                </span>
+                            </div>
+                        </div>
 
-    <table>
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama</th>
-            <th>NIM</th>
-            <th>Program Studi</th>
-            <th>Tahun Lulus</th>
-            <th>Publish</th>
-            <th>Opsi</th>
-        </tr>
-    </thead>
-    <tbody id="myTable">
-    {% for responden in list_of_responden %}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{responden.master_fsatu_id.nama}}</td>
-            <td>{{responden.master_fsatu_id.nomor_mahasiswa}}</td>
-            <td>{{responden.master_fsatu_id.master_prodi_id.nama}}</td>
-            <td>{{responden.master_fsatu_id.tahun_lulus}}</td>
-            <td>{{responden.created|date}}</td>
-            
-            <td>
-                <a href="{% url 'respons:detail' responden.pk %}">Detail</a>
-                <a href="{% url 'respons:update' responden.pk %}">Edit</a>
-                <a href="">Hapus</a>
-            </td>
-        </tr>
-    {% endfor %}
-    <tbody>
-    </table>
+                    </div>
 
+                    <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>NIM</th>
+                            <th>Program Studi</th>
+                            <th>Tahun Lulus</th>
+                            <th>Publish</th>
+                            <th>Opsi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                    {% for responden in list_of_responden %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{responden.master_fsatu_id.nama}}</td>
+                            <td>{{responden.master_fsatu_id.nomor_mahasiswa}}</td>
+                            <td>{{responden.master_fsatu_id.master_prodi_id.nama}}</td>
+                            <td>{{responden.master_fsatu_id.tahun_lulus}}</td>
+                            <td>{{responden.created|date}}</td>
+                            
+                            <td>
+                                <a href="{% url 'respons:detail' responden.pk %}">Detail</a>
+                                <a href="{% url 'respons:update' responden.pk %}">Edit</a>
+                                <a href="">Hapus</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tbody>
+                    <tfoot>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>NIM</th>
+                            <th>Program Studi</th>
+                            <th>Tahun Lulus</th>
+                            <th>Publish</th>
+                            <th>Opsi</th>
+                        </tr>
+                    </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}
     {% include 'lib/_scripts.html' %}
-    <!-- jsGrid -->
-    <script src=" {% static 'admin-lte/plugins/jsgrid/demos/db.js' %}"></script>
-    <script src=" {% static 'admin-lte/plugins/jsgrid/jsgrid.min.js' %}"></script>
+    <!-- DataTables -->
+    <script src="{% static 'admin-lte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <!-- page script -->
+    <script>
+    $(function () {
+        $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        });
+    });
+    </script>
+    
+    <!-- Custome Filter -->
     <script>
         $(document).ready(function() {
             $(':reset');
@@ -79,7 +140,6 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > - 1)
                 });
             });
-
 
         });
     </script>

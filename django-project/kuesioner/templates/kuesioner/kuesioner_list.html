@@ -1,36 +1,87 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {{title}}
 {% endblock  %}
 
+{% block stylesheets %}
+    {% include 'lib/_styles.html' %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin-lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock  %}
+
 {% block content %}
-        <h1>{{title}}</h1><br>
-    <ul>
-        <li>
-            <a href="{% url 'admin:index' %}">Input Pertanyaan</a>
-        </li>
-    </ul>
-    <table>
-        <tr>
-            <th>No</th>
-            <th>Kode</th>
-            <th>Pertanyaan</th>
-            <th colspan="3">Opsi</th>
-        </tr>
-    {% for kuesioner in list_of_kuesioner %}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{kuesioner.kode}}</td>
-            <td>{{kuesioner.pertanyaan}}</td>
-            <td>
-                <a href="{% url 'admin:index' %}">Edit</a>
-            </td>
-            <td>
-                <a href="{% url 'admin:index' %}">Hapus</a>
-            </td>
-        </tr>
-    {% endfor %}
         
-        </table>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-olive text-sm">
+                <div class="card-header">
+                    <h3 class="card-title">{{title}}</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'admin:index' %}">Input Pertanyaan</a>
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kode</th>
+                                <th>Pertanyaan</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for kuesioner in list_of_kuesioner %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{kuesioner.kode}}</td>
+                                <td>{{kuesioner.pertanyaan}}</td>
+                                <td>
+                                    <a class="btn btn-warning btn-sm" href="{% url 'admin:index' %}">Edit</a>
+                                    <a class="btn btn-danger btn-sm" href="{% url 'admin:index' %}">Hapus</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>No</th>
+                                <th>Kode</th>
+                                <th>Pertanyaan</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </tfoot>
+                        
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+{% endblock  %}
+
+{% block javascript %}
+    {% include 'lib/_scripts.html' %}
+    <!-- DataTables -->
+    <script src="{% static 'admin-lte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <!-- page script -->
+    <script>
+    $(function () {
+        $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        });
+    });
+    </script>
 {% endblock  %}
