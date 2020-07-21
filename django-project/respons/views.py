@@ -828,7 +828,16 @@ def export_xls(request):
         'f101', 'f102', #fsepuluh
         'f1101', 'f1102', #fsebelas
         'f1201', 'f1202', #fduabelas
-        'f1301', 'f1302', 'f1303' #ftigabelas
+        'f1301', 'f1302', 'f1303', #ftigabelas
+        'f14', #fempatbelas
+        'f15', #fempatbelas
+        'f1601', 'f1602', 'f1603', 'f1604', 'f1605', 'f1606', 'f1607', 'f1608', 'f1609', 'f1610', 'f1611', 'f1612', 'f1613', 'f1614', #fempatbelas
+        'f1701', 'f1702b', 'f1703',	'f1704b', 'f1705', 'f1705a', 'f1706', 'f1706ba', 'f1707', 'f1708b', 'f1709', 'f1710b', 
+        'f1711', 'f1711a', 'f1712b', 'f1712a', 'f1713', 'f1714b', 'f1715', 'f1716b', 'f1717', 'f1718b', 'f1719', 'f1720b', 
+        'f1721', 'f1722b', 'f1723', 'f1724b', 'f1725', 'f1726b', 'f1727', 'f1728b', 'f1729', 'f1730b', 
+        'f1731', 'f1732b', 'f1733', 'f1734b', 	'f1735', 'f1736b', 'f1737', 'f1737a', 'f1738', 'f1738ba', 'f1739', 'f1740b', 
+        'f1741', 'f1742b', 'f1743', 'f1744b', 'f1745', 'f1746b', 'f1747', 'f1748b', 'f1749', 'f1750b', 'f1751', 'f1752b', 'f1753', 'f1754b', #ftujubelas_a and ftujubelas_b
+
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
@@ -965,10 +974,16 @@ def export_xls(request):
             list_fsebelas = ['', '']
             list_fduabelas = ['', '']
             list_ftigabelas = ['', '', '']
+            list_fempatbelas = ['']
+            list_flimabelas = ['']
+            list_fenambelas = ['', '', '', '', '', '', '','', '', '', '', '', '', '', ]
             temp_rows.extend(list_fsepuluh)
             temp_rows.extend(list_fsebelas)
             temp_rows.extend(list_fduabelas)
             temp_rows.extend(list_ftigabelas)
+            temp_rows.extend(list_fempatbelas)
+            temp_rows.extend(list_flimabelas)
+            temp_rows.extend(list_fenambelas)
         else:
             # IF NOT VALUES IN RESPONS F9 - F10 TO INSERT ROWS
             list_fsembilan = ['', '', '', '', '', '' ]
@@ -992,6 +1007,48 @@ def export_xls(request):
             for value in get_values_ftigabelas:
                 temp_ftigabelas.append(value)
             temp_rows.extend(temp_ftigabelas)
+
+            # insert values fempat into temp_rows
+            get_values_fempatbelas = ResponsFEmpatbelasDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+            temp_fempatbelas = get_values_fempatbelas.respons
+            temp_rows.append(temp_fempatbelas)
+
+            # insert values flimabelas into temp_rows
+            get_values_flimabelas = ResponsFLimabelasDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+            temp_flimabelas = get_values_flimabelas.respons
+            temp_rows.append(temp_flimabelas)
+
+            # insert values fenambelas into temp_rows
+            # initialization
+            list_fenambelas = []
+            list_kode_and_respons = {}
+            list_kode = []
+            get_values_fenambelas = ResponsFEnambelasDetail.objects.get(respons_header_id__pk=get_respons_header.id)
+            list_values = get_values_fenambelas.respons.split(';')
+            print('list values:', list_values)
+            for value in list_values:
+                if value != '':
+                    if value == 'Lainnya':
+                        get_opsi_respons = MasterOpsiRespons.objects.get(kode='F16-13')
+                    else:
+                        get_opsi_respons = MasterOpsiRespons.objects.get(opsi_respons=value)
+                list_kode_and_respons[get_opsi_respons.kode] = get_opsi_respons.opsi_respons
+                list_kode.append(get_opsi_respons.kode)
+            # queuing concept
+            list_queuing_fenambelas = [
+                'F16-01', 'F16-02', 'F16-03', 'F16-04', 'F16-05', 'F16-06', 'F16-07', 
+                'F16-08', 'F16-09', 'F16-10', 'F16-11', 'F16-12', 'F16-13', 'F16-14', 
+            ]
+
+            for queue in list_queuing_fenambelas:
+                if queue in list_kode:
+                    get_value = list_kode_and_respons.get(queue)
+                    list_fenambelas.append(get_value)
+                else:
+                    list_fenambelas.append('')
+
+            print('list_fenambelas', list_fenambelas)
+            temp_rows.extend(list_fenambelas)
 
         # result all values to master rows
         master_rows.append(temp_rows)
