@@ -11,6 +11,10 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from kuesioner.models import MasterFSatu
@@ -36,6 +40,17 @@ def create(request):
                 user.groups.add(lulusan_group)
                 user.save()
 
+                # MAIL SYSTEM
+                htmly = get_template('lulusan/lulusan_email.html')
+                context_mail = {
+                    'username': username,
+                }
+                subject, form_email, to = 'Selamat Datang dilayanan Tracer Study Politeknik TEDC Bandung', 'rivalmusripal@gmail.com', user_email
+                html_content = htmly.render(context_mail)
+                msg = EmailMultiAlternatives(subject, html_content, form_email, [to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
+
     context = {
         'title': 'Tambah Data Lulusan',
         'nav_item_lulusan': 'menu-open',
@@ -58,7 +73,6 @@ def create(request):
 #     def get_context_data(self, *args, **kwargs):
 #         kwargs.update(self.extra_context)
 #         return super().get_context_data(*args, **kwargs)
-
 
 class LulusanListView(ListView):
     model               = MasterFSatu
