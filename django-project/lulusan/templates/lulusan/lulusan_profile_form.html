@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block stylesheets %}
+    {% include 'lib/_styles.html' %}
+    <!-- daterange picker -->
+    <link rel="stylesheet" href=" {% static 'admin-lte/plugins/daterangepicker/daterangepicker.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+{% endblock  %}
+
+{% block content %}
+    <!-- Horizontal Form -->
+        <div class="card card-teal text-sm">
+            <div class="card-header">
+            <h3 class="card-title">{{title}}</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+
+            {{form.non_field_errors}}
+                <div class="form-group row">
+                {{form.tanggal_lahir.errors}}
+                    <label for="{{form.tanggal_lahir.id_for_label}}" class="col-sm-3 col-form-label">Tanggal Lahir:</label>
+                    <div class="col-sm-9">
+                        {{form.tanggal_lahir}}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                {{form.jenis_kelamin.errors}}
+                    <label for="{{form.jenis_kelamin.id_for_label}}" class="col-sm-3 col-form-label">Jenis_Kelamin:</label>
+                    <div class="col-sm-9">
+                        {{form.jenis_kelamin}}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                {{form.status.errors}}
+                    <label for="{{form.status.id_for_label}}" class="col-sm-3 col-form-label">Status:</label>
+                    <div class="col-sm-9">
+                        {{form.status}}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                {{form.pendidikan_terakhir.errors}}
+                    <label for="{{form.pendidikan_terakhir.id_for_label}}" class="col-sm-3 col-form-label">Pendidikan Terakhir:</label>
+                    <div class="col-sm-9">
+                        {{form.pendidikan_terakhir}}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                {{form.angkatan.errors}}
+                    <label for="{{form.angkatan.id_for_label}}" class="col-sm-3 col-form-label">Angkatan:</label>
+                    <div class="col-sm-9">
+                        {{form.angkatan}}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                {{form.alamat.errors}}
+                    <label for="{{form.alamat.id_for_label}}" class="col-sm-3 col-form-label">Alamat:</label>
+                    <div class="col-sm-9">
+                        {{form.alamat}}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                <label for="{{form.foto.id_for_label}}" class="col-sm-3">Foto Profil:</label>
+                {{form.foto.errors}}
+                    <div class="input-group col-sm-9">
+                        <div class="custom-file">
+                            {{form.foto}}
+                            <label for="{{form.foto.id_for_label}}" class="custom-file-label">Pilih Foto:</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="">Upload</span>
+                      </div>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                {{form.akun_linkedin.errors}}
+                    <label for="{{form.akun_linkedin.id_for_label}}" class="col-sm-3 col-form-label">Akun Linkedin:</label>
+                    <div class="col-sm-9">
+                        {{form.akun_linkedin}}
+                    </div>
+                </div>
+
+            
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-info float-right">Simpan</button>
+            </div>
+            <!-- /.card-footer -->
+            </form>
+        </div>
+        <!-- /.card -->
+{% endblock %} 
+
+{% block javascript %}
+    {% include 'lib/_scripts.html' %}
+    <!-- bs-custom-file-input -->
+    <script src=" {% static 'admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js' %} "></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+{% endblock  %}

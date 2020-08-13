@@ -38,7 +38,7 @@ class MasterProdi(models.Model):
         ('D4', 'Diploma 4 (Empat)'),
     )
 
-    jejang          = models.CharField(
+    jenjang          = models.CharField(
                         max_length=2,
                         choices=LIST_DIPLOMA,
     )

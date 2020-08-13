@@ -13,6 +13,7 @@ class MasterFSatuForm(forms.ModelForm):
             'nomor_telepon',
             'alamat_email',
             ]
+            
         widgets = {
 
             'nomor_mahasiswa': forms.TextInput(

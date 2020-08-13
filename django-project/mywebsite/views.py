@@ -44,9 +44,7 @@ def login_view(request):
 
             form = auth_login(request, user)
             messages.success(request, f'welcome {username_login} !!')
-            print("masuk sini nih!")
             if request.GET.get('next'):
-                print("masuk sini nih juga!")
                 return redirect(request.GET.get('next'))
             else :
                 return redirect('beranda')

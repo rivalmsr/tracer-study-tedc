@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock  %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-teal card-outline card-tabs">
+              <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                  <li class="nav-item"> 
+                    <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Unduh Data</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Keterangan</a>
+                  </li>
+                  
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="custom-tabs-three-tabContent">
+
+                  <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                    
+                      <h5>Download Daftar Responsden dengan format xls:</h5>
+                      <a class="btn btn-secondary btn-sm" href="{% url 'respons:unduh-data' %}"><i class="fas fa-download"></i> Unduh Data Responden</a>
+                    
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                    Administrator dapat mengunggah file hasil tracer study perguruan tinggi dengan memilih 
+                    file yang akan diunggah. File master excel sebagai template pengisian data dapat diunduh
+                    pada link yang telah disediakan (“Master.xls”). Pengisian nilai – nilai pada kolom yang
+                    tersedia pada template excel adalah sebagai berikut:<br>
+                    <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Nama Field</th>
+                      <th>Keterangan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Kdptimsmh </td>
+                      <td>: Kode Perguruan Tinggi (PDPT)</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Kdpstmsmh </td>
+                      <td>: Kode Program Studi (PDPT)</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Nimmsmh </td>
+                      <td>: Nomor Induk Mahasiswa (PDPT)</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>Nmmsmh </td>
+                      <td>: Nama Mahasiswa</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>Telpomsmh </td>
+                      <td>: Nomor Telp/HP</td>
+                    </tr>
+                    <tr>
+                      <td>6</td>
+                      <td>Emailmsmh </td>
+                      <td>: Alamat email</td>
+                    </tr>
+                    <tr>
+                      <td>7</td>
+                      <td>F301 – f1754 </td>
+                      <td>: disesuaikan dengan value yang ada pada</td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+                    Referensi form yang digunakan:
+                    <a href="http://pkts.belmawa.ristekdikti.go.id/index.php/site/unduh">Form Kuisioner Standar Tracer Study 2017</a> 
+                  </div>
+                  
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+    </div>
+{% endblock  %}

@@ -1067,3 +1067,14 @@ def export_xls(request):
             
     wb.save(response)
     return response
+
+def unduh_data(request):
+    template_name   = 'respons/unduh_data_tracer.html'
+    context = {
+        'title': 'Unduh Data Tracer',
+        'nav_item_responden': 'menu-open',
+        'nav_status_responden': 'active',
+        'nav_status_unduh_data_responden': 'active',
+    }
+
+    return render(request, template_name, context)
