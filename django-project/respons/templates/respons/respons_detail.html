@@ -6,282 +6,369 @@
 {% endblock  %}
 
 {% block content %}
-    <h1>{{title}}</h1>
-    <h5>Nama : </h5>
-    <h4>{{data_respons_header.master_fsatu_id.nama}}</h4>
-    <h5>Nim : </h5>
-    <h4>{{data_respons_header.master_fsatu_id.nomor_mahasiswa}}</h4>
-    <h5>Jurusan : </h5>
-    <h4>{{data_respons_header.master_fsatu_id.master_prodi_id.nama}}</h4>
-    <h5>Lulusan : </h5>
-    <h4>{{data_respons_header.master_fsatu_id.tahun_lulus}}</h4>
-    <hr>
 
-    <h4>Tanggapan Responden</h4>
-    {% for kuesioner in kuesioner_F2 %}
-    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    <table>
-        {% for fdua in data_fdua %}
-        <tr>
-            <td>{{fdua.master_subkuesioner_id.sub_pertanyaan}}</td>
-            <td>{{fdua.respons}}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endfor %}
-    <hr>
+    <div class="row">
+          <div class="col-12">
+            <div class="callout callout-info">
+              <h5><i class="fas fa-info"></i> Note:</h5>
+              This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+            </div>
+
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+              <!-- title row -->
+              <div class="row">
+                <div class="col-12">
+                    <h4>
+                        <i class="fa fa-clipboard text-teal mr-2"></i> {{title}}
+                        <small class="float-right">Date: {{data_respons_header.updated|date}}</small>
+                    </h4>
+                    <a class="btn btn-info btn-sm float-right" href="{% url 'respons:update' data_respons_header.pk %}" tyle="margin-right: 5px;">
+                        <i class="fas fa-pencil-alt"></i>
+                        Edit
+                    </a>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- info row -->
+              <div class="row invoice-info">
+                <div class="col-sm-6 invoice-col">
+                    <h6>Nama : </h6>
+                    <h5 class="text-bold">{{data_respons_header.master_fsatu_id.nama}}</h5>
+                    <h6>Nim : </h6>
+                    <h5 class="text-bold">{{data_respons_header.master_fsatu_id.nomor_mahasiswa}}</h5>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    <h6>Jurusan : </h6>
+                    <h5 class="text-bold">{{data_respons_header.master_fsatu_id.master_prodi_id.nama}}</h5>
+                    <h6>Lulusan : </h6>
+                    <h5 class="text-bold">{{data_respons_header.master_fsatu_id.tahun_lulus}}</h5>
+                </div>
+                <!-- /.col -->
+                
+              </div>
+              <!-- /.row -->
+
+              <hr>
+
+              <!-- Table row -->
+              <div class="row">
+                <div class="col-12">
+                    <h4>Tanggapan Responden</h4>
+                    {% for kuesioner in kuesioner_F2 %}
+                    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                    <div class="table-responsive ml-3">
+                        <table class="table table-sm table-hover">
+                        <tbody>
+                            {% for fdua in data_fdua %}
+                            <tr>
+                                <td style="width:50%">{{fdua.master_subkuesioner_id.sub_pertanyaan}}</td>
+                                <td class="text-bold">{{fdua.respons}}<i class="fas fa-check text-teal ml-2"></i></td>
+                            </tr>
+                            {% endfor %}
+                        <tbody>
+                        </table>
+                        {% endfor %}
+                    </div>
+                    <hr>
+                    
+                    {% for kuesioner in kuesioner_F3 %}
+                    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                    <h6 class="text-bold ml-3">
+                        {% if data_ftiga.respons != 0 %}
+                            Kira-kira {{data_ftiga.respons}} Bulan {{data_ftiga.keterangan}} 
+                        {% else %}
+                            {{data_ftiga.keterangan}} 
+                        {% endif %}
+                        <i class="fas fa-check ml-2 text-teal"></i>
+                    </h6>
+                    {% endfor %}
+                    <hr>
+
+                    {% for kuesioner in kuesioner_F4 %}
+                    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                    <ol class=" text-bold ml-2">
+                        {% for respons in data_fempat %}
+                            {% if respons == '' %}
+                            {% else %}
+                                <li>
+                                    {{respons}}
+                                <i class="fas fa-check ml-2 text-teal"></i>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                    {% endfor %}
+                    <hr>
+
+                    {% for kuesioner in kuesioner_F5 %}
+                    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                    <h6 class="text-bold ml-3">
+                        Kira-kira {{data_flima.respons}} Bulan {{data_flima.keterangan}}
+                        <i class="fas fa-check ml-2 text-teal"></i> 
+                    </h6>
+                    {% endfor %}
+                    <hr>
+
+                    {% for kuesioner in kuesioner_F6 %}
+                    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                    <h6 class="text-bold ml-3">
+                        {{data_fenam.respons}} {{data_fenam.master_subkuesioner_id.sub_pertanyaan}} 
+                        <i class="fas fa-check ml-2 text-teal"></i>
+                    </h6>
+                    {% endfor %}
+                    <hr>
+
+                    {% for kuesioner in kuesioner_F7 %}
+                    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                    <h6 class="text-bold ml-3">
+                        {{data_ftujuh.respons}} {{data_ftujuh.master_subkuesioner_id.sub_pertanyaan}} 
+                        <i class="fas fa-check ml-2 text-teal"></i>
+                    </h6>
+                    {% endfor %}
+                    <hr>
+
+                    {% for kuesioner in kuesioner_F7A %}
+                    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                    <h6 class="text-bold ml-3">
+                        {{data_ftujuh_a.respons}} {{data_ftujuh_a.master_subkuesioner_id.sub_pertanyaan}}
+                        <i class="fas fa-check ml-2 text-teal"></i> 
+                    </h6>
+                    {% endfor %}
+                    <hr>
+
+                    {% for kuesioner in kuesioner_F8 %}
+                    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                    <h6 class="text-bold ml-3">
+                        {{data_fdelapan.respons}}
+                        <i class="fas fa-check ml-2 text-teal"></i>
+                    </h6>
+                    {% endfor %}
+                    <hr>
+
+                    {% if data_fdelapan.respons == get_F8_value.opsi_respons %}
+
+                        {% for kuesioner in kuesioner_F9 %}
+                        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                        <ol class="text-bold ml-3">
+                            {% for respons in data_fsembilan %}
+                                {% if respons == '' %}
+                                {% else %}
+                                <li>
+                                {{respons}}
+                                <i class="fas fa-check ml-2 text-teal"></i>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ol>
+                        {% endfor %}
+                        <hr>
+
+                        {% for kuesioner in kuesioner_F10 %}
+                        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                        <h6 class="text-bold ml-3">
+                            {{data_fsepuluh.respons}}
+                            <i class="fas fa-check ml-2 text-teal"></i>
+                        </h6>
+                        {% endfor %}
+                        <hr>
+                    {% else %}
+
+                        {% for kuesioner in kuesioner_F11 %}
+                        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                        <h6 class="text-bold ml-3">
+                            {{data_fsebelas.respons}}
+                            <i class="fas fa-check ml-2 text-teal"></i>
+                        </h6>
+                        {% endfor %}
+                        <hr>
+
+                        {% for kuesioner in kuesioner_F13 %}
+                        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                        <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                            {% for ftigabelas in data_ftigabelas %}
+                            <tr>
+                                <td>{{ftigabelas.master_subkuesioner_id.sub_pertanyaan}}</td>
+                                <td class="text-bold">
+                                Rp. {{ftigabelas.respons|intcomma}}
+                                <i class="fas fa-check ml-2 text-teal"></i>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% endfor %}
+                        </div>
+                        <hr>
+
+                        {% for kuesioner in kuesioner_F14 %}
+                        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                        <h6 class="text-bold ml-3">
+                            {{data_fempatbelas.respons}}
+                            <i class="fas fa-check ml-2 text-teal"></i>
+                        </h6>
+                        {% endfor %}
+                        <hr>
+
+                        {% for kuesioner in kuesioner_F15 %}
+                        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                        <h6 class="text-bold ml-3">
+                            {{data_flimabelas.respons}}
+                            <i class="fas fa-check ml-2 text-teal"></i>
+                        </h6>
+                        {% endfor %}
+                        <hr>
+
+                        {% for kuesioner in kuesioner_F16 %}
+                        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                        <ol class="ml-2">
+                            {% for respons in data_fenambelas %}
+                                {% if respons == '' %}
+                                {% else %}
+                                <li class="text-bold">
+                                {{respons}}
+                                <i class="fas fa-check ml-2 text-teal"></i>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ol>
+                        {% endfor %}
+                        <hr>
+                        
+                    {% endif %}
+                    
+                    {% for kuesioner in kuesioner_F17A %}
+                    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                    <div class="table-responsive ml-3">
+                        <table class="table table-sm table-hover">
+                            <tr>
+                                <th>Sub Pertanyaan</th>
+                                <th colspan="5">Sangat Rendah - Sangat Tinggi</th>
+                            </tr>
+                            <tr class="text-bold">
+                                <td></td>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                            {% for ftujuhbelas in data_ftujuhbelas_a %}
+                            <tr>
+                                <td class="text-bold">{{ftujuhbelas.master_subkuesioner_id.sub_pertanyaan}}</td>
+                                {% if ftujuhbelas.respons == 1%}
+                                    <td><i class="fas fa-check ml-2 text-teal"></i></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                {% elif ftujuhbelas.respons == 2%}
+                                    <td></td>
+                                    <td><i class="fas fa-check ml-2 text-teal"></i></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                {% elif ftujuhbelas.respons == 3%}
+                                    <td></td>
+                                    <td></td>
+                                    <td><i class="fas fa-check ml-2 text-teal"></i></td>
+                                    <td></td>
+                                    <td></td>    
+                                {% elif ftujuhbelas.respons == 4%}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><i class="fas fa-check ml-2 text-teal"></i></td>
+                                    <td></td>
+                                {% elif ftujuhbelas.respons == 5%}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><i class="fas fa-check ml-2 text-teal"></i></td>
+                                {% endif %}
+                                
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    {% endfor %}
+                    <hr>
+
+                    {% for kuesioner in kuesioner_F17B %}
+                    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
+                    <div class="table-responsive ml-3">
+
+                        <table class="table table-sm table-hover">
+                            <tr>
+                                <th>Sub Pertanyaan</th>
+                                <th colspan="5">Sangat Rendah - Sangat Tinggi</th>
+                            </tr>
+                            <tr class="text-bold">
+                                <td></td>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                            {% for ftujuhbelas in data_ftujuhbelas_b %}
+                            <tr>
+                                <td class="text-bold">{{ftujuhbelas.master_subkuesioner_id.sub_pertanyaan}}</td>
+                                {% if ftujuhbelas.respons == 1%}
+                                    <td><i class="fas fa-check ml-2 text-teal"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                {% elif ftujuhbelas.respons == 2%}
+                                    <td></td>
+                                    <td><i class="fas fa-check ml-2 text-teal"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                {% elif ftujuhbelas.respons == 3%}
+                                    <td></td>
+                                    <td></td>
+                                    <td><i class="fas fa-check ml-2 text-teal"></td>
+                                    <td></td>
+                                    <td></td>    
+                                {% elif ftujuhbelas.respons == 4%}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><i class="fas fa-check ml-2 text-teal"></td>
+                                    <td></td>
+                                {% elif ftujuhbelas.respons == 5%}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><i class="fas fa-check ml-2 text-teal"></td>
+                                {% endif %}
+                                
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+            </div>
+            <!-- /.invoice -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+
     
-    {% for kuesioner in kuesioner_F3 %}
-    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    <h5>
-        {% if data_ftiga.respons %}
-            Kira-kira Bulan {{data_ftiga.respons}} {{data_ftiga.keterangan}} 
-        {% else %}
-            {{data_ftiga.keterangan}} 
-        {% endif %}
-    </h5>
-    {% endfor %}
-    <hr>
 
-    {% for kuesioner in kuesioner_F4 %}
-    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    <ul>
-        {% for respons in data_fempat %}
-            {% if respons == '' %}
-            {% else %}
-                <li>{{respons}}</li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-    {% endfor %}
-    <hr>
-
-    {% for kuesioner in kuesioner_F5 %}
-    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    <h5>
-        Kira-kira Bulan {{data_flima.respons}} {{data_flima.keterangan}} 
-    </h5>
-    {% endfor %}
-    <hr>
-
-    {% for kuesioner in kuesioner_F6 %}
-    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    <h5>
-        {{data_fenam.respons}} {{data_fenam.master_subkuesioner_id.sub_pertanyaan}} 
-    </h5>
-    {% endfor %}
-    <hr>
-
-    {% for kuesioner in kuesioner_F7 %}
-    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    <h5>
-        {{data_ftujuh.respons}} {{data_ftujuh.master_subkuesioner_id.sub_pertanyaan}} 
-    </h5>
-    {% endfor %}
-    <hr>
-
-    {% for kuesioner in kuesioner_F7A %}
-    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    <h5>
-        {{data_ftujuh_a.respons}} {{data_ftujuh_a.master_subkuesioner_id.sub_pertanyaan}} 
-    </h5>
-    {% endfor %}
-    <hr>
-
-    {% for kuesioner in kuesioner_F8 %}
-    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    <h5>
-        {{data_fdelapan.respons}}
-    </h5>
-    {% endfor %}
-    <hr>
-
-    {% if data_fdelapan.respons == get_F8_value.opsi_respons %}
-
-        {% for kuesioner in kuesioner_F9 %}
-        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-        <ul>
-            {% for respons in data_fsembilan %}
-                {% if respons == '' %}
-                {% else %}
-                <li>{{respons}}</li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        {% endfor %}
-        <hr>
-
-        {% for kuesioner in kuesioner_F10 %}
-        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-        <h5>
-            {{data_fsepuluh.respons}}
-        </h5>
-        {% endfor %}
-        <hr>
-    {% else %}
-
-        {% for kuesioner in kuesioner_F11 %}
-        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-        <h5>
-            {{data_fsebelas.respons}}
-        </h5>
-        {% endfor %}
-        <hr>
-
-        {% for kuesioner in kuesioner_F13 %}
-        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-        <table>
-            {% for ftigabelas in data_ftigabelas %}
-            <tr>
-                <td>{{ftigabelas.master_subkuesioner_id.sub_pertanyaan}}</td>
-                <td>Rp. {{ftigabelas.respons|intcomma}}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        {% endfor %}
-        <hr>
-
-        {% for kuesioner in kuesioner_F14 %}
-        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-        <h5>
-            {{data_fempatbelas.respons}}
-        </h5>
-        {% endfor %}
-        <hr>
-
-        {% for kuesioner in kuesioner_F15 %}
-        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-        <h5>
-            {{data_flimabelas.respons}}
-        </h5>
-        {% endfor %}
-        <hr>
-
-        {% for kuesioner in kuesioner_F16 %}
-        <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-        <ul>
-            {% for respons in data_fenambelas %}
-                {% if respons == '' %}
-                {% else %}
-                <li>{{respons}}</li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        {% endfor %}
-        <hr>
-        
-    {% endif %}
     
-    {% for kuesioner in kuesioner_F17A %}
-    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    <table>
-        <tr>
-            <th>Sub Pertanyaan</th>
-            <th colspan="5">Sangat Rendah - Sangat Tinggi</th>
-        </tr>
-        <tr>
-            <td></td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-        </tr>
-        {% for ftujuhbelas in data_ftujuhbelas_a %}
-        <tr>
-            <td>{{ftujuhbelas.master_subkuesioner_id.sub_pertanyaan}}</td>
-            {% if ftujuhbelas.respons == 1%}
-                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            {% elif ftujuhbelas.respons == 2%}
-                <td></td>
-                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            {% elif ftujuhbelas.respons == 3%}
-                <td></td>
-                <td></td>
-                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
-                <td></td>
-                <td></td>    
-            {% elif ftujuhbelas.respons == 4%}
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
-                <td></td>
-            {% elif ftujuhbelas.respons == 5%}
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
-            {% endif %}
-            
-        </tr>
-        {% endfor %}
-    </table>
-    {% endfor %}
-    <hr>
-
-    {% for kuesioner in kuesioner_F17B %}
-    <h6>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h6>
-    <table>
-        <tr>
-            <th>Sub Pertanyaan</th>
-            <th colspan="5">Sangat Rendah - Sangat Tinggi</th>
-        </tr>
-        <tr>
-            <td></td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-        </tr>
-        {% for ftujuhbelas in data_ftujuhbelas_b %}
-        <tr>
-            <td>{{ftujuhbelas.master_subkuesioner_id.sub_pertanyaan}}</td>
-            {% if ftujuhbelas.respons == 1%}
-                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            {% elif ftujuhbelas.respons == 2%}
-                <td></td>
-                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            {% elif ftujuhbelas.respons == 3%}
-                <td></td>
-                <td></td>
-                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
-                <td></td>
-                <td></td>    
-            {% elif ftujuhbelas.respons == 4%}
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
-                <td></td>
-            {% elif ftujuhbelas.respons == 5%}
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="background-color:green;">{{ftujuhbelas.respons}}</td>
-            {% endif %}
-            
-        </tr>
-        {% endfor %}
-    </table>
-    {% endfor %}
-    <hr>
 
 {% endblock  %}

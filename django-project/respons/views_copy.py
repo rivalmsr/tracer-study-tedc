@@ -226,246 +226,242 @@ def create(request):
     for key, value in list_form:
         context[key] = value
 
-    try:
-        print(request.POST)
-        # Reqeust Method Check
-        if request.is_ajax and request.method == 'POST':
-            if header_form.is_valid():
-                fsatu = ResponsHeader.objects.create( 
-                    master_fsatu_id = MasterFSatu.objects.get(pk=request.POST.get('respons_f1')) 
-                )
-                fsatu.save()
+    # Reqeust Method Check
+    if request.method == 'POST':
+        if header_form.is_valid():
+            fsatu = ResponsHeader.objects.create( 
+                master_fsatu_id = MasterFSatu.objects.get(pk=request.POST.get('respons_f1')) 
+            )
+            fsatu.save()
+            
+            if  ResponsHeader.objects.filter(master_fsatu_id__pk=request.POST.get('respons_f1')).exists():
+                get_respons_header = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1'))
+                # Respons F2
+                if fdua_form.is_valid():
+                    data_fdua = {}
+
+                    # Get and Return request to dictionary
+                    for number in range(1, 8):
+                        data_fdua["F2-" + str(number)] = request.POST.get("respons_f2_"+ str(number)) 
+
+                    # Save data into database
+                    for key, value in data_fdua.items():
+                        fdua = ResponsFDuaDetail.objects.create(
+                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f2')),
+                            master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
+                            respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                            respons                 = value
+                        )
+                        fdua.save()
+
+                # Respons F3
+                get_list_respons_f3_1 = request.POST.getlist('respons_f3_1')
+                get_respons_f3_1 = 0
+
+                for value in get_list_respons_f3_1:
+                    if value != "":
+                        get_respons_f3_1 = value
+
+                if ftiga_form.is_valid():
+                    ftiga = ResponsFTigaDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f3')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = get_respons_f3_1,
+                        keterangan              = request.POST.get('respons_f3_2')
+                    )
+                    ftiga.save()
+
+                # Respons F4
+                if fempat_form.is_valid():
+                    data_fempat = ""
+                    getlist_fempat = request.POST.getlist('respons_f4')
+                     
+                    for value in getlist_fempat:
+                        data_fempat += value + ";" 
+
+                    fempat = ResponsFEmpatDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f4')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = data_fempat
+                    )
+                    fempat.save()
+                    
+                # Respons F5
+                get_list_respons_f5_1 = request.POST.getlist('respons_f5_1')
+                get_respons_f5_1 = 0
+
+                for value in get_list_respons_f5_1:
+                    if value != "":
+                        get_respons_f5_1 = value
+
+                if flima_form.is_valid():
+                    flima = ResponsFLimaDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f5')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = get_respons_f5_1,
+                        keterangan              = request.POST.get('respons_f5_2')
+                    )
+                    flima.save()
+
+                # Respons F6
+                if fenam_form.is_valid():
+                    fenam = ResponsFEnamDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f6')),
+                        master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f6')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = request.POST.get('respons_f6'),
+                    )
+                    fenam.save()
+
+                # Respons F7
+                if ftujuh_form.is_valid():
+                    ftujuh = ResponsFTujuhDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7')),
+                        master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f7')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = request.POST.get('respons_f7'),
+                    )
+                    ftujuh.save()
+
+                # Respons F7A
+                if ftujuh_a_form.is_valid():
+                    ftujuh_a = ResponsFTujuhADetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7A')),
+                        master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f7A')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = request.POST.get('respons_f7_a'),
+                    )
+                    ftujuh_a.save()
                 
-                if  ResponsHeader.objects.filter(master_fsatu_id__pk=request.POST.get('respons_f1')).exists():
-                    get_respons_header = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1'))
-                    # Respons F2
-                    if fdua_form.is_valid():
-                        data_fdua = {}
+                # Respons F8
+                if fdelapan_form.is_valid():
+                    fdelapan = ResponsFDelapanDetail.objects.create(
+                        master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f8')),
+                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons                 = request.POST.get('respons_f8'),
+                    )
+                    fdelapan.save()
+                
+                # Check Condition if value F8 is Not
+                if  request.POST.get('respons_f8') == MasterOpsiRespons.objects.values_list('opsi_respons', flat=True).get(kode='F8-02'):
+
+                    # Respons F9
+                    if fsembilan_form.is_valid():
+                        data_fsembilan = ""
+                        getlist_respons_f9 = request.POST.getlist('respons_f9')
+                         
+                        for value in getlist_respons_f9:
+                            data_fsembilan += value + ";"
+
+                        fsembilan = ResponsFSembilanDetail.objects.create(
+                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f9')),
+                            respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                            respons                 = data_fsembilan
+                        )
+                        fsembilan.save()
+
+                    # Respons F10
+                    if fsepuluh_form.is_valid():
+                        fsepuluh = ResponsFSepuluhDetail.objects.create(
+                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f10')),
+                            respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                            respons                 = request.POST.get('respons_f10'),
+                        )
+                        fsepuluh.save()
+                
+                else:
+                    # Respons F11
+                    if fsebelas_form.is_valid():
+                        fsebelas = ResponsFSebelasDetail.objects.create(
+                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f11')),
+                            respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                            respons                 = request.POST.get('respons_f11'),
+                        )
+                        fsebelas.save()
+
+                    # Respons F13
+                    if ftigabelas_form.is_valid():
+                        data_ftigabelas = {}
 
                         # Get and Return request to dictionary
-                        for number in range(1, 8):
-                            data_fdua["F2-" + str(number)] = request.POST.get("respons_f2_"+ str(number)) 
+                        for number in range(1, 4):
+                            data_ftigabelas["F13-" + str(number)] = request.POST.get("respons_f13_"+ str(number)) 
 
-                        # Save data into database
-                        for key, value in data_fdua.items():
-                            fdua = ResponsFDuaDetail.objects.create(
-                                master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f2')),
+                        for key, value in data_ftigabelas.items():
+                            ftigabelas = ResponsFTigabelasDetail.objects.create(
+                                master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f13')),
                                 master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
                                 respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
                                 respons                 = value
                             )
-                            fdua.save()
+                            ftigabelas.save()
 
-                    # Respons F3
-                    get_list_respons_f3_1 = request.POST.getlist('respons_f3_1')
-                    get_respons_f3_1 = 0
-
-                    for value in get_list_respons_f3_1:
-                        if value != "":
-                            get_respons_f3_1 = value
-
-                    if ftiga_form.is_valid():
-                        ftiga = ResponsFTigaDetail.objects.create(
-                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f3')),
+                    # Respons F14
+                    if fempatbelas_form.is_valid():
+                        fempatbelas = ResponsFEmpatbelasDetail.objects.create(
+                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f14')),
                             respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                            respons                 = get_respons_f3_1,
-                            keterangan              = request.POST.get('respons_f3_2')
+                            respons                 = request.POST.get('respons_f14'),
                         )
-                        ftiga.save()
+                        fempatbelas.save()
 
-                    # Respons F4
-                    if fempat_form.is_valid():
-                        data_fempat = ""
-                        getlist_fempat = request.POST.getlist('respons_f4')
-                        
-                        for value in getlist_fempat:
-                            data_fempat += value + ";" 
-
-                        fempat = ResponsFEmpatDetail.objects.create(
-                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f4')),
+                    # Respons F15
+                    if flimabelas_form.is_valid():
+                        flimabelas = ResponsFLimabelasDetail.objects.create(
+                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f15')),
                             respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                            respons                 = data_fempat
+                            respons                 = request.POST.get('respons_f15'),
                         )
-                        fempat.save()
-                        
-                    # Respons F5
-                    get_list_respons_f5_1 = request.POST.getlist('respons_f5_1')
-                    get_respons_f5_1 = 0
+                        flimabelas.save()
 
-                    for value in get_list_respons_f5_1:
-                        if value != "":
-                            get_respons_f5_1 = value
+                    # Respons F16
+                    if fenambelas_form.is_valid():
+                        data_fenambelas = ""
+                        getlist_respons_fenambelas = request.POST.getlist('respons_f16')
 
-                    if flima_form.is_valid():
-                        flima = ResponsFLimaDetail.objects.create(
-                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f5')),
+                        for value in getlist_respons_fenambelas:
+                            data_fenambelas += value + ";"
+
+                        fenambelas = ResponsFEnambelasDetail.objects.create(
+                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f16')),
                             respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                            respons                 = get_respons_f5_1,
-                            keterangan              = request.POST.get('respons_f5_2')
+                            respons                 = data_fenambelas
                         )
-                        flima.save()
+                        fenambelas.save()
 
-                    # Respons F6
-                    if fenam_form.is_valid():
-                        fenam = ResponsFEnamDetail.objects.create(
-                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f6')),
-                            master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f6')),
+                # Respons F17A
+                if ftujuhbelas_a_form.is_valid():
+                    data_ftujuhbelas_a = {}
+                    # Get and Return request to dictionary
+                    for number in range(1, 30):
+                        data_ftujuhbelas_a["F17-" + str(number)] = request.POST.get("respons_f17_"+ str(number)+"_a") 
+                    # Create data in dictionary to database
+                    for key, value in data_ftujuhbelas_a.items():
+                        ftujuhbelas_a = ResponsFTujuhbelasADetail.objects.create(
+                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f17A')),
+                            master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
                             respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                            respons                 = request.POST.get('respons_f6'),
+                            respons                 = value
                         )
-                        fenam.save()
+                        ftujuhbelas_a.save()
 
-                    # Respons F7
-                    if ftujuh_form.is_valid():
-                        ftujuh = ResponsFTujuhDetail.objects.create(
-                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7')),
-                            master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f7')),
+                # Respons F17B
+                if ftujuhbelas_b_form.is_valid():
+                    data_ftujuhbelas_b = {}
+                    # Get and Return request to dictionary
+                    for number in range(1, 30):
+                        data_ftujuhbelas_b["F17-" + str(number)] = request.POST.get("respons_f17_"+ str(number)+"_b") 
+                    # Create data in dictionary to database
+                    for key, value in data_ftujuhbelas_b.items():
+                        ftujuhbelas_b = ResponsFTujuhbelasBDetail.objects.create(
+                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f17B')),
+                            master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
                             respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                            respons                 = request.POST.get('respons_f7'),
+                            respons                 = value
                         )
-                        ftujuh.save()
+                        ftujuhbelas_b.save()
 
-                    # Respons F7A
-                    if ftujuh_a_form.is_valid():
-                        ftujuh_a = ResponsFTujuhADetail.objects.create(
-                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7A')),
-                            master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f7A')),
-                            respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                            respons                 = request.POST.get('respons_f7_a'),
-                        )
-                        ftujuh_a.save()
-                    
-                    # Respons F8
-                    if fdelapan_form.is_valid():
-                        fdelapan = ResponsFDelapanDetail.objects.create(
-                            master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f8')),
-                            respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                            respons                 = request.POST.get('respons_f8'),
-                        )
-                        fdelapan.save()
-                    
-                    # Check Condition if value F8 is Not
-                    if  request.POST.get('respons_f8') == MasterOpsiRespons.objects.values_list('opsi_respons', flat=True).get(kode='F8-02'):
-
-                        # Respons F9
-                        if fsembilan_form.is_valid():
-                            data_fsembilan = ""
-                            getlist_respons_f9 = request.POST.getlist('respons_f9')
-                            
-                            for value in getlist_respons_f9:
-                                data_fsembilan += value + ";"
-
-                            fsembilan = ResponsFSembilanDetail.objects.create(
-                                master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f9')),
-                                respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                                respons                 = data_fsembilan
-                            )
-                            fsembilan.save()
-
-                        # Respons F10
-                        if fsepuluh_form.is_valid():
-                            fsepuluh = ResponsFSepuluhDetail.objects.create(
-                                master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f10')),
-                                respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                                respons                 = request.POST.get('respons_f10'),
-                            )
-                            fsepuluh.save()
-                    
-                    else:
-                        # Respons F11
-                        if fsebelas_form.is_valid():
-                            fsebelas = ResponsFSebelasDetail.objects.create(
-                                master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f11')),
-                                respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                                respons                 = request.POST.get('respons_f11'),
-                            )
-                            fsebelas.save()
-
-                        # Respons F13
-                        if ftigabelas_form.is_valid():
-                            data_ftigabelas = {}
-
-                            # Get and Return request to dictionary
-                            for number in range(1, 4):
-                                data_ftigabelas["F13-" + str(number)] = request.POST.get("respons_f13_"+ str(number)) 
-
-                            for key, value in data_ftigabelas.items():
-                                ftigabelas = ResponsFTigabelasDetail.objects.create(
-                                    master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f13')),
-                                    master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
-                                    respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                                    respons                 = value
-                                )
-                                ftigabelas.save()
-
-                        # Respons F14
-                        if fempatbelas_form.is_valid():
-                            fempatbelas = ResponsFEmpatbelasDetail.objects.create(
-                                master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f14')),
-                                respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                                respons                 = request.POST.get('respons_f14'),
-                            )
-                            fempatbelas.save()
-
-                        # Respons F15
-                        if flimabelas_form.is_valid():
-                            flimabelas = ResponsFLimabelasDetail.objects.create(
-                                master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f15')),
-                                respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                                respons                 = request.POST.get('respons_f15'),
-                            )
-                            flimabelas.save()
-
-                        # Respons F16
-                        if fenambelas_form.is_valid():
-                            data_fenambelas = ""
-                            getlist_respons_fenambelas = request.POST.getlist('respons_f16')
-
-                            for value in getlist_respons_fenambelas:
-                                data_fenambelas += value + ";"
-
-                            fenambelas = ResponsFEnambelasDetail.objects.create(
-                                master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f16')),
-                                respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                                respons                 = data_fenambelas
-                            )
-                            fenambelas.save()
-
-                    # Respons F17A
-                    if ftujuhbelas_a_form.is_valid():
-                        data_ftujuhbelas_a = {}
-                        # Get and Return request to dictionary
-                        for number in range(1, 30):
-                            data_ftujuhbelas_a["F17-" + str(number)] = request.POST.get("respons_f17_"+ str(number)+"_a") 
-                        # Create data in dictionary to database
-                        for key, value in data_ftujuhbelas_a.items():
-                            ftujuhbelas_a = ResponsFTujuhbelasADetail.objects.create(
-                                master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f17A')),
-                                master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
-                                respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                                respons                 = value
-                            )
-                            ftujuhbelas_a.save()
-
-                    # Respons F17B
-                    if ftujuhbelas_b_form.is_valid():
-                        data_ftujuhbelas_b = {}
-                        # Get and Return request to dictionary
-                        for number in range(1, 30):
-                            data_ftujuhbelas_b["F17-" + str(number)] = request.POST.get("respons_f17_"+ str(number)+"_b") 
-                        # Create data in dictionary to database
-                        for key, value in data_ftujuhbelas_b.items():
-                            ftujuhbelas_b = ResponsFTujuhbelasBDetail.objects.create(
-                                master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f17B')),
-                                master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
-                                respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
-                                respons                 = value
-                            )
-                            ftujuhbelas_b.save()
-
-                    return redirect('respons:detail', get_respons_header.pk)
-    except :
-        pass
+                return redirect('respons:detail', get_respons_header.pk)
 
     return render(request, template_name, context)
 

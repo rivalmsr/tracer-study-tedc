@@ -8,6 +8,7 @@ from .views import (
     ResponsListView,
     export_xls,
     unduh_data,
+    create_with_ajax,
 )
 
 
@@ -19,6 +20,7 @@ urlpatterns = [
     path('list/', login_required(ResponsListView.as_view()), name='list'),
     path('detail/<int:detail_id>/', login_required(detail), name='detail'),
     path('update/<int:update_id>/', login_required(update), name='update'),
+    path('create-with-ajax/', login_required(create_with_ajax), name="create-with-ajax"),
     path('create/', login_required(create), name='create'),
     path('', login_required(index), name='index'),
 ]

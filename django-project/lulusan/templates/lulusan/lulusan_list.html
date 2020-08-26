@@ -23,12 +23,26 @@
                     </h3>
 
                     
-                    <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                            <div class="input-group-append">
-                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                            </div>
+                    <div class="card-tools">                    
+                        <div class="row">
+                                
+                                <div class="col-sm-5">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input class="form-control form-control float-right"  id="myInput" type="text" placeholder="Search...">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-7">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <select class="form-control float-right" id="myOpsi">
+                                            <option value=""> Semua Prodi</option>
+                                            {% for prodi in list_of_lulusan %}                                            
+                                                <option value="{{prodi.master_prodi_id.nama}}">{{prodi.master_prodi_id.nama}}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                </div>
                         </div>
                     </div>
 
@@ -39,6 +53,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>PK</th>
                                 <th>NIM</th>
                                 <th>Nama</th>
                                 <th>Program Studi</th>
@@ -48,10 +63,11 @@
                                 <th>Opsi</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="myTable">
                         {% for lulusan in list_of_lulusan %}
                             <tr>
                                 <td>{{forloop.counter}}</td>
+                                <td>{{lulusan.pk}}</td>
                                 <td>{{lulusan.nomor_mahasiswa}}</td>
                                 <td>{{lulusan.nama}}</td>
                                 <td>{{lulusan.master_prodi_id.nama}}</td>
@@ -104,5 +120,26 @@
         "responsive": true,
         });
     });
+    </script>
+    <!-- Custome Filter -->
+    <script>
+        $(document).ready(function() {
+            $(':reset');
+
+            $('#myInput').on('keyup', function() {
+                var value = $(this).val().toLowerCase();
+                $('#myTable tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > - 1)
+                });
+            });
+
+            $('#myOpsi').on('change', function() {
+                var value = $('#myOpsi').val().toLowerCase();
+                $('#myTable tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > - 1)
+                });
+            });
+
+        });
     </script>
 {% endblock  %}

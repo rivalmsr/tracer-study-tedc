@@ -32,7 +32,7 @@ class ResponsFDuaForm(forms.Form):
         widget   = forms.RadioSelect(attrs={
             'class': 'custom-control-input'
         }),
-        choices = CHOICES_F2,
+        choices  = CHOICES_F2,
         )
     respons_f2_2 = forms.ChoiceField(
         label    = LIST_SUBKUESIONER['F2-2'],
@@ -83,7 +83,7 @@ class ResponsFTigaForm(forms.Form):
         required = False,
         widget   = forms.NumberInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control form-control-sm'
             }
         ))
 
@@ -114,7 +114,7 @@ class ResponsFLimaForm(forms.Form):
     respons_f5_1 = forms.IntegerField(
         widget   = forms.NumberInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control form-control-sm'
             }
         )
     )
