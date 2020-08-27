@@ -1434,7 +1434,6 @@
     // This function will display the specified tab of the form ...
         var x = $('.tab');
         x[n].style.display = "block";
-        //console.log(x[n]);
 
         // ... and fix the Previous/Next buttons:
         if (n == 0) {
@@ -1457,7 +1456,6 @@
         var tab = $('.tab')
         var input = $(tab.get(currentTab)).find('input');
         var countInput = 0;
-        var nameCheckBox = "";
         var inputName = [];
         var inputNameHasValue = [];
 
@@ -1482,7 +1480,7 @@
                 }else if ($(this).prop('type') == 'checkbox' ){
                     console.log("type cb");
                     if($(this).prop('checked') == true){
-                        if($(this).prop('name') != nameCheckBox){
+                        if(!inputNameHasValue.includes(this.name)) {
                             countInput += 1;
                             inputNameHasValue.push(this.name);
                         }
@@ -1502,21 +1500,20 @@
         if(inputName.length == countInput){
             valid = true;
         }
+        console.log('inputan yg tak terisi')
         console.log(inputName);
+        console.log('inputan yg terisi')
         console.log(inputNameHasValue);
-        var arrayNameInput = inputNameHasValue
-                            .filter(x => !inputName.includes(x))
-                            .concat(inputName.filter(x => !inputNameHasValue.includes(x)));
-
-        console.log(arrayNameInput);
-        console.log();
+        var arrayNameInput = inputName.filter(x => !inputNameHasValue.includes(x));
+        console.log('hasil irisan: ')
+        console.log(inputName.filter(x => !inputNameHasValue.includes(x)));
+        
         if(arrayNameInput.length){
             for(i = 0; i < arrayNameInput.length; i++){
                 var inputRequired = arrayNameInput[i];
                 $("input[name='"+inputRequired+"']").addClass('is-warning');
             }
             
-            console.log(arrayNameInput);
             $(function(){
                 // alert submitted
                 const Toast = Swal.mixin({
@@ -1528,10 +1525,13 @@
 
                 Toast.fire({
                     icon: 'warning',
-                    title: '<span class="ml-2 mr-2">Data belum terisi semua!</span>',
+                    title: '<span class="ml-2 mr-2">Ada <b class="text-warning">'+arrayNameInput.length+'</b> tanggapan yang belum terisi!</span>',
                 });
             })
         }
+        console.log("jumlah inputan yg ada: "+inputName.length)
+        console.log("jumlah inputan yg diisi: "+countInput)
+        console.log(valid);
         return valid; // return the valid status
     }
     
@@ -1539,8 +1539,6 @@
     function nextPrev(n) {
         // This function will figure out which tab to display
         var x = $('.tab');
-        console.log("check validateForm return")
-        console.log(validateForm());
         // Exit the function if any field in the current tab is invalid:
         if (n == 1 && !validateForm()) return false;
         // Hide the current tab:
@@ -1573,9 +1571,6 @@
         // ajax function
         e.preventDefault();
         var serializedData = $(this).serialize();
-        console.log("ajax tanggapan!!")
-        console.log(serializedData);
-
         //make post ajax call
         $.ajax({
             type:'POST',
