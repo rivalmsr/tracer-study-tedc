@@ -1454,12 +1454,12 @@
     function validateForm() {
 
         var iterasi, valid = false;
-
         var tab = $('.tab')
         var input = $(tab.get(currentTab)).find('input');
         var countInput = 0;
         var nameCheckBox = "";
         var inputName = [];
+        var inputNameHasValue = [];
 
         $.each(input, function(){
 
@@ -1471,18 +1471,20 @@
                     if($(this).prop('id') == 'id_respons_f3_2_2'){
                         if($(this).prop('checked') == true){
                             countInput += 2;
+                            inputNameHasValue.push(this.name);
                         }
                     }else{
                         if($(this).prop('checked') == true){
                             countInput += 1;
+                            inputNameHasValue.push(this.name);
                         }
                     }
                 }else if ($(this).prop('type') == 'checkbox' ){
                     console.log("type cb");
                     if($(this).prop('checked') == true){
                         if($(this).prop('name') != nameCheckBox){
-                            nameCheckBox = $(this).prop('name');
                             countInput += 1;
+                            inputNameHasValue.push(this.name);
                         }
                     }
                 }
@@ -1490,6 +1492,7 @@
                     console.log("type except rd and cb ");
                     if($(this).val() != ""){
                         countInput += 1;
+                        inputNameHasValue.push(this.name);
                     }
                 }
                 
@@ -1498,6 +1501,36 @@
         
         if(inputName.length == countInput){
             valid = true;
+        }
+        console.log(inputName);
+        console.log(inputNameHasValue);
+        var arrayNameInput = inputNameHasValue
+                            .filter(x => !inputName.includes(x))
+                            .concat(inputName.filter(x => !inputNameHasValue.includes(x)));
+
+        console.log(arrayNameInput);
+        console.log();
+        if(arrayNameInput.length){
+            for(i = 0; i < arrayNameInput.length; i++){
+                var inputRequired = arrayNameInput[i];
+                $("input[name='"+inputRequired+"']").addClass('is-warning');
+            }
+            
+            console.log(arrayNameInput);
+            $(function(){
+                // alert submitted
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                })
+
+                Toast.fire({
+                    icon: 'warning',
+                    title: '<span class="ml-2 mr-2">Data belum terisi semua!</span>',
+                });
+            })
         }
         return valid; // return the valid status
     }
