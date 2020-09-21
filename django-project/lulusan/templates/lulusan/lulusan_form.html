@@ -76,7 +76,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    <button type="submit" id="btn-lulusan" class="btn btn-info bg-olive float-right">Simpan</button>
+                    <button type="submit" id="btn-lulusan" class="btn btn-info float-right">Simpan</button>
                 </div>
                 <!-- /.card-footer -->
                 </form>
@@ -127,8 +127,6 @@
             // ajax function
             e.preventDefault();
             var serializedData = $(this).serialize();
-            console.log(serializedData);
-            console.log("test ajax")
             //make post ajax call
             $.ajax({
                 type:'POST',
@@ -137,14 +135,14 @@
                 success: function (response){
                     Toast.fire({
                         icon: 'success',
-                        title: 'Data lulusan berhasil tersimpan!',
+                        title: '<span class="ml-2 mr-2">Data lulusan berhasil tersimpan!</span>',
                     });
                     $('#form-lulusan').trigger('reset');
                 },
                 error: function (response){
                     Toast.fire({
                         icon: 'warning',
-                        title: 'Data lulusan gagal tersimpan!',
+                        title: '<span class="ml-2 mr-2">Data lulusan gagal tersimpan!</span>',
                     });
                 }
             });

@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    {% include 'lib/_styles.html' %}
+    <link rel="stylesheet" href=" {% static 'admin-lte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %} ">
+    <style>
+            /* Hide all steps by default: */
+            body {
+                background: #f3f3f3;
+            }
+            .mt-custome {
+                margin-top: 3%;
+                /* height: 550px; */
+            }
+
+            label{
+                font-weight: 510 !important;
+            }
+    </style>
+</head>
+<body class="pace-warning">
+
+    <div class="container">
+    <div class="row"> 
+        <div class="col-10 offset-1"> 
+            <div class="card mt-custome elevation-2"> 
+                <div class="card-body">
+                    <h3>Selamat Anda Telah Menyelesaikan Kuesioner</h3>
+                    <img src=" {% static 'admin-lte/image/congratulation.png' %} " width="100px" alt="">
+                    <a class="btn btn-primay">Lihat Detailnya</a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    {% include 'lib/_scripts.html' %}
+    <!-- bs-custom-file-input -->
+    <script src="{% static 'admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+    <script src="{% static 'admin-lte//plugins/sweetalert2/sweetalert2.min.js' %}"></script>
+
+</body>
+</html>

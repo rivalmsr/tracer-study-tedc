@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {{title}}
@@ -9,7 +10,7 @@
       <div class="col-12">
 
 
-          <div class="card card-teal card-outline card-tabs">
+          <div class="card card-info card-outline card-tabs">
 
             <div class="card-header p-0 pt-1 border-bottom-0">
               <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
@@ -27,15 +28,18 @@
               <div class="tab-content" id="custom-tabs-three-tabContent">
 
                 <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
-                  <h5>Download Daftar Responsden dengan format xls:</h5>
-                  <a class="btn btn-secondary btn-sm" href="{% url 'respons:export-xls' %}"><i class="fas fa-download"></i> Unduh Data Responden</a>
+                  <div class="text-center mt-2 mb-3">
+                    <h5>Download Daftar Hasil Responsden dengan format xls:</h5>
+                    <img class="img-fluid mt-2 mb-2" src="{% static 'admin-lte/image/marketing.png' %}" width="80"><br>
+                    <a class="btn btn-info btn-sm mt-2" href="{% url 'respons:export-xls' %}"><i class="fas fa-download"></i> Unduh Data Responden</a>
+                  </div>
                 </div>
 
                 <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
                   <b>Administrator</b> dapat mengunggah file hasil tracer study perguruan tinggi dengan memilih 
                   file yang akan diunggah. File master excel sebagai template pengisian data dapat diunduh
                   pada link yang telah disediakan (“Master.xls”). Pengisian nilai – nilai pada kolom yang
-                  tersedia pada template excel adalah sebagai berikut:<br>
+                  tersedia pada template excel adalah sebagai berikut:<br><br>
                   <div class="table-responsive">
                     <table class="table table-hover table-sm">
                       <thead>
@@ -85,7 +89,7 @@
                       
                       </tbody>
                     </table>
-                  </div>
+                  </div><br><br>
 
                   Referensi form yang digunakan:
                   <a href="http://pkts.belmawa.ristekdikti.go.id/index.php/site/unduh">Form Kuisioner Standar Tracer Study 2017</a> 

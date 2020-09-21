@@ -24,7 +24,7 @@
     {% endblock  %}
 
 </head>
-<body class="hold-transition layout-fixed layout-navbar-fixed accent-olive text-sm">
+<body class="hold-transition layout-fixed layout-navbar-fixed text-sm pace-warning">
 
 {% block body %}
   <div class="wrapper">
@@ -41,16 +41,19 @@
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
 
-        {% block content_header %}
+        {% comment %} {% block content_header %}
           {% include 'lib/_content_header.html' %}
-        {% endblock  %}
+        {% endblock  %} {% endcomment %}
 
         <!-- Main content -->
         {% block content_outer %}
         <section class="content">
           <div class="container-fluid">
+          <br><br>
 
-            {% block content %}{% endblock  %}
+            {% block content %}
+              
+            {% endblock  %}
             
           </div><!-- /.container-fluid -->
         </section>

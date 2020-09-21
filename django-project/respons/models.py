@@ -14,6 +14,8 @@ class ResponsHeader(models.Model):
                                 blank=True,
                                 null=True,    
     )
+    completed               = models.BooleanField(default=False)
+    current_tab             = models.SmallIntegerField(default=0)
     created                 = models.DateTimeField(auto_now_add=True)
     updated                 = models.DateTimeField(auto_now=True)
     slug                    = models.SlugField(blank=True, editable=False)
@@ -23,7 +25,7 @@ class ResponsHeader(models.Model):
         super(ResponsHeader, self).save(**kwargs)
 
     def __str__(self):
-        return "%s - %s" % (self.id, self.master_fsatu_id)
+        return "%s - %s - %s" % (self.id, self.master_fsatu_id, self.completed)
 
 
 class ResponsFDuaDetail(models.Model):
@@ -31,7 +33,8 @@ class ResponsFDuaDetail(models.Model):
                                 MasterKuesioner,
                                 models.SET_NULL,
                                 blank=True,
-                                null=True
+                                null=True,
+
     )
     master_subkuesioner_id  = models.ForeignKey(
                                 MasterSubKuesioner,
@@ -47,6 +50,10 @@ class ResponsFDuaDetail(models.Model):
     )
     respons                 = models.CharField(
                                 max_length=25,
+                                blank=True,
+                                null=True,
+                                default=0,
+                                
     )
 
     def save(self, **kwargs):
@@ -69,12 +76,16 @@ class ResponsFTigaDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.CharField(
-                                max_length=5,
+    respons                 = models.SmallIntegerField(
                                 blank=True,
                                 null=True,
     )
-    keterangan              = models.CharField(max_length=30)
+    keterangan              = models.CharField(
+                                max_length=30,
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFTigaDetail, self).save(**kwargs)
@@ -97,7 +108,11 @@ class ResponsFEmpatDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.TextField()
+    respons                 = models.TextField(
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFEmpatDetail, self).save(**kwargs)
@@ -119,8 +134,17 @@ class ResponsFLimaDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.SmallIntegerField()
-    keterangan              = models.CharField(max_length=30)
+    respons                 = models.SmallIntegerField(
+                                blank=True,
+                                null=True,
+                                
+    )
+    keterangan              = models.CharField(
+                                max_length=30,
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFLimaDetail, self).save(**kwargs)
@@ -148,7 +172,11 @@ class ResponsFEnamDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.SmallIntegerField()
+    respons                 = models.SmallIntegerField(
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFEnamDetail, self).save(**kwargs)
@@ -177,7 +205,11 @@ class ResponsFTujuhDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.SmallIntegerField()
+    respons                 = models.SmallIntegerField(
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFTujuhDetail, self).save(**kwargs)
@@ -205,7 +237,11 @@ class ResponsFTujuhADetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.SmallIntegerField()
+    respons                 = models.SmallIntegerField(
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFTujuhADetail, self).save(**kwargs)
@@ -227,7 +263,12 @@ class ResponsFDelapanDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.CharField(max_length=6)
+    respons                 = models.CharField(
+                                max_length=6,
+                                blank=True,
+                                null=True,
+                                
+    )
     
     def save(self, **kwargs):
         super(ResponsFDelapanDetail, self).save(**kwargs)
@@ -249,7 +290,11 @@ class ResponsFSembilanDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.TextField()
+    respons                 = models.TextField(
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFSembilanDetail, self).save(**kwargs)
@@ -271,7 +316,12 @@ class ResponsFSepuluhDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.CharField(max_length=100)
+    respons                 = models.CharField(
+                                max_length=100,
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFSepuluhDetail, self).save(**kwargs)
@@ -293,7 +343,12 @@ class ResponsFSebelasDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.CharField(max_length=100)
+    respons                 = models.CharField(
+                                max_length=100,
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFSebelasDetail, self).save(**kwargs)
@@ -321,7 +376,12 @@ class ResponsFTigabelasDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.BigIntegerField()
+    respons                 = models.BigIntegerField(
+                                blank=True,
+                                null=True,
+                                default=0,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFTigabelasDetail, self).save(**kwargs)
@@ -343,7 +403,12 @@ class ResponsFEmpatbelasDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.CharField(max_length=25)
+    respons                 = models.CharField(
+                                max_length=25,
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFEmpatbelasDetail, self).save(**kwargs)
@@ -365,7 +430,12 @@ class ResponsFLimabelasDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.CharField(max_length=25)
+    respons                 = models.CharField(
+                                max_length=25,
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFLimabelasDetail, self).save(**kwargs)
@@ -387,41 +457,17 @@ class ResponsFEnambelasDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.TextField()
+    respons                 = models.TextField(
+                                blank=True,
+                                null=True,
+                                
+    )
 
     def save(self, **kwargs):
         super(ResponsFEnambelasDetail, self).save(**kwargs)
 
     def __str__(self):
         return "%s - %s" % (self.master_kuesioner_id, self.respons)
-
-
-class ResponsFTujuhbelasDetail(models.Model):
-    master_kuesioner_id     = models.ForeignKey(
-                                MasterKuesioner,
-                                models.SET_NULL,
-                                blank=True,
-                                null=True
-    )
-    master_subkuesioner_id  = models.ForeignKey(
-                                MasterSubKuesioner,
-                                models.SET_NULL,
-                                blank=True,
-                                null=True,
-    )
-    respons_header_id       = models.ForeignKey(
-                                ResponsHeader,
-                                on_delete=models.CASCADE,
-                                blank=True,
-                                null=True,
-    )
-    respons                 = models.SmallIntegerField()
-
-    def save(self, **kwargs):
-        super(ResponsFTujuhbelasDetail, self).save(**kwargs)
-
-    def __str__(self):
-        return "%s - %s" % (self.master_subkuesioner_id, self.respons)
 
 
 class ResponsFTujuhbelasADetail(models.Model):
@@ -443,7 +489,11 @@ class ResponsFTujuhbelasADetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.SmallIntegerField()
+    respons                 = models.SmallIntegerField(
+                                blank=True,
+                                null=True,
+                                default=0,
+    )
 
     def save(self, **kwargs):
         super(ResponsFTujuhbelasADetail, self).save(**kwargs)
@@ -471,7 +521,11 @@ class ResponsFTujuhbelasBDetail(models.Model):
                                 blank=True,
                                 null=True,
     )
-    respons                 = models.SmallIntegerField()
+    respons                 = models.SmallIntegerField(
+                                blank=True,
+                                null=True,
+                                default=0,
+    )
 
     def save(self, **kwargs):
         super(ResponsFTujuhbelasBDetail, self).save(**kwargs)

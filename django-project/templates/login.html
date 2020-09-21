@@ -2,85 +2,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Log in</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href=" {% static 'admin-lte/plugins/fontawesome-free/css/all.min.css' %}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href=" {% static 'admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href=" {% static 'admin-lte/dist/css/adminlte.min.css' %}">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'login/bootstrap.css' %} ">
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="{% static 'login/style.css' %} ">
 </head>
-<body class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo">
-    <a href=" {% static 'admin-lte/index2.html' %}"><b>Tracer Study </b>TEDC</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="card">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
-      {% if messages %}
-        <ul class="messages">
-          {% for messages in messages %}
-            <li {% if messages.tags %} class="{{messages.tags}}" {% endif %}>
-              {{messages}}
-            </li>
-          {% endfor %}
+<body>
+  <div class="container">
+    <div class="col-md-6 col-md-offset-3 col-xs-12">
+        <!-- @ Start login box wrapper -->
+        <div class="blmd-wrapp">
+            <div class="blmd-color-conatiner ripple-effect-All"></div>
+            <div class="blmd-header-wrapp ">
+                <div class="blmd-switches">
+                     <button class="btn btn-circle btn-lg btn-blmd ripple-effect btn-success blmd-switch-button">
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="#fff" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                         </svg>
+                      </button>
+                </div> 
+                
+            </div> 
+            <div class="blmd-continer">
+            {% if messages %}
+                <ul class="messages">
+                {% for messages in messages %}
+                    <li {% if messages.tags %} class="{{messages.tags}}" {% endif %}>
+                    {{messages}}
+                    </li>
+                {% endfor %}
 
-        </ul>
-      {% endif %}
+                </ul>
+            {% endif %}
+                <!-- @ Login form container -->
+                <form method="POST" class="clearfix" id="login-form">
+                  {% csrf_token %}
+                    <h1>Login Tracer Study TEDC</h1>
+                    <div class="col-md-12">
+        
 
-      <form method="POST">
-      {% csrf_token %}
-        <div class="input-group mb-3">
-          <input type="text" name="username" class="form-control" placeholder="Username">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
+                        <div class="input-group blmd-form">
+                            <div class="blmd-line">
+                                <input type="text" name="username" autocomplete="off" id="username" class="form-control">
+                                <label class="blmd-label">Email atau Username</label>
+                            </div>
+                        </div>
+                        <div class="input-group blmd-form">
+                            <div class="blmd-line">
+                                <input type="password" name="password" autocomplete="off" id="password" class="form-control">
+                                <label class="blmd-label">Password</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-blmd ripple-effect btn-success btn-lg btn-block">Login</button>
+                    </div>
+                    <br/>
+                </form>
+                <!-- @ Login form container -->
+                <form action="POST" class="clearfix form-hidden" id="Register-form">
+                    <h1>Register Akun Tracer Studi</h1>
+                    <div class="col-md-12">
+                        
+                        <div class="input-group blmd-form">
+                            <div class="blmd-line">
+                                <input type="text" name="username" autocomplete="off" id="username" class="form-control">
+                                <label class="blmd-label">Email or Username</label>
+                            </div>
+                        </div>
+                        <div class="input-group blmd-form">
+                            <div class="blmd-line">
+                                <input type="password" name="password" autocomplete="off" id="password" class="form-control">
+                                <label class="blmd-label">Password</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <button type="button" class="btn btn-blmd ripple-effect btn-warning btn-lg btn-block">Register</button>
+                    </div>
+                    <br/>
+                </form>
             </div>
-          </div>
         </div>
-        <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="Password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-8">
-            
-          </div>
-          <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Masuk</button>
-          </div>
-          <!-- /.col -->
-        </div>
-      </form>
-
+      
     </div>
-    <!-- /.login-card-body -->
-  </div>
 </div>
-<!-- /.login-box -->
-
-<!-- jQuery -->
-<script src=" {% static 'admin-lte/plugins/jquery/jquery.min.js' %}"></script>
-<!-- Bootstrap 4 -->
-<script src=" {% static 'admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- AdminLTE App -->
-<script src=" {% static 'admin-lte/dist/js/adminlte.min.js' %}"></script>
-
 </body>
+<!-- jQuery -->
+<script src=" {% static 'login/jquery.js' %} "></script>
+<!-- Bootstrap 4 -->
+<script src=" {% static 'login/bootstrap.js' %} "></script>
+<!-- login -->
+<script src=" {% static 'login/script.js' %} "></script>
 </html>

@@ -79,7 +79,7 @@ class MasterFSatu(models.Model):
                         null=True,
     )
     LIST_OF_YEAR = []
-    for y in range(2004, (datetime.now().year+1)):
+    for y in range(2018, (datetime.now().year+1)):
         LIST_OF_YEAR.append((y, y))
 
     tahun_lulus         = models.PositiveSmallIntegerField(

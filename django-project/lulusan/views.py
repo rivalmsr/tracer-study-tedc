@@ -47,53 +47,50 @@ def create(request):
     form = MasterFSatuForm(request.POST or None)
     template_name = 'lulusan/lulusan_form.html'
     messages_info = ''
-        
-    try:
-        if request.is_ajax and request.method == 'POST':
+   
+    if request.is_ajax and request.method == 'POST':
 
-            nim_lulusan     = request.POST.get('nomor_mahasiswa')
-            nama_lulusan    = request.POST.get('nama')
-            messages_info   = {
-                'nim': nim_lulusan,
-                'nama_lulusan': nama_lulusan,
-            }
+        nim_lulusan     = request.POST.get('nomor_mahasiswa')
+        nama_lulusan    = request.POST.get('nama')
+        messages_info   = {
+            'nim': nim_lulusan,
+            'nama_lulusan': nama_lulusan,
+        }
 
-            if form.is_valid():
-                form.save()
-                
-            if MasterFSatu.objects.filter(nomor_mahasiswa=request.POST.get('nomor_mahasiswa')).exists():
-                biodata_lulusan = BiodataLulusan.objects.create(
-                    master_fsatu_id = MasterFSatu.objects.get(nomor_mahasiswa=request.POST.get('nomor_mahasiswa'))
-                )
-                biodata_lulusan.save()
+        if form.is_valid():
+            form.save()
+            
+        if MasterFSatu.objects.filter(nomor_mahasiswa=request.POST.get('nomor_mahasiswa')).exists():
+            biodata_lulusan = BiodataLulusan.objects.create(
+                master_fsatu_id = MasterFSatu.objects.get(nomor_mahasiswa=request.POST.get('nomor_mahasiswa'))
+            )
+            biodata_lulusan.save()
 
-            if form.is_valid():
-                username = request.POST.get('nama').lower().replace(" ", "_")
-                user_password = request.POST.get('nomor_mahasiswa').lower().replace(" ", "_") + request.POST.get('tahun_lulus')
-                user_email = request.POST.get('alamat_email')
-                if request.method == 'POST':
-                    user = User.objects.create_user(username, user_email, user_password)
-                    user.is_active = False
-                    # add user to group lulusan
-                    lulusan_group = Group.objects.get(name='lulusan')
-                    user.groups.add(lulusan_group)
-                    user.save()
+        if form.is_valid():
+            username = request.POST.get('nama').lower().replace(" ", "_")
+            user_password = request.POST.get('nomor_mahasiswa').lower().replace(" ", "_") + request.POST.get('tahun_lulus')
+            user_email = request.POST.get('alamat_email')
+            if request.method == 'POST':
+                user = User.objects.create_user(username, user_email, user_password)
+                user.is_active = False
+                # add user to group lulusan
+                lulusan_group = Group.objects.get(name='lulusan')
+                user.groups.add(lulusan_group)
+                user.save()
 
-                    # MAIL SYSTEM
-                    current_site = get_current_site(request)
-                    mail_subject = 'Aktifasi Akun Tracer Study Anda'
-                    mail_template_name = 'lulusan/lulusan_activation_account.html'
-                    mail_context = {
-                        'username': username,
-                        'user_password': user_password,
-                        'domain': current_site.domain,
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                        'token': account_activation_token.make_token(user),
-                    }
-                    send_email = mail_system(param_mail_subject=mail_subject, param_template_name=mail_template_name, param_context_mail=mail_context, param_user_mail=user_email)
+                # MAIL SYSTEM
+                current_site = get_current_site(request)
+                mail_subject = 'Aktifasi Akun Tracer Study Anda'
+                mail_template_name = 'lulusan/lulusan_activation_account.html'
+                mail_context = {
+                    'username': username,
+                    'user_password': user_password,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                }
+                send_email = mail_system(param_mail_subject=mail_subject, param_template_name=mail_template_name, param_context_mail=mail_context, param_user_mail=user_email)
                     
-    except:
-        pass
     context = {
         'title': 'Tambah Data Lulusan',
         'nav_item_lulusan': 'menu-open',
@@ -103,7 +100,6 @@ def create(request):
     }
 
     return render(request, template_name, context)
-
 
 
 def activate_account(request, uidb64, token):
@@ -151,7 +147,9 @@ class LulusanProfileView(DetailView):
     def get_context_data(self, *args, **kwargs):
         # get biodata by slug
         slug = self.kwargs.get('slug')
+        print(slug)
         biodata_lulusan = BiodataLulusan.objects.get(master_fsatu_id__slug=slug)
+        print(biodata_lulusan)
         self.extra_context['biodata_lulusan'] = biodata_lulusan
         self.kwargs.update(self.extra_context)
         kwargs = self.kwargs
@@ -202,6 +200,7 @@ def delete(request, delete_id):
         lulusan_account.delete()
         # delete user
         lulusan_group.delete()
+
         return redirect('lulusan:list')
 
     return render(request, template_name, context)

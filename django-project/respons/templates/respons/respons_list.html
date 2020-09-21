@@ -63,11 +63,13 @@
                             <th>NIM</th>
                             <th>Program Studi</th>
                             <th>Tahun Lulus</th>
+                            <th>status</th>
                             <th>Publish</th>
                             <th>Opsi</th>
                         </tr>
                     </thead>
                     <tbody id="myTable">
+
                     {% for responden in list_of_responden %}
                         <tr>
                             <td>{{forloop.counter}}</td>
@@ -75,6 +77,13 @@
                             <td>{{responden.master_fsatu_id.nomor_mahasiswa}}</td>
                             <td>{{responden.master_fsatu_id.master_prodi_id.nama}}</td>
                             <td>{{responden.master_fsatu_id.tahun_lulus}}</td>
+                            <td class="project_progress">
+                                {% if responden.completed %}
+                                    <span class="badge bg-success">Completed</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Progress</span>
+                                {% endif %}
+                            </td>
                             <td>{{responden.created|date}}</td>
                             
                             <td>

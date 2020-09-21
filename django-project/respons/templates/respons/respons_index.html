@@ -1,11 +1,58 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {{title}}
 {% endblock  %}
 
-
 {% block content %}
-    <h1>{{title}}</h1>
-    <a href="{% url 'respons:create' %}">Isi Kuesioner</a>
+  <div class="row">
+  
+  <div class="col-12">
+      <!-- Widget: user widget style 2 -->
+    <div class="card">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+      <div class="card-body bg-info text-center">
+        <h4 class="card-text mt-2">Tracer Study TEDC Bandung</h4>
+        <h5 class="card-text mt-2 mb-3">Kuesioner Standar Tracer Study Kementerian Ristekdikti Tahun 2017</h5>
+        
+        <a href="{% url 'respons:create' %}" class="btn btn-warning elevation-2 mb-3 text-bold"><i class="fa fa-space-shuttle mr-3"></i>Mulai Sekarang</a>
+      </div>
+        
+      <div class="card-footer">
+        <div class="row">
+          <div class="col-sm-4 border-right">
+            <div class="description-block">
+              <h5 class="description-header text-success">17</h5>
+              <span class="description-text">Pertanyaan</span>
+            </div>
+            <!-- /.description-block -->
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-4 border-right">
+            <div class="description-block">
+              <h5 class="description-header text-warning">30%</h5>
+              <span class="description-text">Sudah Diisi</span>
+            </div>
+            <!-- /.description-block -->
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-4">
+            <div class="description-block">
+              <h5 class="description-header">35</h5>
+              <span class="description-text">PRODUCTS</span>
+            </div>
+            <!-- /.description-block -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+
+      </div>
+      <!-- /.widget-user -->
+    </div>
+    <!-- /.col -->
+
+  </div>
 {% endblock  %}
