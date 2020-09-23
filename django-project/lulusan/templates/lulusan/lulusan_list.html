@@ -86,7 +86,7 @@
                                         Edit
                                     </a>
                                     {% csrf_token %}
-                                    <button class="btn btn-danger btn-sm" id="deleteLulusan" value="{% url 'lulusan:delete' lulusan.pk %}" data-catid="{{lulusan.nomor_mahasiswa}}">
+                                    <button class="btn btn-danger btn-sm deleteLulusan" value="{% url 'lulusan:delete' lulusan.pk %}" data-catid="{{lulusan.nomor_mahasiswa}}">
                                     <i class="fas fa-trash"></i>
                                         Hapus
                                     </button>
@@ -126,7 +126,7 @@
         "responsive": true,
         });
 
-        $('#deleteLulusan').click(function(){
+        $('.deleteLulusan').click(function(){
             const lulusan_delete_url = $(this).attr('value');
             var lulusan_nim =  $(this).attr('data-catid');
             Swal.fire({

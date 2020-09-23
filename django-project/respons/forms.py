@@ -12,8 +12,11 @@ from kuesioner.models import (
 )
 
 class ResponsHeaderForm(forms.Form):
-    respons_f1 = forms.IntegerField(
-        label  = 'Nomor Mahasiswa'
+    respons_f1 = forms.CharField(
+        label  = 'Nomor Mahasiswa',
+        widget = forms.TextInput(attrs={
+            'class': 'form-control form-control-sm',
+        })
         )
 
 class ResponsFDuaForm(forms.Form):

@@ -147,9 +147,7 @@ class LulusanProfileView(DetailView):
     def get_context_data(self, *args, **kwargs):
         # get biodata by slug
         slug = self.kwargs.get('slug')
-        print(slug)
         biodata_lulusan = BiodataLulusan.objects.get(master_fsatu_id__slug=slug)
-        print(biodata_lulusan)
         self.extra_context['biodata_lulusan'] = biodata_lulusan
         self.kwargs.update(self.extra_context)
         kwargs = self.kwargs
@@ -183,27 +181,17 @@ class LulusanUpdateBiodataView(UpdateView):
 
 
 def delete(request, delete_id):
-    template_name = 'lulusan/lulusan_confirm_delete.html'
-    lulusan = MasterFSatu.objects.get(pk=delete_id)
-    context = {
-        'title': 'Hapus Data Mahasiswa',
-        'lulusan': lulusan
-    }
-
     # get lulusan form database 
     lulusan_account = get_object_or_404(MasterFSatu, id = delete_id)
     # get user by lulusan from database
     lulusan_group = get_object_or_404(User, email=lulusan_account.alamat_email)
-
     if request.method == 'POST':
         # delete lulusan
         lulusan_account.delete()
         # delete user
         lulusan_group.delete()
-
         return redirect('lulusan:list')
-
-    return render(request, template_name, context)
+    return redirect('lulusan:list')
 
 
 def lulusan_profile(request):

@@ -59,7 +59,7 @@
               <div class="info-box-content">
               <span class="info-box-text">Pengisian Kuesioner</span>
               <span class="info-box-text">Progress</span>
-              <span class="info-box-number">{{persentase_respons_process}}%</span>
+              <span class="info-box-number">{{persentase_respons_progress}}%</span>
           </div>
             <!-- /.info-box-content -->
         </div>
@@ -71,7 +71,10 @@
         <!-- BAR CHART -->
         <div class="card card-outline card-teal">
           <div class="card-header">
-            <h3 class="card-title">Bar Chart</h3>
+            <h3 class="card-title">
+            <i class="far fa-chart-bar"></i>
+            Bar Chart
+            </h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -81,6 +84,8 @@
           </div>
 
           <div class="card-body">
+            <h5 class="card-title">Menampilkan Pengolahan Data dari Pertanyaan</h5>
+            <p class="card-text">F2 - Menurut anda seberapa besar penekanan pada metode pembelajaran di bawah ini dilaksanakan di program studi anda?</p>
             <div class="chart">
               <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
@@ -112,15 +117,42 @@
               </div>
             </div>
             <div class="card-body">
-              <div id="donut-chart" style="height: 300px;"></div>
+              <h5 class="card-title">Menampilkan Pengolahan Data dari Pertanyaan</h5>
+              <p class="card-text">F8 - Apakah anda bekerja saat ini (termasuk kerja sambilan dan wirausaha)?</p>
+              <div id="donut-chart" style="height: 250px;"></div>
             </div>
             <!-- /.card-body-->
           </div>
           <!-- /.card -->
       </div>
-      <div class="col-md-6">
 
+      <div class="col-md-6">
+        <!-- STACKED BAR CHART -->
+          <div class="card card-teal card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="far fa-chart-bar"></i>
+                Stacked Bar Chart
+                </h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Menampilkan Pengolahan Data dari Pertanyaan</h5>
+              <p class="card-text">F8 - Apakah anda bekerja saat ini (termasuk kerja sambilan dan wirausaha)?</p>
+              <div class="chart">
+                <canvas id="stackedBarChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
       </div>
+
     </div>
   <!-- /.row -->
   
@@ -135,19 +167,179 @@
   <script src=" {% static 'admin-lte/plugins/flot-old/jquery.flot.pie.min.js' %} "></script>
 
   <script>
-    //-------------
-    //- Data
-    //-------------
+    //- Initialisasi Data 
     var list_prodi = [];
+    '{% for prodi in list_of_prodi %}'
+      list_prodi.push('{{prodi}}')
+    '{% endfor %}'
+
+    var list_of_perkuliahan_values = []
+    var list_of_demostrasi_values = []
+    var list_of_proyek_riset_values = []
+    var list_of_magang_values = []
+    var list_of_praktikum_values = []
+    var list_of_kerja_lapangan_values = []
+    var list_of_diskusi_values = []
+    
+    '{% for perkuliahan_values in list_of_perkuliahan_values %}'
+      list_of_perkuliahan_values.push(parseFloat('{{perkuliahan_values}}'))
+    '{% endfor %}'
+
+    '{% for demostrasi_values in list_of_demostrasi_values %}'
+      list_of_demostrasi_values.push(parseFloat('{{demostrasi_values}}'))
+    '{% endfor %}'
+
+    '{% for proyek_riset_values in list_of_proyek_riset_values %}'
+      list_of_proyek_riset_values.push(parseFloat('{{proyek_riset_values}}'))
+    '{% endfor %}'
+
+    '{% for magang_values in list_of_magang_values %}'
+      list_of_magang_values.push(parseFloat('{{magang_values}}'))
+    '{% endfor %}'
+
+    '{% for praktikum_values in list_of_praktikum_values %}'
+      list_of_praktikum_values.push(parseFloat('{{praktikum_values}}'))
+    '{% endfor %}'
+
+    '{% for kerja_lapangan_values in list_of_kerja_lapangan_values %}'
+      list_of_kerja_lapangan_values.push(parseFloat('{{kerja_lapangan_values}}'))
+    '{% endfor %}'
+
+    '{% for diskusi_values in list_of_diskusi_values %}'
+      list_of_diskusi_values.push(parseFloat('{{diskusi_values}}'))
+    '{% endfor %}'
+
+    console.log(list_of_diskusi_values)
+    //-------------
+    //- Data BAR CHART -
+    //-------------
+
+    var areaChartData = {
+      labels  : list_prodi,
+      datasets: [
+        {
+          label               : 'Perkuliahan',
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          borderColor         : 'rgba(60,141,188,0.8)',
+          pointRadius          : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : list_of_perkuliahan_values
+        },
+        {
+          label               : 'Demonstrasi',
+          backgroundColor     : 'rgba(0, 192, 239, 0.9)',
+          borderColor         : 'rgba(0, 192, 239, 0.8)',
+          pointRadius         : false,
+          pointColor          : 'rgba(0, 192, 239, 1)',
+          pointStrokeColor    : '#00c0ef',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(0, 192, 239, 1)',
+          data                : list_of_demostrasi_values
+        },
+        {
+          label               : 'Partisipasi dalam proyek riset',
+          backgroundColor     : 'rgba(210, 214, 222, 1)',
+          borderColor         : 'rgba(210, 214, 222, 1)',
+          pointRadius         : false,
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : list_of_proyek_riset_values
+        },
+        {
+          label               : 'Magang',
+          backgroundColor     : 'rgba(245, 105, 84, 0.9)',
+          borderColor         : 'rgba(245, 105, 84, 0.8)',
+          pointRadius         : false,
+          pointColor          : 'rgba(245, 105, 84, 1)',
+          pointStrokeColor    : '#f56954',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(245, 105, 84, 1)',
+          data                : list_of_magang_values
+        },
+        {
+          label               : 'Praktikum',
+          backgroundColor     : 'rgba(0, 166, 90, 0.9)',
+          borderColor         : 'rgba(0, 166, 90, 0.8)',
+          pointRadius         : false,
+          pointColor          : 'rgba(0, 166, 90, 1)',
+          pointStrokeColor    : '#00a65a',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(0, 166, 90, 1)',
+          data                : list_of_praktikum_values
+        },
+        {
+          label               : 'Kerja Lapangan',
+          backgroundColor     : 'rgba(243, 156, 18, 0.9)',
+          borderColor         : 'rgba(243, 156, 18, 0.8)',
+          pointRadius         : false,
+          pointColor          : 'rgba(243, 156, 18, 1)',
+          pointStrokeColor    : '#f39c12',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(243, 156, 18, 1)',
+          data                : list_of_kerja_lapangan_values
+        },
+        {
+          label               : 'Diskusi',
+          backgroundColor     : 'rgba(140, 84, 245, 0.9)',
+          borderColor         : 'rgba(140, 84, 245, 0.8)',
+          pointRadius         : false,
+          pointColor          : 'rgba(140, 84, 245, 1)',
+          pointStrokeColor    : '#8c54f5',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(140, 84, 245, 1)',
+          data                : list_of_diskusi_values
+        },
+      ]
+    }
+
+
+    //-------------
+    //- BAR CHART -
+    //-------------
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var barChartData = jQuery.extend(true, {}, areaChartData)
+    var temp0 = areaChartData.datasets[0]
+    var temp1 = areaChartData.datasets[1]
+    var temp2 = areaChartData.datasets[2]
+    var temp3 = areaChartData.datasets[3]
+    var temp4 = areaChartData.datasets[4]
+    var temp5 = areaChartData.datasets[5]
+    var temp6 = areaChartData.datasets[6]
+    barChartData.datasets[0] = temp0
+    barChartData.datasets[1] = temp1
+    barChartData.datasets[2] = temp2
+    barChartData.datasets[3] = temp3
+    barChartData.datasets[4] = temp4
+    barChartData.datasets[5] = temp5
+    barChartData.datasets[6] = temp6
+
+    var barChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      datasetFill             : false
+    }
+
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar', 
+      data: barChartData,
+      options: barChartOptions
+    })
+    //-------------
+    //- Initial Data 
+    //- STACKED BAR CHART
+    //- BAR CHART -
+    //-------------
     var list_sudah_bekerja = [];
     var list_belum_bekerja = [];
     var count_sudah_bekerja = 0
     var count_belum_bekerja = 0
     var respons_fdelapan = 0
 
-    '{% for prodi in list_of_prodi %}'
-      list_prodi.push('{{prodi}}')
-    '{% endfor %}'
     
     '{% for sudah_bekerja in list_lulusan_sudah_bekerja %}'
       list_sudah_bekerja.push(parseInt('{{sudah_bekerja}}'))
@@ -167,7 +359,12 @@
     count_belum_bekerja *= respons_fdelapan
     console.log(count_belum_bekerja)
 
-    var areaChartData = {
+    
+    //-------------
+    //- Data STACKED BAR CHART
+    //-------------
+
+    var areaChartData2 = {
       labels  : list_prodi,
       datasets: [
         {
@@ -196,27 +393,12 @@
       ]
     }
 
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = jQuery.extend(true, {}, areaChartData)
-    var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
-
-    var barChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      datasetFill             : false
-    }
-
-    var barChart = new Chart(barChartCanvas, {
-      type: 'bar', 
-      data: barChartData,
-      options: barChartOptions
-    })
+    var barChartData2 = jQuery.extend(true, {}, areaChartData2)
+    var temp0 = areaChartData2.datasets[0]
+    var temp1 = areaChartData2.datasets[1]
+    barChartData2.datasets[0] = temp1
+    barChartData2.datasets[1] = temp0
+    
 
     /*
      * DONUT CHART
@@ -240,10 +422,10 @@
         pie: {
           show       : true,
           radius     : 1,
-          innerRadius: 0.3,
+          innerRadius: 0.2,
           label      : {
             show     : true,
-            radius   : 2 / 3,
+            radius   : 1.7 / 3,
             formatter: labelFormatter,
             threshold: 0.1
           }
@@ -268,6 +450,33 @@
         + '<br>'
         + Math.round(series.percent) + '%</div>'
     }
+
+
+    //---------------------
+    //- STACKED BAR CHART -
+    //---------------------
+
+    var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+    var stackedBarChartData = jQuery.extend(true, {}, barChartData2)
+
+    var stackedBarChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      scales: {
+        xAxes: [{
+          stacked: true,
+        }],
+        yAxes: [{
+          stacked: true
+        }]
+      }
+    }
+
+    var stackedBarChart = new Chart(stackedBarChartCanvas, {
+      type: 'bar', 
+      data: stackedBarChartData,
+      options: stackedBarChartOptions
+    })
 
   </script>
 

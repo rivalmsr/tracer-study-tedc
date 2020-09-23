@@ -1,5 +1,9 @@
 import xlwt
-from django.shortcuts import render, redirect
+from django.shortcuts import (
+render, 
+get_object_or_404,
+redirect,
+)
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 
@@ -64,6 +68,14 @@ from kuesioner.models import (
 def index(request):
     # Initialisasi Dictionary 
     context = {}
+     # respons header
+    list_of_responden =  ResponsHeader.objects.all().count()
+    if list_of_responden > 0:
+        responden_completed = ResponsHeader.objects.filter(completed=True).count()
+        responden_progress = ResponsHeader.objects.filter(completed=False).count()
+    else:
+        responden_completed = 0
+        responden_progress = 0
     
     template_name = 'respons/respons_index.html'
     context = {
@@ -71,6 +83,8 @@ def index(request):
         'nav_item_kuesioner': 'menu-open',
         'nav_status_kuesioner': 'active',
         'nav_status_pengisian_kuesioner': 'active',
+        'responden_completed': responden_completed,
+        'responden_progress': responden_progress,
     }
     return render(request, template_name, context)
 
@@ -91,27 +105,6 @@ class ResponsListView(ListView):
     model = ResponsHeader
     template_name   = 'respons/respons_list.html'
     context_object_name = 'list_of_responden'
-
-    # # set progress responden
-    # list_respons_header = ResponsHeader.objects.all()
-    # list_progress_responden = []
-    # for respons_header in list_respons_header:
-    #     list_respons_fdelapan = ResponsFDelapanDetail.objects.filter(respons_header_id=respons_header.id)
-    #     for respons_fdelapan in list_respons_fdelapan:
-    #         # inisialisasi nilai
-    #         persentase = 100
-    #         total_tab  = 0
-    #         # pengkodisian
-    #         if respons_fdelapan.respons == 'Ya':
-    #             total_tab = 19
-    #         elif respons_fdelapan.respons == 'Tidak':
-    #             total_tab = 11
-    #         else:
-    #             total_tab = 21
-    #         # perhitungan nilai progress
-    #         satuan = persentase/total_tab
-    #         progress = round(respons_header.current_tab*satuan)
-    #         list_progress_responden.append(progress)
 
     extra_context= {
         'title': 'List Responden',
@@ -328,16 +321,20 @@ def create(request):
                 current_value = request.POST.get('current-tab')
             else:
                 current_value = 0
-    
+            # get nomor mahasiswa and clear it 
+            txt_nomor_mahasiswa = request.POST.get('respons_f1').upper()
+            nomor_mahasiswa = txt_nomor_mahasiswa.replace(" ", "")
+
             fsatu = ResponsHeader.objects.create( 
-                master_fsatu_id = MasterFSatu.objects.get(pk=request.POST.get('respons_f1')),
+                master_fsatu_id = MasterFSatu.objects.get(nomor_mahasiswa=nomor_mahasiswa),
                 current_tab     = current_value,
                
             )
             fsatu.save()
             
-            if  ResponsHeader.objects.filter(master_fsatu_id__pk=request.POST.get('respons_f1')).exists():
-                get_respons_header = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1'))
+            if  ResponsHeader.objects.filter(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa).exists():
+                get_respons_header = ResponsHeader.objects.get(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa)
+
                 # Respons F2
                 if fdua_form.is_valid():
                     data_fdua = {}
@@ -354,7 +351,7 @@ def create(request):
                         fdua = ResponsFDuaDetail.objects.create(
                             master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f2')),
                             master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
-                            respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                            respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                             respons                 = value
                         )
                         fdua.save()
@@ -378,7 +375,7 @@ def create(request):
                         keterangan_value = ""
                     ftiga = ResponsFTigaDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f3')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = respons_value,
                         keterangan              = keterangan_value,
                     )
@@ -398,7 +395,7 @@ def create(request):
                     # create values into database
                     fempat = ResponsFEmpatDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f4')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = list_value,
                     )
                     fempat.save()
@@ -425,7 +422,7 @@ def create(request):
                     # create values into database
                     flima = ResponsFLimaDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f5')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = respons_value,
                         keterangan              = keterangan_value,
                     )
@@ -443,7 +440,7 @@ def create(request):
                     fenam = ResponsFEnamDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f6')),
                         master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f6')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = value,
                     )
                     fenam.save()
@@ -459,7 +456,7 @@ def create(request):
                     ftujuh = ResponsFTujuhDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7')),
                         master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f7')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = value,
                     )
                     ftujuh.save()
@@ -475,7 +472,7 @@ def create(request):
                     ftujuh_a = ResponsFTujuhADetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f7A')),
                         master_subkuesioner_id  = MasterSubKuesioner.objects.get(master_kuesioner_id__pk=request.POST.get('kuesioner_f7A')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = value,
                     )
                     ftujuh_a.save()
@@ -490,7 +487,7 @@ def create(request):
                     # create value into database
                     fdelapan = ResponsFDelapanDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f8')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = value,
                     )
                     fdelapan.save()
@@ -511,7 +508,7 @@ def create(request):
                     # create values into database
                     fsembilan = ResponsFSembilanDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f9')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = list_value,
                     )
                     fsembilan.save()
@@ -526,7 +523,7 @@ def create(request):
                     # create value into database
                     fsepuluh = ResponsFSepuluhDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f10')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = value,
                     )
                     fsepuluh.save()
@@ -542,7 +539,7 @@ def create(request):
                     # create value into database
                     fsebelas = ResponsFSebelasDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f11')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = value,
                     )
                     fsebelas.save()
@@ -561,7 +558,7 @@ def create(request):
                         ftigabelas = ResponsFTigabelasDetail.objects.create(
                             master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f13')),
                             master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
-                            respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                            respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                             respons                 = value
                         )
                         ftigabelas.save()
@@ -576,7 +573,7 @@ def create(request):
                     # create values into database
                     fempatbelas = ResponsFEmpatbelasDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f14')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = value,
                     )
                     fempatbelas.save()
@@ -591,7 +588,7 @@ def create(request):
                     # create values into database
                     flimabelas = ResponsFLimabelasDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f15')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = value,
                     )
                     flimabelas.save()
@@ -610,7 +607,7 @@ def create(request):
                     # create values into database
                     fenambelas = ResponsFEnambelasDetail.objects.create(
                         master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f16')),
-                        respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                        respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                         respons                 = list_value,
                     )
                     fenambelas.save()
@@ -629,7 +626,7 @@ def create(request):
                         ftujuhbelas_a = ResponsFTujuhbelasADetail.objects.create(
                             master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f17A')),
                             master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
-                            respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                            respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                             respons                 = value,
                         )
                         ftujuhbelas_a.save()
@@ -648,7 +645,7 @@ def create(request):
                         ftujuhbelas_b = ResponsFTujuhbelasBDetail.objects.create(
                             master_kuesioner_id     = MasterKuesioner.objects.get(pk=request.POST.get('kuesioner_f17B')),
                             master_subkuesioner_id  = MasterSubKuesioner.objects.get(kode=key),
-                            respons_header_id       = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1')),
+                            respons_header_id       = ResponsHeader.objects.get(pk=get_respons_header.pk),
                             respons                 = value,
                         )
                         ftujuhbelas_b.save()
@@ -684,7 +681,7 @@ def update(request, update_id):
     # Respons Form
     get_value_header_form = ResponsHeader.objects.get(pk=update_id)
     data_form_header = {
-        'respons_f1': get_value_header_form.master_fsatu_id.pk
+        'respons_f1': get_value_header_form.master_fsatu_id.nomor_mahasiswa
     }
     header_form         = ResponsHeaderForm(request.POST or None, initial=data_form_header)
 
@@ -894,8 +891,12 @@ def update(request, update_id):
     # Reqeust Method Check
  
     if request.method == 'POST':
-        if ResponsHeader.objects.filter(master_fsatu_id__pk=request.POST.get('respons_f1')).exists():
-            respons_header = ResponsHeader.objects.get(master_fsatu_id__pk=request.POST.get('respons_f1'))
+         # get nomor mahasiswa and clear it 
+        txt_nomor_mahasiswa = request.POST.get('respons_f1').upper()
+        nomor_mahasiswa = txt_nomor_mahasiswa.replace(" ", "")
+
+        if ResponsHeader.objects.filter(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa).exists():
+            respons_header = ResponsHeader.objects.get(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa)
             # Respons Header
             if request.POST.get('current-tab'):
                 value = request.POST.get('current-tab')
@@ -1446,3 +1447,13 @@ def unduh_data(request):
     }
 
     return render(request, template_name, context)
+
+def delete(request, delete_id):
+    # get respons form database 
+    respons_header = get_object_or_404(ResponsHeader, id = delete_id)
+    if request.method == 'POST':
+        # delete respons
+        respons_header.delete()
+        return redirect('respons:list')
+    return redirect('respons:list')
+    
