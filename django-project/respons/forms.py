@@ -151,7 +151,8 @@ class ResponsFEnamForm(forms.Form):
         label   = LABEL_F6[0],
         widget  = forms.NumberInput(
             attrs={
-                'class': 'form-control form-control-sm'
+                'class': 'form-control form-control-sm',
+                'min': '0',
             }
         )
 
@@ -164,7 +165,8 @@ class ResponsFTujuhForm(forms.Form):
         label   = LABEL_F7[0],
         widget  = forms.NumberInput(
             attrs={
-                'class': 'form-control form-control-sm'
+                'class': 'form-control form-control-sm',
+                'min': '0',
             }
         )
     )
@@ -176,7 +178,8 @@ class ResponsFTujuhAForm(forms.Form):
         label     = LABEL_F7_A[0],
         widget    = forms.NumberInput(
             attrs={
-                'class': 'form-control form-control-sm'
+                'class': 'form-control form-control-sm',
+                'min': '0',
             }
         )
     )
@@ -243,7 +246,8 @@ class ResponsFTigabelasForm(forms.Form):
         label       = LIST_SUBKUESIONER['F13-1'],
         widget    = forms.NumberInput(
             attrs={
-                'class': 'form-control form-control-sm'
+                'class': 'form-control form-control-sm',
+                'min': '0',
             }
         )
     )
@@ -252,7 +256,8 @@ class ResponsFTigabelasForm(forms.Form):
         label       = LIST_SUBKUESIONER['F13-2'],
         widget    = forms.NumberInput(
             attrs={
-                'class': 'form-control form-control-sm'
+                'class': 'form-control form-control-sm',
+                'min': '0',
             }
         )
     )
@@ -261,7 +266,8 @@ class ResponsFTigabelasForm(forms.Form):
         label       = LIST_SUBKUESIONER['F13-3'],
         widget    = forms.NumberInput(
             attrs={
-                'class': 'form-control form-control-sm'
+                'class': 'form-control form-control-sm',
+                'min': '0',
             }
         )
     )

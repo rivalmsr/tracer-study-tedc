@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from datetime import datetime
+from django.contrib.auth.models import User
 from poltektedc.models import ( 
     MasterPoltekTedc,
     MasterProdi,
@@ -61,6 +62,12 @@ class MasterOpsiRespons(models.Model):
 
 
 class MasterFSatu(models.Model):
+    user_id             = models.ForeignKey(
+                        User,
+                        models.SET_NULL,
+                        blank=True,
+                        null=True,
+    )    
     nomor_mahasiswa     = models.CharField(
                             max_length=12,
                             unique=True)

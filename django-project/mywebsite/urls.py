@@ -8,6 +8,7 @@ from .views import (
     login_view,
     logout_view,
     beranda,
+    home
 )
 urlpatterns = [
     path('accounts/logout/', logout_view, name='logout'),
@@ -18,7 +19,7 @@ urlpatterns = [
     path('kuesioner/', include('kuesioner.urls', namespace='kuesioner')),
     path('admin/', admin.site.urls),
     path('beranda/', login_required(beranda), name='beranda'),
-    path('', TemplateView.as_view(template_name='home.html'), name='index'),
+    path('', home, name='index'),
 ]
 
 if settings.DEBUG:

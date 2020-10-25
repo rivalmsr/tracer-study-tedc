@@ -104,6 +104,7 @@
     <div class="container">
     <div class="row"> 
         <div class="col-10 offset-1"> 
+        
             <div class="card mt-custome elevation-2"> 
                 <div class="card-body"> 
                     <div class="mb-2">
@@ -126,24 +127,25 @@
                         <div class="tab">
                             
                             <div class="form-group">
-                                <div class="row">
-                                {% for header in header_form %}
-                                    <div class="col-md-2">
-                                        {{header.label_tag}}
+                                {% if user.groups.all.0 == "staff_admin" %}
+                                    <div class="row">
+                                    {% for header in header_form %}
+                                        <div class="col-md-2">
+                                            {{header.label_tag}}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{header}}
+                                        </div>
+                                    {% endfor %}
                                     </div>
-                                    <div class="col-md-3">
-                                        {{header}}
-                                    </div>
-                                {% endfor %}
-                                </div>
-                                
+                                {% endif %}
 
                                 {% for kuesioner in kuesioner_F2 %}
                                     <input type="hidden" name="kuesioner_f2" value="{{kuesioner.pk}}">
                                     <h5>{{kuesioner.kode}} - {{kuesioner.pertanyaan}}</h5>
                                     <h6><b>{{kuesioner.keterangan}}</b></h6>
-
                                 {% endfor %}
+
                                 <div class="">
                                     <h5>{{fdua_form.respons_f2_1.label}}</h5>
                                     <div class="ml-3">
@@ -246,7 +248,7 @@
                                                             <td>Kira-kira</td>
                                                             
                                                             <td>
-                                                                <input type="number" id="id_respons_f3_1_0" name="respons_f3_1" class="form-control form-control-sm" value="">
+                                                                <input type="number" min="0" id="id_respons_f3_1_0" name="respons_f3_1" class="form-control form-control-sm" value="">
                                                             </td>
                                                             <td> Bulan {{radio.choice_label}}</td>
                                                         </tr>
@@ -263,7 +265,7 @@
                                                             <td>Kira-kira</td>
 
                                                             <td>
-                                                                <input type="number" id="id_respons_f3_1_1" name="respons_f3_1" class="form-control form-control-sm" value="">
+                                                                <input type="number" min="0" id="id_respons_f3_1_1" name="respons_f3_1" class="form-control form-control-sm" value="">
                                                             </td>
                                                             <td> Bulan {{radio.choice_label}}</td>
                                                         </tr>
@@ -328,7 +330,7 @@
                                             <label class="custom-control-label" for="{{radio.id_for_label}}">
                                                 <table>
                                                     <td>Kira-kira</td>
-                                                    <td><input type="number" id="id_respons_f5_1_0" class="form-control form-control-sm" name="respons_f5_1"></td>
+                                                    <td><input type="number" min="0" id="id_respons_f5_1_0" class="form-control form-control-sm" name="respons_f5_1"></td>
                                                 <td>Bulan {{radio.choice_label}}</td>
                                             </table>
                                         </label>
@@ -339,7 +341,7 @@
                                                 <label class="custom-control-label" for="{{radio.id_for_label}}">
                                                 <table>
                                                     <td>Kira-kira</td>
-                                                    <td><input type="number" id="id_respons_f5_1_1" class="form-control form-control-sm" name="respons_f5_1"></td>
+                                                    <td><input type="number" min="0" id="id_respons_f5_1_1" class="form-control form-control-sm" name="respons_f5_1"></td>
                                                     <td>Bulan {{radio.choice_label}}</td>
                                                 </table>
                                             </label>
@@ -2087,7 +2089,9 @@
 
     <script>
     var currentTab = 0; // Current tab is set to be the first tab (0)
+
     var setCurrentTab = '{{data_respons_header.current_tab}}' ; // set current tab by update respons header
+    console.log(setCurrentTab);
     //set current tab conditions
     if (setCurrentTab != ""){
         currentTab += parseInt(setCurrentTab)

@@ -50,12 +50,11 @@
 
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body table-responsive p-0" style="height: 400px;">
+                <div class="card-body table-responsive p-0" style="height: 500px;">
                     <table class="table table-head-fixed table-hover text-nowrap">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>PK</th>
                                 <th>NIM</th>
                                 <th>Nama</th>
                                 <th>Program Studi</th>
@@ -69,7 +68,6 @@
                         {% for lulusan in list_of_lulusan %}
                             <tr>
                                 <td>{{forloop.counter}}</td>
-                                <td>{{lulusan.pk}}</td>
                                 <td>{{lulusan.nomor_mahasiswa}}</td>
                                 <td>{{lulusan.nama}}</td>
                                 <td>{{lulusan.master_prodi_id.nama}}</td>

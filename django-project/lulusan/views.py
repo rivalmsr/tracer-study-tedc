@@ -3,7 +3,7 @@ from django.shortcuts import (
     get_object_or_404,
     redirect,
 )
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     CreateView,
     ListView,
@@ -12,6 +12,7 @@ from django.views.generic import (
     DeleteView,
 )
 # Email System 
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
@@ -50,33 +51,42 @@ def create(request):
    
     if request.is_ajax and request.method == 'POST':
 
-        nim_lulusan     = request.POST.get('nomor_mahasiswa')
-        nama_lulusan    = request.POST.get('nama')
+        print(request.POST)
+
+        get_nomor_mahasiswa     = request.POST.get('nomor_mahasiswa')
+        get_nama_mahasiswa      = request.POST.get('nama')
         messages_info   = {
-            'nim': nim_lulusan,
-            'nama_lulusan': nama_lulusan,
+            'nomor_mahasiswa': get_nomor_mahasiswa,
+            'nama_mahasiswa': get_nama_mahasiswa,
         }
 
         if form.is_valid():
             form.save()
-            
-        if MasterFSatu.objects.filter(nomor_mahasiswa=request.POST.get('nomor_mahasiswa')).exists():
+        
+        if MasterFSatu.objects.filter(nomor_mahasiswa=get_nomor_mahasiswa).exists():
             biodata_lulusan = BiodataLulusan.objects.create(
-                master_fsatu_id = MasterFSatu.objects.get(nomor_mahasiswa=request.POST.get('nomor_mahasiswa'))
+                master_fsatu_id = MasterFSatu.objects.get(nomor_mahasiswa=get_nomor_mahasiswa)
             )
             biodata_lulusan.save()
-
+            
         if form.is_valid():
             username = request.POST.get('nama').lower().replace(" ", "_")
-            user_password = request.POST.get('nomor_mahasiswa').lower().replace(" ", "_") + request.POST.get('tahun_lulus')
+            user_password = get_nomor_mahasiswa.lower().replace(" ", "_") + request.POST.get('tahun_lulus')
             user_email = request.POST.get('alamat_email')
+            print('step one')
             if request.method == 'POST':
+                print('step two')
                 user = User.objects.create_user(username, user_email, user_password)
                 user.is_active = False
                 # add user to group lulusan
                 lulusan_group = Group.objects.get(name='lulusan')
                 user.groups.add(lulusan_group)
                 user.save()
+    
+                if MasterFSatu.objects.filter(nomor_mahasiswa=get_nomor_mahasiswa).exists() and User.objects.filter(pk=user.pk).exists():
+                    fsatu = MasterFSatu.objects.filter(nomor_mahasiswa=get_nomor_mahasiswa).update(
+                        user_id = User.objects.get(pk=user.pk)
+                    )
 
                 # MAIL SYSTEM
                 current_site = get_current_site(request)
@@ -90,7 +100,7 @@ def create(request):
                     'token': account_activation_token.make_token(user),
                 }
                 send_email = mail_system(param_mail_subject=mail_subject, param_template_name=mail_template_name, param_context_mail=mail_context, param_user_mail=user_email)
-                    
+        
     context = {
         'title': 'Tambah Data Lulusan',
         'nav_item_lulusan': 'menu-open',
@@ -103,6 +113,7 @@ def create(request):
 
 
 def activate_account(request, uidb64, token):
+    context = {}
     try:
         uid = force_bytes(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -111,10 +122,11 @@ def activate_account(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return HttpResponse('Your account has been activate successfully')
+        messages.success(request, f'Konfirmasi Email Akun Tracer Study Berhasil!')
+        return redirect('login')
     else:
-        return HttpReesponse('Activation link is invalid!')
-
+        messages.info(request, f'Konfirmasi Email Akun Tracer Study Gagal!')
+        return redirect('login')
 
 class LulusanListView(ListView):
     model               = MasterFSatu

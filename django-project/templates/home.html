@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>AdminLTE 3 | Top Navigation</title>
+  <title>{{title}}</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href=" {% static 'admin-lte/plugins/fontawesome-free/css/all.min.css' %} ">
@@ -18,17 +18,41 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href=" {% static 'admin-lte/dist/css/adminlte.min.css' %} ">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <style>
+    .jumbotron {
+        position: relative;
+        background: url("{% static 'admin-lte/image/lulusan-if-2.jpg' %}");
+        background-size: cover;
+        background-position: center;
+    }
+    .jumbotron > .overlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(61, 153, 112, 0.2);
+        z-index: 1;
+    }
+
+    .jumbotron > .inner {
+        position: relative;
+        background-color: rgba(61, 153, 112, 0.65);
+        z-index: 2;
+
+    }
+  </style>
 </head>
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white elevation-1 text-sm">
     <div class="container">
       <a href=" {% static 'admin-lte/index3.html" class="navbar-brand' %} ">
-        <img src=" {% static 'admin-lte/dist/img/AdminLTELogo.png' %} " alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        <img src=" {% static 'admin-lte/dist/img/poltektedc.png' %} " alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light">Politeknik TEDC Bandung</span>
+        <span class="brand-text font-weight-light text-dark">Politeknik TEDC Bandung</span>
       </a>
       
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,9 +61,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       <!-- Right navbar links -->
       <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'beranda' %}" >Beranda</a>
+       {% comment %} {% if user.groups.all.0.name == 'staff_admin' %} {% endcomment %}
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="{% url 'beranda' %}" class="nav-link text-bold">Beranda</a>
         </li>
+        {% comment %} {% elif user.groups.all.0.name == 'lulusan' %}
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="{% url 'lulusan:detail' master_fsatu.slug %}" class="nav-link text-bold">Profil Lulusan</a>
+          </li>
+        {% else %}
+        {{user.groups.all.0.name}}
+      {% endif %} {% endcomment %}
       </ul>
     </div>
   </nav>
@@ -47,15 +79,87 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <div class="jumbotron text-center">
-  <h3 class="display-3">Tracer Study</h3>
-    <p class="lead"><strong>Politeknik TEDC Bandung</p>
-  <hr>
-  <p class="lead">
-    <a class="btn btn-warning btn-sm" href="{% url 'login' %}" role="button"><b>Silahkan Melakukan Login</b></a>
-  </p>
-  
-  </div>
+    <div class="jumbotron jumbotron-fluid text-white">
+    <div class="overlay"></div>
+      <div class="inner">
+        <div class="container pt-1 pb-2">
+          <h1 class="display-4 ">Selamat Datang!</h1>
+          <p class="lead">Sistem Informasi Pengelolaan dan Pengisian Kuesioner Standar Tracer Study Kementerian Ristekdikti Tahun 2017</p>
+          <hr class="my-4">
+          <p>Silahkan cek kontak masuk email untuk melihat username dan password dari Akun Tracer Study Anda!</p>
+          <p class="lead">
+            <a class="btn btn-warning btn-md elevation-2" href="#" role="button">Login Sekarang</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <br><br>
+    <!-- Main content -->
+    <div class="content">
+      <div class="container">
+      
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the card's
+                  content.
+                </p>
+
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+              </div>
+            </div>
+
+            <div class="card card-teal card-outline">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the card's
+                  content.
+                </p>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+              </div>
+            </div><!-- /.card -->
+          </div>
+          <!-- /.col-md-6 -->
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title m-0">Featured</h5>
+              </div>
+              <div class="card-body">
+                <h6 class="card-title">Special title treatment</h6>
+
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-teal">Go somewhere</a>
+              </div>
+            </div>
+
+            <div class="card card-teal card-outline">
+              <div class="card-header">
+                <h5 class="card-title m-0">Featured</h5>
+              </div>
+              <div class="card-body">
+                <h6 class="card-title">Special title treatment</h6>
+
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-teal">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+          <!-- /.col-md-6 -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
@@ -70,14 +174,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      Anything you want
+  <footer class="main-footer text-sm">
+    <strong>Sistem Informasi <a class="text-teal" href="http://adminlte.io">Tracer Study TEDC</a>.</strong>
+    <div class="float-right d-none d-sm-inline-block">
+      Tahun Project <b>2020</b>
     </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
+</footer>
 </div>
 <!-- ./wrapper -->
 

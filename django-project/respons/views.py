@@ -4,8 +4,9 @@ render,
 get_object_or_404,
 redirect,
 )
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 from django.views.generic import (
     CreateView,
@@ -14,7 +15,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-
+from django.contrib.auth.models import User
 from .models import (
     ResponsHeader,
     ResponsFDuaDetail,
@@ -69,6 +70,17 @@ def index(request):
     # Initialisasi Dictionary 
     context = {}
      # respons header
+    identitas_group = request.user.groups.get()
+    identitas_user  = request.user.pk
+
+    if identitas_group.name == 'lulusan':
+        if ResponsHeader.objects.filter(master_fsatu_id__user_id__pk=identitas_user).exists():
+            respons_header = ResponsHeader.objects.get(master_fsatu_id__user_id__pk=identitas_user)
+        else:
+            respons_header = []
+    else:
+        respons_header = []
+
     list_of_responden =  ResponsHeader.objects.all().count()
     if list_of_responden > 0:
         responden_completed = ResponsHeader.objects.filter(completed=True).count()
@@ -85,6 +97,7 @@ def index(request):
         'nav_status_pengisian_kuesioner': 'active',
         'responden_completed': responden_completed,
         'responden_progress': responden_progress,
+        'respons_header': respons_header,
     }
     return render(request, template_name, context)
 
@@ -251,7 +264,7 @@ def detail(request, detail_id):
 def create(request):  
     # Initialisasi Dictionary 
     context = {}
-    
+    validation_respons_header = False
     # Returns to template
     template_name       = 'respons/respons_form.html'
     context = {
@@ -313,28 +326,43 @@ def create(request):
     # Return forms to context
     for key, value in list_form:
         context[key] = value
-
+    
     # Reqeust Method Check
     if request.method == 'POST':
-        if header_form.is_valid():
-            if request.POST.get('current-tab'):
-                current_value = request.POST.get('current-tab')
-            else:
-                current_value = 0
-            # get nomor mahasiswa and clear it 
+    
+        # initialisasi
+        identitas_group = request.user.groups.get()
+        identitas_user  = request.user.pk
+        nomor_mahasiswa = ''
+
+        # conditional by user request
+        if identitas_group.name == 'staff_admin':
             txt_nomor_mahasiswa = request.POST.get('respons_f1').upper()
             nomor_mahasiswa = txt_nomor_mahasiswa.replace(" ", "")
+        else:
+            master_fsatu = MasterFSatu.objects.get(user_id=identitas_user)
+            nomor_mahasiswa = master_fsatu.nomor_mahasiswa
 
-            fsatu = ResponsHeader.objects.create( 
+        if request.POST.get('current-tab'):
+            current_value = request.POST.get('current-tab')
+        else:
+            current_value = 0
+
+        # get nomor mahasiswa and clear it 
+        if  ResponsHeader.objects.filter(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa).exists():
+            return redirect('respons:index')
+        else:
+            fsatu_respons_header = ResponsHeader.objects.create( 
                 master_fsatu_id = MasterFSatu.objects.get(nomor_mahasiswa=nomor_mahasiswa),
                 current_tab     = current_value,
-               
             )
-            fsatu.save()
-            
-            if  ResponsHeader.objects.filter(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa).exists():
-                get_respons_header = ResponsHeader.objects.get(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa)
-
+            fsatu_respons_header.save()
+        
+        if  ResponsHeader.objects.filter(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa).exists():
+            get_respons_header = ResponsHeader.objects.get(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa)
+                
+            # try except condition
+            try:
                 # Respons F2
                 if fdua_form.is_valid():
                     data_fdua = {}
@@ -660,7 +688,10 @@ def create(request):
                         )
                 # redirect to detail 
                 return redirect('respons:detail', get_respons_header.pk)
-
+            except:
+                delete_respons_header = ResponsHeader.objects.filter(get_respons_header.pk).delete()
+                return redirect('respons:index')
+                
     return render(request, template_name, context)
 
 def update(request, update_id):
@@ -891,9 +922,18 @@ def update(request, update_id):
     # Reqeust Method Check
  
     if request.method == 'POST':
-         # get nomor mahasiswa and clear it 
-        txt_nomor_mahasiswa = request.POST.get('respons_f1').upper()
-        nomor_mahasiswa = txt_nomor_mahasiswa.replace(" ", "")
+        # initialisasi
+        identitas_group = request.user.groups.get()
+        identitas_user  = request.user.pk
+        nomor_mahasiswa = ''
+
+        # conditional by user request
+        if identitas_group.name == 'staff_admin':
+            txt_nomor_mahasiswa = request.POST.get('respons_f1').upper()
+            nomor_mahasiswa = txt_nomor_mahasiswa.replace(" ", "")
+        else:
+            master_fsatu = MasterFSatu.objects.get(user_id=identitas_user)
+            nomor_mahasiswa = master_fsatu.nomor_mahasiswa
 
         if ResponsHeader.objects.filter(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa).exists():
             respons_header = ResponsHeader.objects.get(master_fsatu_id__nomor_mahasiswa=nomor_mahasiswa)

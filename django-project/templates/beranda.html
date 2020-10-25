@@ -9,7 +9,7 @@
       <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box">
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
-
+            
             <div class="info-box-content">
             <span class="info-box-text">Total Lulusan</span>
             <span class="info-box-number">{{total_lulusan}}</span>
@@ -67,13 +67,12 @@
       </div>
       <!-- /.col -->
       <div class="col-md-12">
-
         <!-- BAR CHART -->
         <div class="card card-outline card-teal">
           <div class="card-header">
             <h3 class="card-title">
-            <i class="far fa-chart-bar"></i>
-            Bar Chart
+            <i class="far fa-chart-bar text-teal"></i>
+              Diagram Penekanan Pada Metode Pembelajaran
             </h3>
 
             <div class="card-tools">
@@ -84,7 +83,7 @@
           </div>
 
           <div class="card-body">
-            <h5 class="card-title">Menampilkan Pengolahan Data dari Pertanyaan</h5>
+            <h5 class="card-title">Data didapat dari jawaban responden</h5>
             <p class="card-text">F2 - Menurut anda seberapa besar penekanan pada metode pembelajaran di bawah ini dilaksanakan di program studi anda?</p>
             <div class="chart">
               <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -93,9 +92,8 @@
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
+      </div><!-- /.col (RIGHT) -->
 
-      </div>
-      <!-- /.col (RIGHT) -->
     </div>
   <!-- /.row -->
   
@@ -104,10 +102,10 @@
         <!-- Donut chart -->
           <div class="card card-teal card-outline">
             <div class="card-header">
-              <h3 class="card-title">
-                <i class="far fa-chart-bar"></i>
-                Donut Chart
-              </h3>
+              <h4 class="card-title">
+                <i class="far fa-chart-bar text-teal"></i>
+                Diagram Status Pekerjaan Lulusan Keseluruhan 
+              </h4>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -117,7 +115,7 @@
               </div>
             </div>
             <div class="card-body">
-              <h5 class="card-title">Menampilkan Pengolahan Data dari Pertanyaan</h5>
+              <h5 class="card-title">Data didapat dari jawaban responden</h5>
               <p class="card-text">F8 - Apakah anda bekerja saat ini (termasuk kerja sambilan dan wirausaha)?</p>
               <div id="donut-chart" style="height: 250px;"></div>
             </div>
@@ -130,10 +128,10 @@
         <!-- STACKED BAR CHART -->
           <div class="card card-teal card-outline">
             <div class="card-header">
-              <h3 class="card-title">
-                <i class="far fa-chart-bar"></i>
-                Stacked Bar Chart
-                </h3>
+              <h4 class="card-title">
+                <i class="far fa-chart-bar text-teal"></i>
+                Diagram Status Pekerjaan Lulusan Berdasarkan Prodi
+              </h4>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -142,7 +140,7 @@
               </div>
             </div>
             <div class="card-body">
-              <h5 class="card-title">Menampilkan Pengolahan Data dari Pertanyaan</h5>
+              <h5 class="card-title">Data didapat dari jawaban responden</h5>
               <p class="card-text">F8 - Apakah anda bekerja saat ini (termasuk kerja sambilan dan wirausaha)?</p>
               <div class="chart">
                 <canvas id="stackedBarChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -213,7 +211,14 @@
     //-------------
     //- Data BAR CHART -
     //-------------
-
+    console.log(list_prodi.length);
+    for (let i=0; i<list_prodi.length; i++ ){
+      console.log(i)
+      if (i > 2){
+        console.log('test');
+      }
+    }
+    
     var areaChartData = {
       labels  : list_prodi,
       datasets: [

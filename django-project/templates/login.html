@@ -28,15 +28,17 @@
             </div> 
             <div class="blmd-continer">
             {% if messages %}
-                <ul class="messages">
+            <ul class="messages">
                 {% for messages in messages %}
-                    <li {% if messages.tags %} class="{{messages.tags}}" {% endif %}>
+                    <li {% if messages.tags %} class="{{messages.tags}} " {% endif %} style='color:#369187; font-size:20px;'>
                     {{messages}}
                     </li>
                 {% endfor %}
-
-                </ul>
+            </ul>
             {% endif %}
+            
+            
+
                 <!-- @ Login form container -->
                 <form method="POST" class="clearfix" id="login-form">
                   {% csrf_token %}

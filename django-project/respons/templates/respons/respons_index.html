@@ -16,7 +16,17 @@
         <h4 class="card-text mt-2">Tracer Study TEDC Bandung</h4>
         <h5 class="card-text mt-2 mb-3">Kuesioner Standar Tracer Study Kementerian Ristekdikti Tahun 2017</h5>
         
-        <a href="{% url 'respons:create' %}" class="btn btn-warning elevation-2 mb-3 text-bold"><i class="fa fa-space-shuttle mr-3"></i>Mulai Sekarang</a>
+        {% if user.groups.all.0.name == 'lulusan' %}
+
+          {% if respons_header.current_tab > 0 %}
+            <a href="{% url 'respons:detail' respons_header.pk %}" class="btn btn-success elevation-2 mb-3 text-bold"><i class="fa fa-space-shuttle mr-3"></i>Lihat Detail Tanggapan</a>
+          {% else %}
+            <a href="{% url 'respons:create' %}" class="btn btn-warning elevation-2 mb-3 text-bold"><i class="fa fa-space-shuttle mr-3"></i>Mulai Tanggapan</a>
+          {% endif %}
+
+        {% else %}
+          <a href="{% url 'respons:create' %}" class="btn btn-warning elevation-2 mb-3 text-bold"><i class="fa fa-space-shuttle mr-3"></i>Mulai Tanggapan</a>
+        {% endif %}
       </div>
         
       <div class="card-footer">

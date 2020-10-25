@@ -3,7 +3,7 @@
   <aside class="main-sidebar sidebar-light-teal elevation-2">
     <!-- Brand Logo -->
     <a href="{% url 'beranda' %}" class="brand-link navbar-teal elevation-1">
-      <img src=" {% static 'admin-lte/dist/img/AdminLTELogo.png' %} " alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      <img src=" {% static 'admin-lte/dist/img/poltektedc.png' %} " alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light"><b>Tracer Study</b> TEDC</span>
     </a>
@@ -13,8 +13,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-flat" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+        {% if user.groups.all.0.name == "staff_admin" %}
           <li class="nav-item has-treeview">
             <a href="{% url 'beranda' %}" class="nav-link {{nav_status_beranda}}">
               <i class="nav-icon fas fa-home"></i>
@@ -24,7 +23,6 @@
             </a>
           </li>
 
-          {% comment %} Side Lulusan {% endcomment %}
           <li class="nav-item has-treeview {{nav_item_lulusan}}">
             <a href="#" class="nav-link {{nav_status_lulusan}}">
               <i class="nav-icon fas fa-user-graduate"></i>
@@ -46,12 +44,6 @@
                   <p>INPUT DATA LULUSAN</p>
                 </a>
               </li>
-              {% comment %} <li class="nav-item">
-                <a href="#" class="nav-link {{nav_status_upload_lulusan}}">
-                  <i class="nav-icon far fa-circle"></i>
-                  <p>UNGGAH DATA LULUSAN</p>
-                </a>
-              </li> {% endcomment %}
             </ul>
           </li>
 
@@ -72,13 +64,6 @@
                 </a>
               </li>
 
-              {% comment %} <li class="nav-item">
-                <a href="{% url 'respons:info' %}" class="nav-link {{nav_info_kuesioner}}">
-                  <i class="nav-icon far fa-circle"></i>
-                  <p>PETUNJUK PENGISIAN</p>
-                </a>
-              </li> {% endcomment %}
-
               <li class="nav-item">
                 <a href="{% url 'respons:index' %}" class="nav-link {{nav_status_pengisian_kuesioner}}">
                   <i class="nav-icon far fa-circle"></i>
@@ -86,15 +71,9 @@
                 </a>
               </li>
 
-              {% comment %} <li class="nav-item">
-                <a href="{% url 'respons:index' %}" class="nav-link {{nav_status_pengisian_kuesioner}}">
-                  <i class="nav-icon far fa-circle"></i>
-                  <p>DETAIL TANGGAPAN</p>
-                </a>
-              </li> {% endcomment %}
-
             </ul>
           </li>
+
           <li class="nav-item has-treeview {{nav_item_responden}}">
             <a href="#" class="nav-link {{nav_status_responden}}">
               <i class="nav-icon  fas fa-database"></i>
@@ -110,12 +89,6 @@
                   <p>DATA TRACER</p>
                 </a>
               </li>
-              {% comment %} <li class="nav-item">
-                <a href="" class="nav-link {{nav_status}}">
-                  <i class="nav-icon far fa-circle"></i>
-                  <p>PUSAT KARIR</p>
-                </a>
-              </li> {% endcomment %}
               <li class="nav-item">
                 <a href="{% url 'respons:unduh-data' %}" class="nav-link {{nav_status_unduh_data_responden}}">
                   <i class="nav-icon far fa-circle"></i>
@@ -124,47 +97,46 @@
               </li>    
             </ul>
           </li>
-          {% comment %} <li class="nav-item has-treeview {{nav_item_report}}">
-            <a href="#" class="nav-link {{nav_status_report}}">
-              <i class="nav-icon fas fa-chart-pie"></i>
+
+        {% elif user.groups.all.0.name == "lulusan" %}
+          <li class="nav-item has-treeview">
+            <a href="{% url 'beranda' %}" class="nav-link {{nav_status_beranda}}">
+              <i class="nav-icon fas fa-home"></i>
               <p>
-                REPORT
-                <i class="fas fa-angle-left right"></i>
+                BERANDA
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item has-treeview {{nav_item_kuesioner}}">
+            <a href="#" class="nav-link {{nav_status_kuesioner}}">
+              <i class="nav-icon fas fa-paper-plane"></i>
+              <p>
+                KUESIONER
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
+
               <li class="nav-item">
-                <a href="{% url 'report:horizontal' %}" class="nav-link {{nav_status_report}}">
-                  <i class="fas fa-poll-h nav-icon"></i>
-                  <p>REPORT KESELARASAN HORISONTAL</p>
+                <a href="{% url 'kuesioner:list' %}" class="nav-link {{nav_status_daftar_kuesioner}}">
+                  <i class="nav-icon far fa-circle"></i>
+                  <p>DAFTAR KUESIONER</p>
                 </a>
               </li>
+
               <li class="nav-item">
-                <a href="{% url 'report:vertical' %}" class="nav-link {{nav_status_report}}">
-                  <i class="fas fa-poll nav-icon"></i>
-                  <p>REPORT KESELARASAN VERTIKAL</p>
+                <a href="{% url 'respons:index' %}" class="nav-link {{nav_status_pengisian_kuesioner}}">
+                  <i class="nav-icon far fa-circle"></i>
+                  <p>FORM PENGISIAN</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="" class="nav-link {{nav_status_report}}">
-                  <i class="fas fa-list-alt nav-icon"></i>
-                  <p>DAFTAR LAMA TUNGGU</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link {{nav_status_report}}">
-                  <i class="fas fa-chart-line nav-icon"></i>
-                  <p>STATISTIK PER PRODI</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link {{nav_status_report}}">
-                  <i class="fas fa-chart-line nav-icon"></i>
-                  <p>STATISTIK TRACER STUDY</p>
-                </a>
-              </li>    
+
             </ul>
-          </li> {% endcomment %}
+          </li>
+
+        {% endif %}
+          
         </ul>
       </nav><br><br><br>
       <!-- /.sidebar-menu -->

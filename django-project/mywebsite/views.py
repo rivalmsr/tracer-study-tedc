@@ -41,11 +41,19 @@ from respons.models import (
     ResponsFTujuhbelasBDetail,
 )
 
+def home(request):
+    template_name = 'home.html'
+    context = {
+        'title': 'Home | Tracer Study',
+    }
+    return render(request, template_name, context)
+
 def beranda(request):
     # list of lulusan
     template_name = 'beranda.html'
     list_of_lulusan = MasterFSatu.objects.all()
     total_lulusan = list_of_lulusan.count()
+
     # list of user confirmasi
     list_of_user = User.objects.all()
     list_of_user_isActive = User.objects.filter(is_active=True)
@@ -71,15 +79,19 @@ def beranda(request):
     list_of_praktikum_values = []
     list_of_kerja_lapangan_values = []
     list_of_diskusi_values = []
-
+    
     for prodi in list_of_fdua_by_prodi:
+        print(prodi)
         for kode in list_of_sub_pertanyaan_kode:
+            print(kode)
             list_of_sub_pertanyaan = ResponsFDuaDetail.objects.filter(master_subkuesioner_id__kode=kode, respons_header_id__master_fsatu_id__master_prodi_id__nama=prodi)
             respons_value = 0
             for sub_pertanyaan in list_of_sub_pertanyaan:
+                print(sub_pertanyaan)
                 if list_of_sub_pertanyaan.count() > 1:
                     temp_respons_value = list_of_respons_values.get(sub_pertanyaan.respons)
-                    respons_value += temp_respons_value
+                    if temp_respons_value != None:
+                        respons_value += temp_respons_value
                 else:
                     respons_value = list_of_respons_values.get(sub_pertanyaan.respons)
             respons_value /= list_of_sub_pertanyaan.count()
@@ -100,7 +112,6 @@ def beranda(request):
 
     # data bar chart
     list_aja = ResponsFDelapanDetail.objects.values_list('respons_header_id__master_fsatu_id__master_prodi_id__nama', flat=True).order_by('respons_header_id__master_fsatu_id__master_prodi_id__pk').distinct()
-    print(list_aja)
 
     list_lulusan_belum_bekerja = []
     list_lulusan_sudah_bekerja = []
@@ -116,12 +127,12 @@ def beranda(request):
         persentase = 100 / list_of_lulusan.count()
         responden_completed = ResponsHeader.objects.filter(completed=True).count()
         responden_progress = ResponsHeader.objects.filter(completed=False).count()
-        
-        persentase_respons_completed = round(responden_completed * (100 / (list_of_lulusan.count()-responden_progress)))
-        persentase_respons_progress = round(responden_progress * (100 / (list_of_lulusan.count()-responden_completed)))
+        persentase_respons_completed = round(responden_completed * persentase)
+        persentase_respons_progress = round(responden_progress * persentase)
     else:
         persentase_respons_completed = 0
         persentase_respons_progress = 0
+    
     context       = {
         'title': 'Beranda',
         'nav_status_beranda': 'active',
@@ -156,14 +167,13 @@ def login_view(request):
             return redirect('index')
         else :
             return render(request, template_name, context)
-    
+
     
     if request.method == 'POST':
         username_login = request.POST.get('username')
         password_login = request.POST.get('password')
         user = authenticate(request, username= username_login, password=password_login)
         if user is not None:
-
             form = auth_login(request, user)
             messages.success(request, f'welcome {username_login} !!')
             if request.GET.get('next'):

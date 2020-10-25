@@ -9,9 +9,11 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{% url 'index' %}" class="nav-link text-bold">HOME</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{% url 'admin:index' %}" class="nav-link text-bold">ADMIN DATABASE</a>
-      </li>
+      {% if user.groups.all.0.name == 'staff_admin' %}
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="{% url 'admin:index' %}" class="nav-link text-bold">ADMIN DATABASE</a>
+        </li>
+      {% endif %}
     </ul>
 
 
@@ -27,7 +29,9 @@
             src="{% static 'admin-lte/dist/img/user-ts.png' %}"
           {% endif %}
            class="user-image img-circle elevation-2" alt="User Image">
-          <span class="d-none d-md-inline">Alexander Pierce</span>
+          <span class="d-none d-md-inline">
+            {{user.username}}
+          </span>
         </a>
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <!-- User image -->
@@ -39,7 +43,7 @@
               src="{% static 'admin-lte/dist/img/user-ts.png' %}"
             {% endif %} class="img-circle elevation-2" alt="User Image">
             <p>
-              Alexander Pierce - Web Developer
+              {{user.username}}
               <small>Member since Nov. 2012</small>
             </p>
           </li>

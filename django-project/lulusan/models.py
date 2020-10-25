@@ -41,7 +41,7 @@ class BiodataLulusan(models.Model):
     angkatan            = models.CharField(
                             max_length=5, 
                             blank=True,
-                            default='-belum diisi-',
+                            null=True,
     )
     pekerjaan           = models.CharField(
                             max_length=100, 

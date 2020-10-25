@@ -10,7 +10,7 @@ from kuesioner.models import (
 class ResponsHeader(models.Model):
     master_fsatu_id         = models.ForeignKey(
                                 MasterFSatu,
-                                models.SET_NULL,
+                                on_delete=models.CASCADE,
                                 blank=True,
                                 null=True,    
     )
